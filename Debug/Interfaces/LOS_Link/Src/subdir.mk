@@ -5,15 +5,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Interfaces/LOS_Link/Src/PPM.cpp \
 ../Interfaces/LOS_Link/Src/RSSI.cpp 
 
 OBJS += \
-./Interfaces/LOS_Link/Src/PPM.o \
 ./Interfaces/LOS_Link/Src/RSSI.o 
 
 CPP_DEPS += \
-./Interfaces/LOS_Link/Src/PPM.d \
 ./Interfaces/LOS_Link/Src/RSSI.d 
 
 
@@ -24,7 +21,7 @@ Interfaces/LOS_Link/Src/%.o Interfaces/LOS_Link/Src/%.su: ../Interfaces/LOS_Link
 clean: clean-Interfaces-2f-LOS_Link-2f-Src
 
 clean-Interfaces-2f-LOS_Link-2f-Src:
-	-$(RM) ./Interfaces/LOS_Link/Src/PPM.d ./Interfaces/LOS_Link/Src/PPM.o ./Interfaces/LOS_Link/Src/PPM.su ./Interfaces/LOS_Link/Src/RSSI.d ./Interfaces/LOS_Link/Src/RSSI.o ./Interfaces/LOS_Link/Src/RSSI.su
+	-$(RM) ./Interfaces/LOS_Link/Src/RSSI.d ./Interfaces/LOS_Link/Src/RSSI.o ./Interfaces/LOS_Link/Src/RSSI.su
 
 .PHONY: clean-Interfaces-2f-LOS_Link-2f-Src
 

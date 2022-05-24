@@ -1,15 +1,15 @@
 /*
- * PPM.hpp
+ * LOS_Link.hpp
  *
  *  Created on: May 24, 2022
  *      Author: anthony
  */
 
-#ifndef LOS_LINK_INC_PPM_HPP_
-#define LOS_LINK_INC_PPM_HPP_
+#ifndef INC_LOS_LINK_HPP_
+#define INC_LOS_LINK_HPP_
 
 
-#include "../../LOS_Actuators/Inc/actuators.hpp"
+#include <LOS_Actuators/Inc/PWM.hpp>
 #include <stdint.h>
 
 static const int32_t MAX_PPM_CHANNELS = 12;
@@ -94,4 +94,6 @@ class PPMChannel {
 };
 
 
-#endif /* LOS_LINK_INC_PPM_HPP_ */
+
+
+#endif /* INC_LOS_LINK_HPP_ */

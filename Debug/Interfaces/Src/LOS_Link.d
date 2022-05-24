@@ -1,6 +1,6 @@
-Interfaces/LOS_Actuators/Src/actuators.o: \
- ../Interfaces/LOS_Actuators/Src/actuators.cpp \
- /Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Actuators/Inc/actuators.hpp \
+Interfaces/Src/LOS_Link.o: ../Interfaces/Src/LOS_Link.cpp \
+ ../Interfaces/Src/../Inc/LOS_Link.hpp \
+ /Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Actuators/Inc/PWM.hpp \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -35,9 +35,11 @@ Interfaces/LOS_Actuators/Src/actuators.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Interfaces/LOS_Actuators/Src/../../interface_temp_params.hpp \
- ../Core/Inc/main.h ../Core/Inc/tim.h ../Core/Inc/main.h
-/Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Actuators/Inc/actuators.hpp:
+ ../Interfaces/Src/../interface_temp_params.hpp ../Core/Inc/main.h \
+ ../Core/Inc/tim.h ../Core/Inc/main.h \
+ /Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Link/Inc/RSSI.hpp
+../Interfaces/Src/../Inc/LOS_Link.hpp:
+/Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Actuators/Inc/PWM.hpp:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -72,7 +74,8 @@ Interfaces/LOS_Actuators/Src/actuators.o: \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-../Interfaces/LOS_Actuators/Src/../../interface_temp_params.hpp:
+../Interfaces/Src/../interface_temp_params.hpp:
 ../Core/Inc/main.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/main.h:
+/Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/Interfaces/LOS_Link/Inc/RSSI.hpp:
