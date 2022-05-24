@@ -1,0 +1,2 @@
+../Interfaces/LOS_Link/Src/RSSI.cpp:17:6:bool CommsFailed()	4	static
+../Interfaces/LOS_Link/Src/RSSI.cpp:20:6:void RSSI_Check()	4	static

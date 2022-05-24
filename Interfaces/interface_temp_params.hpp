@@ -12,8 +12,9 @@
 #include "main.h"
 #include "tim.h"
 
-TIM_HandleTypeDef *PWM_TIM = &htim3;
-TIM_HandleTypeDef *DSHOT_TIM = &htim1;
+extern TIM_HandleTypeDef *PWM_TIM;
+extern TIM_HandleTypeDef *DSHOT_TIM;
+extern TIM_HandleTypeDef *PPM_TIM;
 
 
 #endif /* INTERFACE_TEMP_PARAMS_HPP_ */

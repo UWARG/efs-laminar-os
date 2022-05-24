@@ -1,0 +1,9 @@
+../Interfaces/LOS_Link/Src/PPM.cpp:51:1:PPMChannel::PPMChannel(uint8_t, uint32_t)	32	static
+../Interfaces/LOS_Link/Src/PPM.cpp:69:12:StatusCode PPMChannel::setLimits(uint8_t, uint32_t, uint32_t, uint32_t)	24	static
+../Interfaces/LOS_Link/Src/PPM.cpp:80:12:StatusCode PPMChannel::setNumChannels(uint8_t)	16	static
+../Interfaces/LOS_Link/Src/PPM.cpp:88:10:uint32_t PPMChannel::get_us(PWMChannelNum)	16	static
+../Interfaces/LOS_Link/Src/PPM.cpp:96:6:bool PPMChannel::is_disconnected(uint32_t)	16	static
+../Interfaces/LOS_Link/Src/PPM.cpp:104:9:uint8_t PPMChannel::get(PWMChannelNum)	24	static
+../Interfaces/LOS_Link/Src/PPM.cpp:114:14:float counter_to_time(uint32_t, uint32_t)	32	static
+../Interfaces/LOS_Link/Src/PPM.cpp:125:16:uint8_t time_to_percentage(uint32_t, uint32_t, float)	32	static
+../Interfaces/LOS_Link/Src/PPM.cpp:142:6:void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef*)	24	static

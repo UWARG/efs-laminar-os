@@ -6,8 +6,8 @@
  *      Sourced from: Chris Chung
  */
 
-#ifndef LOS_IO_INC_ACTUATORS_HPP_
-#define LOS_IO_INC_ACTUATORS_HPP_
+#ifndef LOS_ACTUATORS_INC_ACTUATORS_HPP_
+#define LOS_ACTUATORS_INC_ACTUATORS_HPP_
 
 // Tim3 Ch1&2 are pwm outs on pa6/pa7
 
@@ -118,4 +118,4 @@ void dshotDMACompleteCallback(DMA_HandleTypeDef *hdma);
 
 
 
-#endif /* LOS_IO_INC_ACTUATORS_HPP_ */
+#endif /* LOS_ACTUATORS_INC_ACTUATORS_HPP_ */
