@@ -1,0 +1,8 @@
+../Interfaces/LOS_IO/Src/actuators.cpp:46:1:PWMChannel::PWMChannel()	48	static
+../Interfaces/LOS_IO/Src/actuators.cpp:59:6:void PWMChannel::set(uint8_t, float)	48	static
+../Interfaces/LOS_IO/Src/actuators.cpp:80:6:void PWMChannel::dshotPrepareDMABuffer(uint32_t*, float)	32	static
+../Interfaces/LOS_IO/Src/actuators.cpp:98:10:uint16_t PWMChannel::dshotPrepareFrame(float, bool)	32	static
+../Interfaces/LOS_IO/Src/actuators.cpp:121:6:void PWMChannel::dshotStartDMA(PWMPinConfig)	24	static
+../Interfaces/LOS_IO/Src/actuators.cpp:145:6:void PWMChannel::dshotEnableDMARequests(PWMPinConfig)	16	static
+../Interfaces/LOS_IO/Src/actuators.cpp:147:1:void __static_initialization_and_destruction_0(int, int)	16	static
+../Interfaces/LOS_IO/Src/actuators.cpp:147:1:cpp)	8	static

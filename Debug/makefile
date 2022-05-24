@@ -13,6 +13,7 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+-include Interfaces/LOS_IO/Src/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -79,8 +80,8 @@ all: main-build
 main-build: LaminarOS.elf secondary-outputs
 
 # Tool invocations
-LaminarOS.elf LaminarOS.map: $(OBJS) $(USER_OBJS) E:\WARG\ZP_Proto_Port\LaminarOS\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "LaminarOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\WARG\ZP_Proto_Port\LaminarOS\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LaminarOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+LaminarOS.elf LaminarOS.map: $(OBJS) $(USER_OBJS) /Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "LaminarOS.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/anthony/Documents/Code/ZP_Proto_Port/LaminarOS/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LaminarOS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

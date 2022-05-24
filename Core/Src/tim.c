@@ -382,9 +382,9 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_COMMUTATION],hdma_tim1_ch4_trig_com);
 
     /* TIM1 interrupt Init */
-    HAL_NVIC_SetPriority(TIM1_BRK_TIM9_IRQn, 15, 0);
+    HAL_NVIC_SetPriority(TIM1_BRK_TIM9_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(TIM1_BRK_TIM9_IRQn);
-    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 15, 0);
+    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
     HAL_NVIC_SetPriority(TIM1_TRG_COM_TIM11_IRQn, 15, 0);
     HAL_NVIC_EnableIRQ(TIM1_TRG_COM_TIM11_IRQn);
@@ -467,7 +467,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     PA10     ------> TIM1_CH3
     PA11     ------> TIM1_CH4
     */
-    GPIO_InitStruct.Pin = DSHOT_CH4_Pin|DSHOT_CH3_Pin|DSHOT_CH2_Pin|DSHOT_CH1_Pin;
+    GPIO_InitStruct.Pin = DSHOT4_Pin|DSHOT3_Pin|DSHOT2_Pin|DSHOT1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
