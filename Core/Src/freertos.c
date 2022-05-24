@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <../../AttitudeManager/Inc/attitudeManagerInterface.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +51,8 @@ osThreadId defaultTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
+
+void attitudeManagerExecute(void const * argument);
 
 /* USER CODE END FunctionPrototypes */
 
@@ -82,6 +84,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
+	attitudeManagerInterfaceInit();
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
