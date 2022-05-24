@@ -2,3 +2,6 @@
 .metadata/
 .Debug/
 Debug/
+!Debug/LaminarOS.elf
+!Debug/LaminarOS.list
+!Debug/LaminarOS.map
