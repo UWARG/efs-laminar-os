@@ -124,8 +124,7 @@ int main(void)
 	  imuObj->GetResult(imuData);
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-	  char First[] = "what the heck";
-	  HAL_UART_Transmit(&huart1, (uint8_t*)First, sizeof(First), 100);
+	  HAL_UART_Transmit(&huart1, (uint8_t*) &imuData, sizeof(imuData), 100);
   }
   /* USER CODE END 3 */
 }
