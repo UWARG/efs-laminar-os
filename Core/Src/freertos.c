@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <../../AttitudeManager/Inc/attitudeManagerInterface.h>
+#include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
