@@ -5,17 +5,17 @@
  *      Author: anthony
  *
  *  This file should give to ZP results from PPM.
- *  For now, it is just the PPM driver...
+ *  For now, it is just the PPM driver... (which should be moved to Drivers later).
  */
 
 
 
 
-#include "../Inc/LOS_Link.hpp"
+#include <Inc/LOS_Link.hpp>
 #include "../interface_temp_params.hpp"
 #include "tim.h"
 #include <stdint.h>
-#include <LOS_Link/Inc/RSSI.hpp>// gotta figure out where to put all of this later.
+#include <Inc/RSSI.hpp>// gotta figure out where to put all of this later.
 
 /***********************************************************************************************************************
  * Definitions

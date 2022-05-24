@@ -7,8 +7,8 @@
  */
 
 // Includes
-#include <LOS_Actuators/Inc/PWM.hpp>
-#include "../../interface_temp_params.hpp"
+#include <Inc/PWM.hpp>
+#include "../interface_temp_params.hpp"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 

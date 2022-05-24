@@ -9,7 +9,7 @@
 #define INC_LOS_LINK_HPP_
 
 
-#include <LOS_Actuators/Inc/PWM.hpp>
+#include <Inc/PWM.hpp>
 #include <stdint.h>
 
 static const int32_t MAX_PPM_CHANNELS = 12;
