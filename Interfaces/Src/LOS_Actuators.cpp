@@ -25,7 +25,7 @@ void LOS_Actuators::set(Quadrotor_Motor_out quad_out) {
     this->pwm->set(back_left, quad_out.back_left);
 }
 
-void LOS_Actuators::__configure_quadrotor(uint8_t front_left=0, uint8_t front_right=1, uint8_t back_right=2, uint8_t back_left=3){
+void LOS_Actuators::__configure_quadrotor(uint8_t front_left, uint8_t front_right, uint8_t back_right, uint8_t back_left){
     this->front_left = front_left;
     this->front_right = front_right;
     this->back_right = back_right;

@@ -25,7 +25,7 @@ typedef struct Quadrotor_Motor_out {
 	float front_right;
 	float back_left;
 	float back_right;
-}
+};
 
 
 #endif /* INC_INTERFACE_DATATYPES_HPP_ */
