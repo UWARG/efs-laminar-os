@@ -8,7 +8,7 @@
 
 // Includes
 #include <Inc/PWM.hpp>
-#include "../interface_temp_params.hpp"
+#include "../driver_params.hpp"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 

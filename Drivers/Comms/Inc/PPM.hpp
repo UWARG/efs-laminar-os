@@ -5,8 +5,8 @@
  *      Author: anthony
  */
 
-#ifndef INC_LOS_LINK_HPP_
-#define INC_LOS_LINK_HPP_
+#ifndef PPM_HPP_
+#define PPM_HPP_
 
 
 #include <Inc/PWM.hpp>
@@ -96,4 +96,4 @@ class PPMChannel {
 
 
 
-#endif /* INC_LOS_LINK_HPP_ */
+#endif /* PPM_HPP_ */
