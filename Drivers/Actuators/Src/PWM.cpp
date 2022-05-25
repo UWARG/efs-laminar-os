@@ -7,8 +7,8 @@
  */
 
 // Includes
-#include <Inc/PWM.hpp>
-#include "../driver_params.hpp"
+#include "../Inc/PWM.hpp"
+#include "../../driver_params.hpp"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 
@@ -24,9 +24,6 @@ const uint8_t DSHOT_RESERVED_VALUES = 47;
 const uint8_t DSHOT_150_BIT_1 = 240;
 const uint8_t DSHOT_150_BIT_0 = 120;
 const uint8_t NUM_DSHOT_MOTORS = 4;
-
-TIM_HandleTypeDef *PWM_TIM = &htim3;
-TIM_HandleTypeDef *DSHOT_TIM = &htim1;
 
 static uint32_t DMAMotorBuffer1[DSHOT_DMA_BUFFER_SIZE];
 static uint32_t DMAMotorBuffer2[DSHOT_DMA_BUFFER_SIZE];

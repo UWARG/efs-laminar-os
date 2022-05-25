@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
+// #include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -84,7 +84,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
-	attitudeManagerInterfaceInit();
+	// attitudeManagerInterfaceInit();
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
