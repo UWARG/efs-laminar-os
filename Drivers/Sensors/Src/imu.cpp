@@ -21,30 +21,30 @@
    Taken from datasheet: https://www.mouser.com/pdfdocs/BST-BMX160-DS000-11.pdf
  */
 
-#define BMX160_READ_BIT 0x01
-#define BMX160_WRITE_BIT 0x00
-#define BMX160_DUMMY_BYTE 0x00
+static constexpr uint8_t BMX160_READ_BIT = 0x01;
+static constexpr uint8_t BMX160_WRITE_BIT = 0x00;
+static constexpr uint8_t BMX160_DUMMY_BYTE = 0x00;
 
-#define BMX160_I2C_ADDR (0x68 << 1) // Left-aligned slave address
+static constexpr uint8_t BMX160_I2C_ADDR = (0x68 << 1); // Left-aligned slave address
 
-#define CHIP_ID_REG 0x00
-#define DATA_REG 0x04
-#define STATUS_REG 0x1B
-#define CMD_REG 0x7E
-#define PMU_STATUS_REG 0x03
+static constexpr uint8_t CHIP_ID_REG = 0x00;
+static constexpr uint8_t DATA_REG = 0x04;
+static constexpr uint8_t STATUS_REG = 0x1B;
+static constexpr uint8_t CMD_REG = 0x7E;
+static constexpr uint8_t PMU_STATUS_REG = 0x03;
 
 // Registers for configuring accelerometer, gyroscope, and magnetometer
-#define ACC_CONF_REG 0x40
-#define ACC_RANGE_REG 0x41
-#define GYR_CONF_REG 0x42
-#define GYR_RANGE_REG 0x43
-#define MAG_CONF_REG 0x44
-#define MAG_IF_0_REG 0x4C
-#define MAG_IF_1_REG 0x4D
-#define MAG_IF_2_REG 0x4E
-#define MAG_IF_3_REG 0x4F
+static constexpr uint8_t ACC_CONF_REG = 0x40;
+static constexpr uint8_t ACC_RANGE_REG = 0x41;
+static constexpr uint8_t GYR_CONF_REG = 0x42;
+static constexpr uint8_t GYR_RANGE_REG = 0x43;
+static constexpr uint8_t MAG_CONF_REG = 0x44;
+static constexpr uint8_t MAG_IF_0_REG = 0x4C;
+static constexpr uint8_t MAG_IF_1_REG = 0x4D;
+static constexpr uint8_t MAG_IF_2_REG = 0x4E;
+static constexpr uint8_t MAG_IF_3_REG = 0x4F;
 
-#define MAX_BUFF_SIZE 21
+static constexpr uint8_t MAX_BUFF_SIZE = 21;
 
 static uint8_t MAG_REPZ_REG = 0x52;
 static uint8_t MAG_REPXY_REG = 0x51;

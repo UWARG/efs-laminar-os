@@ -140,7 +140,7 @@ void Error_Handler(void);
 #define I2C1_SDA_Pin GPIO_PIN_9
 #define I2C1_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+void MX_FREERTOS_Init(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -61,7 +61,7 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#include "../../Drivers/Sensors/Inc/imu.hpp"
+
 /* USER CODE END 0 */
 
 /**
@@ -105,12 +105,11 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  static IMU *imuObj;
-  imuObj = &BMX160::getInstance();
+
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
-  // MX_FREERTOS_Init();
+  MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
@@ -120,11 +119,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  IMUData_t imuData;
-	  imuObj->GetResult(imuData);
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-	  HAL_UART_Transmit(&huart1, (uint8_t*) &imuData, sizeof(imuData), 100);
   }
   /* USER CODE END 3 */
 }
