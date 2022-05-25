@@ -6,7 +6,7 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include <Inc/imu.hpp>
+#include "../Inc/imu.hpp"
 #include <Inc/LOS_Link.hpp>
 #include "gpio.h"
 #include "i2c.h"

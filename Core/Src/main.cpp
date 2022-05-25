@@ -61,7 +61,7 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#include "../../Interfaces/Inc/imu.hpp"
+#include "../../Drivers/Sensors/Inc/imu.hpp"
 /* USER CODE END 0 */
 
 /**

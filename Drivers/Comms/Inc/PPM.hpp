@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include "../../driver_params.hpp"
 
-static const uint8_t MAX_PPM_CHANNELS = 12;
+static const uint8_t MAX_PPM_CHANNELS = 12; // TODO: put this into driver_params
 
 static const int32_t ARM_DISARM_CHANNEL_INDEX = 4;
 static const uint8_t GIMBAL_GRABBER_TOGGLE_INDEX = 5; // three-way switch for gimbal, grabber, or none
