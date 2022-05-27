@@ -9,7 +9,7 @@
 #define INC_INTERFACE_DATATYPES_HPP_
 
 
-typedef struct Instructions_t{
+typedef struct Teleop_Instructions_t{
 	float input[8]; // deprecated, here just in case
 	// should these individual channels be defined in the link or in zp?
 	// I think they should be defined in ZP.... (in case you wanted to fly with trims/rates?)

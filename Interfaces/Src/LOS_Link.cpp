@@ -16,8 +16,8 @@ LOS_Link::LOS_Link(uint8_t channels) {
     // PPMChannel *ppm = new PPMChannel(channels);
 }
 
-Instructions_t LOS_Link::get_inputs(){
-    Instructions_t instructions;
+Teleop_Instructions_t LOS_Link::get_inputs(){
+    Teleop_Instructions_t instructions;
     for(uint8_t i=0; i<8; ++i) {
         instructions.input[i] = this->ppm->get(i);
     }
