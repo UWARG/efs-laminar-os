@@ -18,11 +18,11 @@ void LOS_Actuators::set(uint8_t channel, float percent) {
     this->pwm->set(channel, percent);
 }
 
-void LOS_Actuators::set(Quadrotor_Motor_out quad_out) {
-    this->pwm->set(front_left, quad_out.front_left);
-    this->pwm->set(front_right, quad_out.front_right);
-    this->pwm->set(back_right, quad_out.back_right);
-    this->pwm->set(back_left, quad_out.back_left);
+void LOS_Actuators::set(PID_Output_t * quad_out) {
+    this->pwm->set(front_left, quad_out->frontLeftMotorPercent);
+    this->pwm->set(front_right, quad_out->frontRightMotorPercent);
+    this->pwm->set(back_right, quad_out->backRightMotorPercent);
+    this->pwm->set(back_left, quad_out->backLeftMotorPercent);
 }
 
 void LOS_Actuators::__configure_quadrotor(uint8_t front_left, uint8_t front_right, uint8_t back_right, uint8_t back_left){

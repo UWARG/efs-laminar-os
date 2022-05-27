@@ -30,6 +30,8 @@ class LOS_Link {
          * @return 0 if an invalid channel number was given.
          */
         Teleop_Instructions_t get_inputs();
+
+        uint8_t get_input(int channel);
     private:
         PPMChannel *ppm;
 };
