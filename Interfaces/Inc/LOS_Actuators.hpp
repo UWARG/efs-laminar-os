@@ -33,7 +33,7 @@ class LOS_Actuators {
          * 
          * @param quad_output 
          */
-        void set(Quadrotor_Motor_out quad_output); // function that will just make it easier to get quad output
+        void set(PID_Output_t * quad_output); // function that will just make it easier to get quad output
         
         /**
          * @brief Configure quadrotor motor outputs. Default is cw starting front_left
