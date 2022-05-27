@@ -11,17 +11,17 @@
 
 
 
-#include <Inc/PPM.hpp>
-#include "../driver_params.hpp"
+#include "../Inc/PPM.hpp"
+#include "../../driver_params.hpp"
 #include "tim.h"
 #include <stdint.h>
-#include <Inc/RSSI.hpp>// gotta figure out where to put all of this later.
+#include "../Inc/RSSI.hpp"// gotta figure out where to put all of this later.
 
 /***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
 
-TIM_HandleTypeDef *PPM_TIM = &htim2;
+
 
 const float SEC_TO_MICROSEC = 1000000.0f;
 
