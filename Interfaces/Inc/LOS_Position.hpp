@@ -16,13 +16,12 @@ class LOS_Position {
     // LOS_Position class returns yaw, pitch, roll as a singleton
     // This class is used to get the current position of the drone
     public:
-        static LOS_Position* getInstance();
+        static LOS_Position& getInstance();
         PositionData_t getPosition();
         void updatePosition(IMUData_t imuData);
     private:
         LOS_Position();
         PositionData_t position_;
-        static LOS_Position * instance_;
         static IMU *imuObj;
 };
 
