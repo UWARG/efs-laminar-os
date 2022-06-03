@@ -109,19 +109,26 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
-  MX_FREERTOS_Init();
+  // MX_FREERTOS_Init();
 
   /* Start scheduler */
-  osKernelStart();
+  // osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint8_t X = 0;
+  uint8_t MSG[35] = {'\0'};
   while (1)
   {
+	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	  HAL_Delay(100);
+	  sprintf(MSG, "Hello Dudes! Tracing X = %d\r\n", X);
+	  HAL_UART_Transmit(&huart2, MSG, sizeof(MSG), 100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  ++X;
   }
   /* USER CODE END 3 */
 }
