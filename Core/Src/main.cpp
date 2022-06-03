@@ -29,7 +29,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "../../Drivers/Sensors/Inc/imu.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -118,14 +119,28 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint8_t X = 0;
-  uint8_t MSG[35] = {'\0'};
+  uint8_t MSG[50];
+  uint8_t default_msg[30];
+
+  static IMU *imuObj;
+  imuObj = &BMX160::getInstance();
+  HAL_Delay(1000);
+  static IMUData_t imuData;
+  bool uartcomms = false;
   while (1)
   {
+	  imuObj->GetResult(imuData);
 	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	  HAL_Delay(100);
-	  sprintf(MSG, "Hello Dudes! Tracing X = %d\r\n", X);
+	  HAL_Delay(1000);
+	  sprintf((char*)default_msg, "Hello this is a value = %d \n", X);
+	  sprintf((char*)MSG, "IMU Data! Accel X = %f; \t Gyro X = %f \n", imuData.accel_x, imuData.gyro_x);
+	  printf("%s", MSG);
+	  if (uartcomms) {
+	  HAL_UART_Transmit(&huart2, default_msg, sizeof(default_msg), 100);
 	  HAL_UART_Transmit(&huart2, MSG, sizeof(MSG), 100);
-    /* USER CODE END WHILE */
+	  }
+
+	  /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  ++X;
