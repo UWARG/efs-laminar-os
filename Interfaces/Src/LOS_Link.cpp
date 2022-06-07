@@ -11,8 +11,14 @@
 // #include "../../Drivers/Comms/Inc/PPM.hpp"
 #include "../Inc/LOS_Link.hpp"
 
-LOS_Link::LOS_Link(uint8_t channels) {
-    this->ppm = new PPMChannel(channels);
+LOS_Link &LOS_Link::getInstance() {
+    static LOS_Link instance;
+    return instance;
+}
+
+LOS_Link::LOS_Link() {
+    uint8_t NUM_CHANNELS = 8;
+    this->ppm = new PPMChannel(NUM_CHANNELS);
     // PPMChannel *ppm = new PPMChannel(channels);
 }
 

@@ -14,14 +14,7 @@
 
 class LOS_Link {
     public:
-        /**
-         * @brief Construct a new los link object
-         * 
-         * @param num_channels 8 if not provided
-         */
-        LOS_Link(uint8_t num_channels = 8);
-
-        
+        static LOS_Link& getInstance();
         /**
          * @brief Returns a percent value that was most recently received from all channels
          * Percentage 0-100.
@@ -29,8 +22,10 @@ class LOS_Link {
          * @param num 
          * @return 0 if an invalid channel number was given.
          */
-        Instructions_t get_inputs();
+        Teleop_Instructions_t get_inputs();
+        uint8_t get_input(int channel);
     private:
+        LOS_Link();
         PPMChannel *ppm;
 };
 
