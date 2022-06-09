@@ -46,7 +46,6 @@ typedef struct PositionData_t {
 	float alt;
 	float vx, vy, vz;
 	float q0, q1, q2, q3;
-	float ax, ay, az;
 	float gx, gy, gz;
 };
 
