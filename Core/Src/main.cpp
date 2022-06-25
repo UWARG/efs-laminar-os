@@ -119,6 +119,21 @@ int main(void) {
 
 	PWMChannel *pwm = new PWMChannel();
 
+
+//		pwm->set(4, 0);
+//		pwm->set(5, 0);
+//		pwm->set(6, 0);
+//		pwm->set(7, 0);
+//		HAL_Delay(1000);
+//		pwm->set(4, 100);
+//		pwm->set(5, 100);
+//		pwm->set(6, 100);
+//		pwm->set(7, 100);
+//		HAL_Delay(2000);
+//		pwm->set(4, 0);
+//		pwm->set(5, 0);
+//		pwm->set(6, 0);
+//		pwm->set(7, 0);
 	while (1) {
 		/** Setting PWM Channels
 		 *  We set the configuration in Drivers/Actuators/Src/PWM.cpp
@@ -127,6 +142,12 @@ int main(void) {
 		 *  Not sure why DShot isn't working, but we will see....
 		 */
 		pwm->set(0, 50); // this will set PWM channel 0 to 50%
+		pwm->set(1, 100);
+		pwm->set(2, 0);
+		pwm->set(4, 50);
+		pwm->set(5, 50);
+		pwm->set(6, 50);
+		pwm->set(7, 50);
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
