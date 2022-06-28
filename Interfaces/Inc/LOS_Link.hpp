@@ -12,6 +12,16 @@
 #include "../../Drivers/Comms/Inc/PPM.hpp"
 #include "../Inc/interface_datatypes.hpp"
 
+static const MAX_CHANNELS = 8;
+
+typedef struct Instructions_t {
+    uint8_t CHANNEL_VALUES[MAX_CHANNELS];
+} Instructions_t;
+
+class LOS_Link {
+    virtual void GetInstruction()
+}
+
 class LOS_Link {
     public:
         /**
