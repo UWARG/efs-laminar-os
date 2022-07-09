@@ -11,7 +11,7 @@
 
 #include <cstdint>
 
-typedef struct Teleop_Instructions_t{
+typedef struct {
 	float teleop_inp[8]; // deprecated, here just in case
 	// should these individual channels be defined in the link or in zp?
 	// I think they should be defined in ZP.... (in case you wanted to fly with trims/rates?)
@@ -20,14 +20,14 @@ typedef struct Teleop_Instructions_t{
 	uint8_t yaw;
 	uint8_t throttle;
 	uint8_t is_armed;
-};
+} Teleop_Instructions_t;
 
-typedef struct Quadrotor_Motor_out {
+typedef struct {
 	float front_left;
 	float front_right;
 	float back_left;
 	float back_right;
-};
+} Quadrotor_Motor_out;
 
 typedef struct
 {
@@ -39,15 +39,14 @@ typedef struct
 } PID_Output_t;
 
 
-typedef struct PositionData_t {
+typedef struct {
     float pitch, roll, yaw;
 	float ax, ay, az;
 	double lat, lon;
 	float alt;
 	float vx, vy, vz;
 	float q0, q1, q2, q3;
-	float ax, ay, az;
 	float gx, gy, gz;
-};
+} PositionData_t;
 
 #endif /* INC_INTERFACE_DATATYPES_HPP_ */
