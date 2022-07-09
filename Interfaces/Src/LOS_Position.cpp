@@ -9,19 +9,15 @@
 #include "../Inc/LOS_Position.hpp"
 #include "../../Drivers/Sensors/Inc/imu.hpp"
 
-LOS_Position * LOS_Position::instance_ = nullptr;
-
 
 /**
- * @brief Gets pointer to LOS_Position singleton
+ * @brief Gets LOS_Position singleton
  * 
- * @return LOS_Position* 
- */
-LOS_Position* LOS_Position::getInstance() {
-    if (!instance_ || instance_ == nullptr) { // don't know which one is correct
-        instance_ = new LOS_Position();
-    }
-    return instance_;
+ * @return LOS_Position& 
+ */ 
+LOS_Position &LOS_Position::getInstance() {
+    static LOS_Position instance;
+    return instance;
 }
 
 
