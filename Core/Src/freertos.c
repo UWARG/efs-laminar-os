@@ -29,7 +29,7 @@
 #include "../../SensorFusion/Inc/SF_Interface.h"
 #include "../../SensorFusion/Inc/SensorFusion.hpp"
 #include "../../AttitudeManager/Inc/AM_Interface.h"
-#include "../../../SensorFusion/Inc/SF_Interface.hpp"
+#include "../../SensorFusion/Inc/SF_Interface.hpp"
 /* USER CODE END Includes */
 osThreadId sensorFusionHandle;
 /* Private typedef -----------------------------------------------------------*/
