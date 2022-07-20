@@ -23,13 +23,13 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+#include "../../SensorFusion/Inc/SF_Interface.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 // #include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
 #include "../../SensorFusion/Inc/SF_Interface.h"
 #include "../../SensorFusion/Inc/SensorFusion.hpp"
 #include "../../AttitudeManager/Inc/AM_Interface.h"
-#include "../../SensorFusion/Inc/SF_Interface.hpp"
 /* USER CODE END Includes */
 osThreadId sensorFusionHandle;
 /* Private typedef -----------------------------------------------------------*/
@@ -235,7 +235,7 @@ void sensorFusionExecute(void const *argument) {
 //    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
 		SensorFusionInterfaceExecute();
 //    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
-		// uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
+		 uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
 	}
 }
