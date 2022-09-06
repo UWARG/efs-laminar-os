@@ -38,6 +38,13 @@ void TransmitMessage(DroneBasicPayload* payload) {
 	uint8_t* packetArr = (uint8_t*)&packet;
 	uint8_t* payloadArr = (uint8_t*)payload;
 
+
+	/* 
+		TLDR: stm32 uses little endian, but the transmit frame (defined by the xbees protocol) 
+		uses big endian. So the data being sent can be in little endian (and is) but the transmit 
+		frame header must be in big endian, or the xbee wont be able to read the values.
+	*/
+
 	tf.messageLength = sizeof(TransmitFrameHeader) + sizeof(Packet) + sizeof(DroneBasicPayload) - 3;
 
 	tf.shortAddress = (tf.shortAddress & 0xFF00) >> 8 | (tf.shortAddress & 0x00FF) << 8;
