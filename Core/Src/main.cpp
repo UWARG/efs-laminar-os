@@ -26,7 +26,8 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
+#include "../../Drivers/Sensors/Inc/imu.hpp"
+#include <stdio.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -54,7 +55,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void MX_FREERTOS_Init(void);
+//void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -109,10 +110,21 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
-  MX_FREERTOS_Init();
+  //MX_FREERTOS_Init();
 
   /* Start scheduler */
-  osKernelStart();
+  //osKernelStart();
+  //IMU *imuObj;
+  IMUData_t imuData;
+  float gyro_x;
+  float gyro_y;
+  float gyro_z;
+  float accel_x;
+  float accel_y;
+  float accel_z;
+  float mag_x;
+  float mag_y;
+  float mag_z;
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
@@ -120,7 +132,24 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  IMU *imuObj;
+	  //uint8_t store[3] = {imuData.gyro_x, imuData.gyro_y, imuData.gyro_z};
+	  imuObj = &BMX160::getInstance();
+	  imuObj->GetResult(imuData);
+	  gyro_x = imuData.gyro_x;
+	  gyro_y = imuData.gyro_y;
+	  gyro_z = imuData.gyro_z;
+	  accel_x = imuData.accel_x;
+	  accel_y = imuData.accel_y;
+	  accel_z = imuData.accel_z;
+	  mag_x = imuData.mag_x;
+	  mag_y = imuData.mag_y;
+	  mag_z = imuData.mag_z;
+	  //uint8_t store[3] = {imuData.gyro_x, imuData.gyro_y, imuData.gyro_z};
+	  //sprintf((char*)store, "%f, %f, %f", imuData.gyro_x, imuData.gyro_y, imuData.gyro_z);
+	  //_IO_putc(imuData.gyro_x, )
+	  //HAL_UART_Transmit(&huart2, store, sizeof(store), 100);
+	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
