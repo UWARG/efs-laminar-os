@@ -26,8 +26,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 // #include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
+#include "../../SensorFusion/Inc/SF_Interface.h"
+#include "../../SensorFusion/Inc/SensorFusion.hpp"
 /* USER CODE END Includes */
-
+osThreadId sensorFusionHandle;
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
@@ -53,7 +55,7 @@ osThreadId defaultTaskHandle;
 /* USER CODE BEGIN FunctionPrototypes */
 
 void attitudeManagerExecute(void const * argument);
-
+void sensorFusionExecute(void const * argument);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
@@ -85,6 +87,7 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
 	// attitudeManagerInterfaceInit();
+	SensorFusionInterfaceInit();
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -108,6 +111,10 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
+  /* definition and creation of sensorFusion */
+    osThreadDef(sensorFusion, sensorFusionExecute, osPriorityNormal, 0, 2000);
+    sensorFusionHandle = osThreadCreate(osThread(sensorFusion), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -130,6 +137,30 @@ void StartDefaultTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
+}
+
+void sensorFusionExecute(void const * argument)
+{
+  /* USER CODE BEGIN sensorFusionExecute */
+  TickType_t xLastWakeTime;
+  const TickType_t xTimeIncrement = 20;
+  /* Inspect our own high water mark on entering the task. */
+  UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
+
+  /* Infinite loop */
+  for(;;)
+  {
+    // Initialise the xLastWakeTime variable with the current time.
+    xLastWakeTime = xTaskGetTickCount();
+
+    // TODO: Re-add RSSI_CHECK
+    // RSSI_Check();
+    SensorFusionInterfaceExecute();
+    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
+    vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
+  }
+  /* USER CODE END sensorFusionExecute */
 }
 
 /* Private application code --------------------------------------------------*/
