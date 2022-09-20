@@ -156,7 +156,7 @@ void sensorFusionExecute(void const * argument)
     // TODO: Re-add RSSI_CHECK
     // RSSI_Check();
     SensorFusionInterfaceExecute();
-    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
     vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
   }
