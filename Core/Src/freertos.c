@@ -23,7 +23,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 
-#include "../../SensorFusion/Inc/SF_Interface.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 // #include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
@@ -31,7 +30,6 @@
 #include "../../SensorFusion/Inc/SensorFusion.hpp"
 #include "../../AttitudeManager/Inc/AM_Interface.h"
 /* USER CODE END Includes */
-osThreadId sensorFusionHandle;
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
@@ -59,8 +57,8 @@ osThreadId defaultTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
-void attitudeManagerExecute(void const * argument);
-
+void attitudeManagerExecute(void const *argument);
+void sensorFusionExecute(void const *argument);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const *argument);
@@ -88,17 +86,19 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
 void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName);
 
 /* USER CODE BEGIN 4 */
-__weak void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTaskName)
-{
-   /* Run time stack overflow checking is performed if
-   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
-   called if a stack overflow is detected. */
-  while (1) {
+__weak void vApplicationStackOverflowHook(xTaskHandle xTask,
+		signed char *pcTaskName) {
+	/* Run time stack overflow checking is performed if
+	 configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
+	 called if a stack overflow is detected. */
+	while (1) {
 //    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_SET);
-    for (int i = 0; i < 1000000; i++) { }
+		for (int i = 0; i < 1000000; i++) {
+		}
 //    HAL_GPIO_WritePin(LED3_GPIO_Port, LED3_Pin, GPIO_PIN_RESET);
-    for (int i = 0; i < 9000000; i++) { }
-  }
+		for (int i = 0; i < 9000000; i++) {
+		}
+	}
 
 }
 /* USER CODE END 4 */
@@ -112,7 +112,7 @@ void MX_FREERTOS_Init(void) {
 	/* USER CODE BEGIN Init */
 
 	// attitudeManagerInterfaceInit();
-  /* USER CODE END Init */
+	/* USER CODE END Init */
 
 	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
@@ -135,17 +135,17 @@ void MX_FREERTOS_Init(void) {
 	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
 	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
+	/* USER CODE BEGIN RTOS_THREADS */
+	/* add threads, ... */
+	/* USER CODE END RTOS_THREADS */
 
 	/* definition and creation of attitudeManager */
 	osThreadDef(attitudeManager, attitudeManagerExecute, osPriorityNormal, 0,
-			128);
+			256);
 	attitudeManagerHandle = osThreadCreate(osThread(attitudeManager), NULL);
 
 	/* definition and creation of sensorFusion */
-	osThreadDef(sensorFusion, sensorFusionExecute, osPriorityNormal, 0, 1536);
+	osThreadDef(sensorFusion, sensorFusionExecute, osPriorityNormal, 0, 2000);
 	sensorFusionHandle = osThreadCreate(osThread(sensorFusion), NULL);
 
 	/* USER CODE END RTOS_THREADS */
@@ -168,28 +168,27 @@ void StartDefaultTask(void const *argument) {
 	/* USER CODE END StartDefaultTask */
 }
 
-void sensorFusionExecute(void const * argument)
-{
-  /* USER CODE BEGIN sensorFusionExecute */
-  TickType_t xLastWakeTime;
-  const TickType_t xTimeIncrement = 20;
-  /* Inspect our own high water mark on entering the task. */
-  UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
+void sensorFusionExecute(void const *argument) {
+	/* USER CODE BEGIN sensorFusionExecute */
+	TickType_t xLastWakeTime;
+	const TickType_t xTimeIncrement = 20;
+	/* Inspect our own high water mark on entering the task. */
+	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 
-  /* Infinite loop */
-  for(;;)
-  {
-    // Initialise the xLastWakeTime variable with the current time.
-    xLastWakeTime = xTaskGetTickCount();
+	/* Infinite loop */
+	for (;;) {
+		// Initialise the xLastWakeTime variable with the current time.
+		xLastWakeTime = xTaskGetTickCount();
 
-    // TODO: Re-add RSSI_CHECK
-    // RSSI_Check();
-    SensorFusionInterfaceExecute();
-    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
-    vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
-  }
-  /* USER CODE END sensorFusionExecute */
+		// TODO: Re-add RSSI_CHECK
+		// RSSI_Check();
+		SensorFusionInterfaceExecute();
+		//SF_Init();
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
+		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
+	}
+	/* USER CODE END sensorFusionExecute */
 }
 
 /* Private application code --------------------------------------------------*/
@@ -214,30 +213,6 @@ void attitudeManagerExecute(void const *argument) {
 	}
 
 	/* USER CODE END attitudeManagerExecute */
-}
-
-/* sensorFusionExecute function */
-void sensorFusionExecute(void const *argument) {
-	/* USER CODE BEGIN sensorFusionExecute */
-	TickType_t xLastWakeTime;
-	const TickType_t xTimeIncrement = 10; // 100Hz
-	/* Inspect our own high water mark on entering the task. */
-	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
-
-	/* Infinite loop */
-	for (;;) {
-		// Initialise the xLastWakeTime variable with the current time.
-		xLastWakeTime = xTaskGetTickCount();
-
-		// TODO: Re-add RSSI_CHECK
-		// RSSI_Check();
-		// HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-//    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
-		SensorFusionInterfaceExecute();
-//    HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
-		 uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
-		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
-	}
 }
 /* USER CODE END sensorFusionExecute */
 /* USER CODE END Application */
