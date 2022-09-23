@@ -184,6 +184,9 @@ void sensorFusionExecute(void const *argument) {
 		// RSSI_Check();
 		SensorFusionInterfaceExecute();
 		//SF_Init();
+		//SFOutput_t *testing;
+		//SF_GetResult(&testing);
+		//SF_GetRawIMU();
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);

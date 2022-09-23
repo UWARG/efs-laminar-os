@@ -131,7 +131,6 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		IMU *imuObj;
-		//uint8_t store[3] = {imuData.gyro_x, imuData.gyro_y, imuData.gyro_z};
 		imuObj = &BMX160::getInstance();
 		imuObj->GetResult(imuData);
 		gyro_x = imuData.gyro_x;
@@ -143,10 +142,6 @@ int main(void) {
 		mag_x = imuData.mag_x;
 		mag_y = imuData.mag_y;
 		mag_z = imuData.mag_z;
-		//uint8_t store[3] = {imuData.gyro_x, imuData.gyro_y, imuData.gyro_z};
-		//sprintf((char*)store, "%f, %f, %f", imuData.gyro_x, imuData.gyro_y, imuData.gyro_z);
-		//_IO_putc(imuData.gyro_x, )
-		//HAL_UART_Transmit(&huart2, store, sizeof(store), 100);
 		HAL_Delay(1000);
 		/* USER CODE BEGIN 3 */
 	}
