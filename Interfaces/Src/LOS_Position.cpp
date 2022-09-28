@@ -5,38 +5,53 @@
  *      Author: anthony
  */
 
-
 #include "../Inc/LOS_Position.hpp"
 #include "../../Drivers/Sensors/Inc/imu.hpp"
-
-
+//#define BMX160
+//#define MPU6050
 /**
  * @brief Gets LOS_Position singleton
  * 
  * @return LOS_Position& 
- */ 
-LOS_Position &LOS_Position::getInstance() {
-    static LOS_Position instance;
-    return instance;
+ */
+LOS_Position& LOS_Position::getInstance() {
+/*
+	#ifdef BMX160
+	static BMX160 singleton;
+	return singleton;
+#endif
+
+#ifdef MPU6050
+	static MPU6050 singleton;
+	return singleton;
+#endif
+*/
+	static LOS_Position instance;
+	return instance;
 }
 
-
 LOS_Position::LOS_Position() {
-    // TODO: run this elsewhere or thread this in update thread
-    imuObj = &BMX160::getInstance();
+	// TODO: run this elsewhere or thread this in update thread
+	#ifdef BMX160
+	IMU& imuObj = BMX160::getInstance();
+	#endif
+
+	#ifdef MPU6050
+	IMU& imuObj = MPU6050::getInstance();
+	#endif
 }
 
 PositionData_t LOS_Position::getPosition() {
-    // gets BMX160 results
-    // Todo: put the getting of results in updatePosition
-    // updatePosition(imuObj->GetResult()); or smth
-    IMUData_t imuData;
-    imuObj->GetResult(imuData);
-    position_.roll = imuData.gyro_x;
-    position_.pitch = imuData.gyro_y;
-    position_.yaw = imuData.gyro_z;
-    position_.ax = imuData.accel_x;
-    position_.ay = imuData.accel_y;
-    position_.az = imuData.accel_z;
-    return position_;
+	// gets BMX160 results
+	// Todo: put the getting of results in updatePosition
+	// updatePosition(imuObj->GetResult()); or smth
+	IMUData_t imuData;
+	imuObj->GetResult(imuData);
+	position_.roll = imuData.gyro_x;
+	position_.pitch = imuData.gyro_y;
+	position_.yaw = imuData.gyro_z;
+	position_.ax = imuData.accel_x;
+	position_.ay = imuData.accel_y;
+	position_.az = imuData.accel_z;
+	return position_;
 }
