@@ -171,7 +171,7 @@ void StartDefaultTask(void const *argument) {
 void sensorFusionExecute(void const *argument) {
 	/* USER CODE BEGIN sensorFusionExecute */
 	TickType_t xLastWakeTime;
-	const TickType_t xTimeIncrement = 20;
+	const TickType_t xTimeIncrement = 23;
 	/* Inspect our own high water mark on entering the task. */
 	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 
@@ -182,15 +182,8 @@ void sensorFusionExecute(void const *argument) {
 
 		// TODO: Re-add RSSI_CHECK
 		// RSSI_Check();
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 		SensorFusionInterfaceExecute();
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_RESET);
-		//SF_Init();
-		//SFOutput_t *testing;
-		//SF_GetResult(&testing);
-		//SF_GetRawIMU();
-		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
 	}
@@ -204,18 +197,17 @@ void attitudeManagerExecute(void const *argument) {
 
 	/* USER CODE BEGIN attitudeManagerExecute */
 	TickType_t xLastWakeTime;
-	const TickType_t xTimeIncrement = 4;
+	const TickType_t xTimeIncrement = 53;
 	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 	/* Infinite loop */
 	for (;;) {
 		// TODO: Re-add RSSI_CHECK
 		xLastWakeTime = xTaskGetTickCount();
 
-        HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-        AM_interfaceInit();
-        AM_interfaceExecute();
-        //HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-		// uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
+		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+		AM_interfaceInit();
+		AM_interfaceExecute();
+		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
 	}
 
