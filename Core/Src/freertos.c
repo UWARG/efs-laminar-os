@@ -112,6 +112,7 @@ void MX_FREERTOS_Init(void) {
 	/* USER CODE BEGIN Init */
 
 	// attitudeManagerInterfaceInit();
+	AM_interfaceInit();
 	/* USER CODE END Init */
 
 	/* USER CODE BEGIN RTOS_MUTEX */
@@ -171,7 +172,7 @@ void StartDefaultTask(void const *argument) {
 void sensorFusionExecute(void const *argument) {
 	/* USER CODE BEGIN sensorFusionExecute */
 	TickType_t xLastWakeTime;
-	const TickType_t xTimeIncrement = 23;
+	const TickType_t xTimeIncrement = 25;
 	/* Inspect our own high water mark on entering the task. */
 	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 
@@ -197,7 +198,7 @@ void attitudeManagerExecute(void const *argument) {
 
 	/* USER CODE BEGIN attitudeManagerExecute */
 	TickType_t xLastWakeTime;
-	const TickType_t xTimeIncrement = 53;
+	const TickType_t xTimeIncrement = 20;
 	UBaseType_t uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 	/* Infinite loop */
 	for (;;) {
@@ -205,7 +206,6 @@ void attitudeManagerExecute(void const *argument) {
 		xLastWakeTime = xTaskGetTickCount();
 
 		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-		AM_interfaceInit();
 		AM_interfaceExecute();
 		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
