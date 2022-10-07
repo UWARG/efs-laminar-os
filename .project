@@ -41,5 +41,10 @@
 			<type>2</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/Controls</locationURI>
 		</link>
+		<link>
+			<name>SensorFusion</name>
+			<type>2</type>
+			<location>C:/Users/Jack/git_workspace/ZP_Proto_Port/SensorFusion</location>
+		</link>
 	</linkedResources>
 </projectDescription>
