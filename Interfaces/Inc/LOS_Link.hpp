@@ -32,6 +32,9 @@ class LOS_Link {
         Teleop_Instructions_t get_inputs();
 
         uint8_t get_input(int channel);
+
+        bool disconnected(uint32_t sys_time);
+
     private:
         PPMChannel *ppm;
 };
