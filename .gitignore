@@ -1,8 +1,5 @@
-
-.metadata/
-.Debug/
-Debug/
-!Debug/LaminarOS.elf
-!Debug/LaminarOS.list
-!Debug/LaminarOS.map
-.settings/
+/boardfiles/nucleof401re/build/*
+/boardfiles/nucleof401re/build/.settings/*
+/boardfiles/nucleol552zeq/build/*
+/boardfiles/nucleol552zeq/build/.settings/*
+/build/*
