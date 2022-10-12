@@ -1,3 +1,14 @@
+set(FOLDER_NAME nucleol552zeq)
+set(STARTUP_ASM boardfiles/nucleol552zeq/Core/Startup/startup_stm32l552zetxq.s)
+set(LINKER_SCRIPT boardfiles/nucleol552zeq/STM32L552ZETXQ_FLASH.ld)
+set(PROJ_NAME nucleol552zeq)
+set(FAMILY_NAME STM32L5xx)
+
+add_definitions(
+  -DUSE_HAL_LIB
+  -DSTM32L552xx
+)
+
 # This file MUST be included as a toolchain file in cmake for the build to work
 # Use the -DCMAKE_TOOLCHAIN_FILE flag in cmake
 # Sometimes we need to compile for x86 for things like unit tests, in which case this file
@@ -15,7 +26,7 @@ set(CMAKE_SIZE arm-none-eabi-size CACHE INTERNAL "")
 
 
 # ARM compiler options
-set(MCU_CPU cortex-m0)
+set(MCU_CPU cortex-m33)
 set(MCU_FLOAT_ABI soft) # since we don't have a floating point unit on this chip. Otherwise should be hard
 set(MCU_FLAGS "-mcpu=${MCU_CPU} -mthumb -mfloat-abi=${MCU_FLOAT_ABI}")
 
@@ -34,4 +45,3 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-s

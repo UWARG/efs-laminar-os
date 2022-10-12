@@ -5,11 +5,15 @@
  #project name/ chip name (for naming the output files)
 
 set(FOLDER_NAME nucleof401re)
-set(STARTUP_ASM boardfiles/nucleof401re/startup_stm32f401xe.s)
+set(STARTUP_ASM boardfiles/nucleof401re/Core/Startup/startup_stm32f401retx.s)
 set(LINKER_SCRIPT boardfiles/nucleof401re/STM32F401RETX_FLASH.ld)
 set(PROJ_NAME nucelof401re)
 set(FAMILY_NAME STM32F4xx)
 
+add_definitions(
+  -DUSE_HAL_LIB
+  -DSTM32F401xE
+)
 
 # This file MUST be included as a toolchain file in cmake for the build to work
 # Use the -DCMAKE_TOOLCHAIN_FILE flag in cmake
