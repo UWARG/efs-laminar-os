@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.2.0)
 project(LaminarOS C CXX)
 
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/Interface/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Core/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
