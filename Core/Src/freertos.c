@@ -25,7 +25,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-// #include "../../AttitudeManager/Inc/attitudeManagerInterface.h"
 #include "../../SensorFusion/Inc/SF_Interface.h"
 #include "../../SensorFusion/Inc/SensorFusion.hpp"
 #include "../../AttitudeManager/Inc/AM_Interface.h"
@@ -183,7 +182,7 @@ void sensorFusionExecute(void const *argument) {
 
 		// TODO: Re-add RSSI_CHECK
 		// RSSI_Check();
-		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+		//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 		SensorFusionInterfaceExecute();
 		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL);
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
@@ -203,9 +202,10 @@ void attitudeManagerExecute(void const *argument) {
 	/* Infinite loop */
 	for (;;) {
 		// TODO: Re-add RSSI_CHECK
+		//RSSI_Check();
 		xLastWakeTime = xTaskGetTickCount();
 
-		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 		AM_interfaceExecute();
 		uxHighWaterMark = uxTaskGetStackHighWaterMark( NULL );
 		vTaskDelayUntil(&xLastWakeTime, xTimeIncrement);
