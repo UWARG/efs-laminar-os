@@ -83,7 +83,7 @@ struct crsf_payload_RC_channels_packed_t {
 	unsigned chan15 : 11;
 };
 
-#pragma pack(pop)
+
 
 enum class crsf_parser_state_t : uint8_t {
 	unsynced = 0,
@@ -165,7 +165,7 @@ int	crsf_config(int uart_fd);
  * @param max_channels maximum length of values
  * @return true if channels successfully decoded
  */
-_bool	crsf_parse(const uint64_t now, const uint8_t *frame, unsigned len, uint16_t *values,
+bool	crsf_parse(const uint64_t now, const uint8_t *frame, unsigned len, uint16_t *values,
 			   uint16_t *num_values, uint16_t max_channels);
 
 
