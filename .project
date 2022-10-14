@@ -44,12 +44,12 @@
 		<link>
 			<name>Safety</name>
 			<type>2</type>
-			<location>C:/Users/Jack/git_workspace/ZP_Proto_Port/Safety</location>
+			<location>/Applications/STM32CubeIDE.app/Contents/MacOS/C::/Users/Jack/git_workspace/ZP_Proto_Port/Safety</location>
 		</link>
 		<link>
 			<name>SensorFusion</name>
 			<type>2</type>
-			<location>C:/Users/Jack/git_workspace/ZP_Proto_Port/SensorFusion</location>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/SensorFusion</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
