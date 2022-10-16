@@ -7,6 +7,7 @@ set(FAMILY_NAME STM32L5xx)
 add_definitions(
   -DUSE_HAL_LIB
   -DSTM32L552xx
+  -DUSE_FULL_LL_DRIVER
 )
 
 # This file MUST be included as a toolchain file in cmake for the build to work
