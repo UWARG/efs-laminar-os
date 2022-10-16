@@ -3,3 +3,4 @@
 /boardfiles/nucleol552zeq/build/*
 /boardfiles/nucleol552zeq/build/.settings/*
 /build/*
+.vscode/*
