@@ -38,4 +38,5 @@ static Gps *g_gpsObj = NEOM8::GetInstance(); // NEOM8 Gps
 // g_imuObj = &VN300::getInstance(); // VECTOR NAV - 300 
 const bool SENSOR_FUSION_ = true;
 
+
 #endif
