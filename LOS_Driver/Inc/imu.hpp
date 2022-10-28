@@ -1,5 +1,5 @@
 /*
- * imu.hpp
+ *imu.hpp
  *
  *  Created on: May 24, 2022
  *      Author: anthony
@@ -11,7 +11,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include <stdint.h>
-#include "i2c.h"
+#include "../../boardfiles/nucleof401re/Core/Inc/i2c.h" //board file
 
 /* Exported functions prototypes ---------------------------------------------*/
 // void Error_Handler();

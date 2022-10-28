@@ -18,8 +18,12 @@ LOS_Position& LOS_Position::getInstance() {
     return instance;
 }
 
+/**
+ * @brief constructor for LOS_Position
+ * 
+ */
+
 LOS_Position::LOS_Position() {
-	// TODO: run this elsewhere or thread this in update thread
 	#ifdef BMX160
 	IMU& imuObj = BMX160::getInstance();
 	#endif
@@ -31,15 +35,23 @@ LOS_Position::LOS_Position() {
     #ifdef VN300
     // for vn300
     #else
-    #define sensor_fusion_ = true;
+    bool sensor_fusion_ = true;
     #endif
 
-    if (sensor_fusion_)
+    if (sensor_fusion_ == true)
+    {
         SF_Init();
+    }
 
 }
 
-void sensor_fusion(IMUData_t new_imuData)
+/**
+ * @brief Calls sensor fusion after updating raw
+ *        position from data from sensors
+ * 
+ */
+
+void LOS_Position::sensor_fusion(IMUData_t new_imuData)
 {
     // imu
     rawPosition_.gyrx = new_imuData.gyro_x; 
@@ -72,7 +84,7 @@ void sensor_fusion(IMUData_t new_imuData)
     // rawPosition_.altitude =
     // rawPosition_.temp = 
 
-    SF_GetResult(*sensorFusionOut_);
+    SF_GetResult(&sensorFusionOut_);
     
     // lat and long
     position_.latitude = sensorFusionOut_.latitude;
@@ -86,10 +98,10 @@ void sensor_fusion(IMUData_t new_imuData)
 
     // track and heading
     position_.track = sensorFusionOut_.track;
-    position_.heading = sensorFusionOut_.heading
+    position_.heading = sensorFusionOut_.heading;
 
     // air speed
-    position_.air_speed = sensorFusionOut_.airSpeed;
+    position_.air_speed = sensorFusionOut_.airspeed;
 
     // ground speed
     position_.ground_speed = sensorFusionOut_.groundSpeed;
@@ -104,7 +116,13 @@ void sensor_fusion(IMUData_t new_imuData)
     position_.yaw_rate = sensorFusionOut_.yawRate;
 }
 
-void updatePosition() {
+/**
+ * @brief updates the position struct calling
+ *        either sensor fusion or imu directly 
+ *        (if its VN-300)
+ */
+
+void LOS_Position::updatePosition() {
 
     IMUData_t imuData;
     imuObj->GetResult(imuData);
@@ -146,10 +164,16 @@ void updatePosition() {
     }
 }
 
+/**
+ * @brief Retrieves pointer to position data
+ * 
+ * @return LOS_Position& 
+ */
+
 PositionData_t* LOS_Position::getPosition() {
 	// update position
     updatePosition();
 	
     // returns pointer to the position struct
-    return position_;
+    return &position_;
 }
