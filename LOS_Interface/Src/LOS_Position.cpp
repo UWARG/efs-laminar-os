@@ -5,7 +5,8 @@
  *      Author: anthony
  */
 
-#include "../Inc/LOS_Position.hpp"
+#include "LOS_Position.hpp"
+#include "SensorFusion.hpp"
 
 /**
  * @brief Gets LOS_Position singleton
@@ -88,14 +89,14 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
     rawPosition_.longitude = new_gpsData.longitude;
     rawPosition_.utcTime =  new_gpsData.utcTime;
     rawPosition_.groundSpeed = new_gpsData.groundSpeed;
-    rawPosition_.altitude = new_gpsData.altitude;
+    rawPosition_.altitude_gps = new_gpsData.altitude;
     rawPosition_.heading = new_gpsData.heading;
     rawPosition_.numSatellites = new_gpsData.numSatellites;
     rawPosition_.fixStatus = new_gpsData.fixStatus;
 
     // altimeter
     rawPosition_.pressure = new_altimeterData.pressure;
-    rawPosition_.altitude = new_altimeterData.altitude;
+    rawPosition_.altitude_alt = new_altimeterData.altitude;
     rawPosition_.temp =  new_altimeterData.temp;
 
     SF_GenerateNewResult(new_imuData, new_gpsData, new_altimeterData, new_airspeedData);
