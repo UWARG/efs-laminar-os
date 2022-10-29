@@ -11,9 +11,6 @@
 #include "../Inc/MathConstants.hpp"
 //#define TARGET_BUILD
 
-// TODO: switch to interface
-#include "../Inc/imu.hpp"
-
 #ifdef AUTOPILOT
 #endif
 
@@ -21,7 +18,7 @@
 extern "C" {
 #endif
 
-#include "../../CControl/Inc/CControlFunctions.h"
+#include "CControlFunctions.h"
 
 #ifdef __cplusplus
 }
@@ -564,21 +561,26 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 	return SFError;
 }
 
-SFError_t SF_GenerateNewResult() {
+SFError_t SF_GenerateNewResult(IMUData_t imuData, GpsData_t GpsData, AltimeterData_t altimeterData, airspeedData_t airspeedData) {
 	SFError_t SFError;
 	SFError.errorCode = 0;
 
+	/*
 	IMUData_t imuData;
 	IMU& imuObj = BMX160::getInstance();
 	imuObj.GetResult(imuData);
+	*/
+	
 #ifdef AUTOPILOT
-    GpsData_t GpsData;
+	/*
+	GpsData_t GpsData;
     AltimeterData_t altimeterData;
     airspeedData_t airspeedData;
     gpsObj->GetResult(GpsData);
     altimeterObj->GetResult(altimeterData);
     airspeedObj->GetResult(airspeedData);
-
+	*/
+   
     //Send gps timestamp
     #ifndef UNIT_TESTING
     TimeStampingPOGI *timeStamper = TimeStampingPOGI::GetInstance();

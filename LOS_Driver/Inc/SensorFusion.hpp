@@ -15,6 +15,8 @@ extern "C"
 #include <stdint.h>
 #include "CommonDataTypes.hpp"
 
+#include "../../LOS_Interface/Inc/LOS_Position.hpp"
+
 //Frequency of SF calculations in Hz
 const int SF_FREQ = 100;
 
@@ -100,7 +102,7 @@ void SF_Init(void);
 /**
  * Generates fused sensor data. Should be called at a constant rate defined by SF_FREQ after SF_Init has been called once.
  */
-SFError_t SF_GenerateNewResult();
+SFError_t SF_GenerateNewResult(IMUData_t imuData, GpsData_t GpsData, AltimeterData_t altimeterData, airspeedData_t airspeedData);
 
 /**
  * Get latest fused sensor data. Can be called any time data is needed after SF_init has been called once. Waits until the output struct is not being accessed by another task.
