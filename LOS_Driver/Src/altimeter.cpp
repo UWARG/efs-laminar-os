@@ -1,7 +1,7 @@
 #include "../Inc/altimeter.hpp"
 
-#include "stm32f7xx_hal.h"
-#include "stm32f7xx_hal_i2c.h"
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal_i2c.h"
 
 #include <algorithm>
 
@@ -106,7 +106,7 @@ void MPL3115A2::Calibrate(void)
 
 void MPL3115A2::ConfigAltimeter(void)
 {
-    HAL_NVIC_DisableIRQ(I2C4_EV_IRQn);
+    HAL_NVIC_DisableIRQ(I2C3_EV_IRQn);
 
     uint8_t txByte;
 
@@ -122,7 +122,7 @@ void MPL3115A2::ConfigAltimeter(void)
 
     HAL_Delay(20);
 
-    HAL_NVIC_EnableIRQ(I2C4_EV_IRQn);
+    HAL_NVIC_EnableIRQ(I2C3_EV_IRQn);
 
 }
 

@@ -11,14 +11,14 @@
 
 #include "interface_datatypes.hpp"
 
-#include "../../LOS_Driver/Inc/imu.hpp"
-#include "../../LOS_Driver/Inc/airpseed.hpp"
-#include "../../LOS_Driver/Inc/altimeter.hpp"
-#include "../../LOS_Driver/Inc/gps.hpp"
+#include "imu.hpp"
+#include "airpseed.hpp"
+#include "altimeter.hpp"
+#include "gps.hpp"
 
 #include "config.hpp"
 
-#include "../../LOS_Driver/Inc/SensorFusion.hpp"
+#include "CommonDataTypes.hpp"
 
 class LOS_Position {
         // This class is used to get the current position
