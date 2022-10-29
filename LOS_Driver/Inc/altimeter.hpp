@@ -8,6 +8,7 @@
 #define ALTIMETER_HPP
 
 #include <cstdint>
+#include <stdint.h>
 #include "CommonDataTypes.hpp"
 /***********************************************************************************************************************
  * Definitions

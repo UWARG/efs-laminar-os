@@ -16,6 +16,8 @@
 #include "../../LOS_Driver/Inc/altimeter.hpp"
 #include "../../LOS_Driver/Inc/gps.hpp"
 
+#include "config.hpp"
+
 #include "../../LOS_Driver/Inc/SensorFusion.hpp"
 
 class LOS_Position {
@@ -30,7 +32,9 @@ public:
 
 private:
         LOS_Position();
-        void sensor_fusion(IMUData_t new_imuData);
+        void sensor_fusion(IMUData_t new_imuData, GpsData_t gpsData,
+                           AltimeterData_t altimeterData,
+                           airspeedData_t airspeedData);
 
         bool sensor_fusion_;
         PositionData_t position_;
@@ -39,7 +43,9 @@ private:
         SFOutput_t sensorFusionOut_;
         
         static IMU *imuObj;
-
+        static Gps *gpsObj;
+        static Altimeter *altimeterObj;
+        static airspeed *airspeedObj;
 
 };
 
