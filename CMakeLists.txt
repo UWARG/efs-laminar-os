@@ -45,7 +45,8 @@ file(GLOB_RECURSE C_SOURCES ${HAL_DRIVERS_C_SOURCES}
                             ${HAL_CORE_C_SOURCES}
                             ${INTERFACE_CXX_SOURCES}
                             ${DRIVERS_CXX_SOURCES}
-                            ${CORE_CXX_SOURCES})                            
+                            ${CORE_C_SOURCES}
+                            ${FREE_RTOS_C_SOURCES})                            
 message("MESSAGE: ${C_SOURCES}")                         
 file(GLOB_RECURSE CXX_SOURCES ${HAL_CORE_CXX_SOURCES} 
                               ${INTERFACE_CXX_SOURCES}
