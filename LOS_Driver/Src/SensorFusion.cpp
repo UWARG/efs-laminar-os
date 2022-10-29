@@ -5,10 +5,10 @@
  * Author: Lucy Gong, Dhruv Rawat, Anthony Bertnyk, Anthony Luo
  */
 
-#include "../Inc/SensorFusion.hpp"
-#include "../Inc/MahonyAHRS.hpp"
+#include "SensorFusion.hpp"
+#include "MahonyAHRS.hpp"
 #include <cmath>
-#include "../Inc/MathConstants.hpp"
+#include "MathConstants.hpp"
 //#define TARGET_BUILD
 
 #ifdef AUTOPILOT
@@ -564,6 +564,7 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 SFError_t SF_GenerateNewResult(IMUData_t imuData, GpsData_t GpsData, AltimeterData_t altimeterData, airspeedData_t airspeedData) {
 	SFError_t SFError;
 	SFError.errorCode = 0;
+	
 
 	/*
 	IMUData_t imuData;

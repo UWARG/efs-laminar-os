@@ -1,13 +1,11 @@
-#include "../Inc/SF_Interface.h"
+#include "SF_Interface.h"
 
-#include "../Inc/SensorFusion.hpp"
-
-#include "../Inc/imu.hpp"
+#include "SensorFusion.hpp"
 
 void SensorFusionInterfaceInit(void) {
 	SF_Init();
 }
 
-void SensorFusionInterfaceExecute(void) {
-	SFError_t err = SF_GenerateNewResult();
+void SensorFusionInterfaceExecute(IMUData_t imuData, GpsData_t GpsData, AltimeterData_t altimeterData, airspeedData_t airspeedData) {
+	SFError_t err = SF_GenerateNewResult(imuData,  GpsData, altimeterData, airspeedData);
 }

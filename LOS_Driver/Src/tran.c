@@ -11,7 +11,7 @@
  * Turn A into transponse A^T
  */
 void tran(float* A, int row, int column) {
-
+    
 	float B[row*column];
 	float* transpose;
 	float* ptr_A = A;
