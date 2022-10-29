@@ -25,15 +25,27 @@ LOS_Position& LOS_Position::getInstance() {
 
 LOS_Position::LOS_Position() {
 	#ifdef BMX160
-	IMU& imuObj = BMX160::getInstance();
+	imuObj = &BMX160::getInstance();
 	#endif
 
 	#ifdef MPU6050
-	IMU& imuObj = MPU6050::getInstance();
+	imuObj = &MPU6050::getInstance();
 	#endif
 
+    #ifdef MPL3115A2
+    altimeterObj = &MPL3115A2::getInstance(); 
+    #endif
+
+    #ifdef MPXV7002DP
+    airspeedObj = &MPXV7002DP::GetInstace();
+    #endif
+
+    #ifdef NEOM8
+    gpsObj = &NEOM8::GetInstance();
+    #endif
+
     #ifdef VN300
-    // for vn300
+    imuObj = &VN300::getInstance();
     #else
     bool sensor_fusion_ = true;
     #endif
@@ -51,7 +63,9 @@ LOS_Position::LOS_Position() {
  * 
  */
 
-void LOS_Position::sensor_fusion(IMUData_t new_imuData)
+void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
+                                 AltimeterData_t new_altimeterData,
+                                 airspeedData_t new_airspeedData)
 {
     // imu
     rawPosition_.gyrx = new_imuData.gyro_x; 
@@ -67,23 +81,24 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData)
     rawPosition_.magz = new_imuData.mag_z;
 
     // airspeed
-    // RawPosition_.airspeed = 
+    rawPosition_.airspeed = new_airspeedData.airspeed; 
 
     // gps
-    // rawPosition_.latitude = 
-    // rawPosition_.longitude = 
-    // rawPosition_.utcTime =   
-    // rawPosition_.groundSpeed = 
-    // rawPosition_.altitude =
-    // rawPosition_.heading =
-    // rawPosition_.numSatellites = 
-    // rawPosition_.fixStatus = 
+    rawPosition_.latitude = new_gpsData.latitude;
+    rawPosition_.longitude = new_gpsData.longitude;
+    rawPosition_.utcTime =  new_gpsData.utcTime;
+    rawPosition_.groundSpeed = new_gpsData.groundSpeed;
+    rawPosition_.altitude = new_gpsData.altitude;
+    rawPosition_.heading = new_gpsData.heading;
+    rawPosition_.numSatellites = new_gpsData.numSatellites;
+    rawPosition_.fixStatus = new_gpsData.fixStatus;
 
     // altimeter
-    // rawPosition_.pressure = 
-    // rawPosition_.altitude =
-    // rawPosition_.temp = 
+    rawPosition_.pressure = new_altimeterData.pressure;
+    rawPosition_.altitude = new_altimeterData.altitude;
+    rawPosition_.temp =  new_altimeterData.temp;
 
+    SF_GenerateNewResult(new_imuData, new_gpsData, new_altimeterData, new_airspeedData);
     SF_GetResult(&sensorFusionOut_);
     
     // lat and long
@@ -129,10 +144,17 @@ void LOS_Position::updatePosition() {
 
     if (sensor_fusion_)
     {   
-        sensor_fusion(imuData);
+        GpsData_t gpsData;
+        AltimeterData_t altimeterData;
+        airspeedData_t airspeedData;
+        gpsObj->GetResult(gpsData);
+        altimeterObj->GetResult(altimeterData);
+        airspeedObj->GetResult(airspeedData);
+        sensor_fusion(imuData, gpsData, altimeterData, airspeedData);
     }
     else
     {
+        /* Vector Nav */
         // lat and long
         // position_.latitude = 
         // position_.longitude = 
