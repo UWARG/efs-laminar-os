@@ -5,10 +5,6 @@
 #include "config.hpp"
 
 /* LOS_Link */
-typedef struct LosLinkRx_t{
-  uint8_t rssi;
-  uint8_t rx_channels[NUM_RX_CHANNELS];
-};
 
 /* LOS_Position*/
 typedef struct {

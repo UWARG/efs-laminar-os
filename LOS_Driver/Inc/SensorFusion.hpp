@@ -15,7 +15,7 @@ extern "C"
 #include <stdint.h>
 #include "CommonDataTypes.hpp"
 
-#include "../../LOS_Interface/Inc/LOS_Position.hpp"
+#include "LOS_Position.hpp"
 
 //Frequency of SF calculations in Hz
 const int SF_FREQ = 100;
@@ -26,21 +26,6 @@ const int SF_FREQ = 100;
 typedef struct {
     int errorCode;
 } SFError_t;
-
-typedef struct {
-    float roll, pitch, yaw; //Degrees. Yaw of 180 is north.
-    float rollRate, pitchRate, yawRate; //Degrees/second
-    float airspeed; //m/s
-    float altitude; //m
-    float rateOfClimb; //m/s
-    long double latitude; //Decimal degrees
-    float latitudeSpeed; //m/s
-    long double longitude; //Decimal degrees
-    float longitudeSpeed; //m/s
-    double track; //Degrees. Track of 0 is north.
-    float groundSpeed; //m/s
-    double heading; //Degrees. Heading of 0 is north.
-} SFOutput_t;
 
 //Following structs store the raw sensor data so other modules can have direct access to them without including sensor header files
 typedef struct

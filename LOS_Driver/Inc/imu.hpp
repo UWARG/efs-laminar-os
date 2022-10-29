@@ -11,7 +11,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include <stdint.h>
-#include "../../boardfiles/nucleof401re/Core/Inc/i2c.h" //board file
+#include "i2c.h" //board file
 
 /* Exported functions prototypes ---------------------------------------------*/
 // void Error_Handler();
