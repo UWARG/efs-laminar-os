@@ -2,7 +2,7 @@
 #define LOS_LINK_HPP_
 
 #include "interface_datatypes.hpp"
-#include "RC_Reciever.hpp"
+#include "RC_Receiver.hpp"
 #include "PPM.hpp"
 
 class Los_Link{

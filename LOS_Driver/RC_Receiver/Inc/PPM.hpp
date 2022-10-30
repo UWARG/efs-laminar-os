@@ -2,7 +2,7 @@
 #define PPM_HPP_
 
 #include <cstdint>
-#include "RC_Reciever.hpp"
+#include "RC_Receiver.hpp"
 #include "driver_params.hpp"
 
 static const uint8_t MAX_PPM_CHANNELS = 12; // TODO: put this into driver_params
