@@ -4,8 +4,12 @@ project(LaminarOS C CXX)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
+
+    ## Any new driver folders Inc dirs must be added here ##
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Common/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
+
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
@@ -34,8 +38,8 @@ set(INTERFACE_C_SOURCES "${INTERFACE_DIR}/Src/*.c")
 set(INTERFACE_CXX_SOURCES "${INTERFACE_DIR}/Src/*.cpp")
 
 set(DRIVERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver)
-set(DRIVERS_C_SOURCES "${DRIVERS_DIR}/Src/*.c")
-set(DRIVERS_CXX_SOURCES "${DRIVERS_DIR}/Src/*.cpp")
+set(DRIVERS_C_SOURCES "${DRIVERS_DIR}/*/Src/*.c")
+set(DRIVERS_CXX_SOURCES "${DRIVERS_DIR}/*/Src/*.cpp")
 
 set(CORE_Dir ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core)
 set(CORE_C_SOURCES "${CORE_Dir}/Src/*.c")
