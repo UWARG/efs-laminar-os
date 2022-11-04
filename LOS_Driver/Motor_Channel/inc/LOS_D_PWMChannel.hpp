@@ -1,5 +1,5 @@
-#ifndef PWM_CHANNEL_HPP_
-#define PWM_CHANNEL_HPP_
+#ifndef LOS_D_PWM_CHANNEL_HPP_
+#define LOS_D_PWM_CHANNEL_HPP_
 
 #include "main.h"
 #include "LOS_D_MotorChannel.hpp"
@@ -23,4 +23,4 @@ class PWMChannel : public MotorChannel {
 
 };
 
-#endif // PWM_CHANNEL_HPP_
+#endif // LOS_D_PWM_CHANNEL_HPP_

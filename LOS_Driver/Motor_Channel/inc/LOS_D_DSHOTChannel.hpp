@@ -1,5 +1,5 @@
-#ifndef DSHOT_CHANNEL_HPP_
-#define DSHOT_CHANNEL_HPP_
+#ifndef LOS_D_DSHOT_CHANNEL_HPP_
+#define LOS_D_DSHOT_CHANNEL_HPP_
 
 #include "LOS_D_PWMChannel.hpp"
 
@@ -54,4 +54,4 @@ class DSHOTChannel : public PWMChannel {
 
 };
 
-#endif // DSHOT_CHANNEL_HPP_
+#endif // LOS_D_DSHOT_CHANNEL_HPP_
