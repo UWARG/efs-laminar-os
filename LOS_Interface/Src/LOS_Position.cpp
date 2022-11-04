@@ -6,7 +6,6 @@
  */
 
 #include "LOS_Position.hpp"
-#include "SensorFusion.hpp"
 
 /**
  * @brief Gets LOS_Position singleton
@@ -25,33 +24,8 @@ LOS_Position& LOS_Position::getInstance() {
  */
 
 LOS_Position::LOS_Position() {
-	#ifdef BMX160
-	imuObj = &BMX160::getInstance();
-	#endif
 
-	#ifdef MPU6050
-	imuObj = &MPU6050::getInstance();
-	#endif
-
-    #ifdef MPL3115A2
-    altimeterObj = &MPL3115A2::getInstance(); 
-    #endif
-
-    #ifdef MPXV7002DP
-    airspeedObj = &MPXV7002DP::GetInstace();
-    #endif
-
-    #ifdef NEOM8
-    gpsObj = &NEOM8::GetInstance();
-    #endif
-
-    #ifdef VN300
-    imuObj = &VN300::getInstance();
-    #else
-    bool sensor_fusion_ = true;
-    #endif
-
-    if (sensor_fusion_ == true)
+    if (SENSOR_FUSION_ == true)
     {
         SF_Init();
     }
@@ -141,16 +115,16 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
 void LOS_Position::updatePosition() {
 
     IMUData_t imuData;
-    imuObj->GetResult(imuData);
+    g_imuObj->GetResult(imuData);
 
-    if (sensor_fusion_)
+    if (SENSOR_FUSION_)
     {   
         GpsData_t gpsData;
         AltimeterData_t altimeterData;
         airspeedData_t airspeedData;
-        gpsObj->GetResult(gpsData);
-        altimeterObj->GetResult(altimeterData);
-        airspeedObj->GetResult(airspeedData);
+        g_gpsObj->GetResult(gpsData);
+        g_altimeterObj->GetResult(altimeterData);
+        g_airspeedObj->GetResult(airspeedData);
         sensor_fusion(imuData, gpsData, altimeterData, airspeedData);
     }
     else

@@ -6,13 +6,9 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "../Inc/imu.hpp"
+#include "BMX160.hpp"
 //#include <Inc/LOS_Link.hpp>
-#include "gpio.h"
-#include "i2c.h"
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx_hal_def.h"
-#include "stm32f4xx_hal_i2c.h"
+
 #include <cstdint>
 
 /* Private define ------------------------------------------------------------*/
@@ -334,82 +330,5 @@ void BMX160::setAllPowerModesToNormal() {
 	HAL_Delay(10);
 
 }
-
-/* Public Methods  ---------------------------------------------------------*/
-
-IMU& MPU6050::getInstance(){
-  static MPU6050 singleton;
-  return singleton;
-
-}
-
-void MPU6050::GetResult(IMUData_t &Data){
-	uint8_t data[6];
-	int16_t raw_x = 0, raw_y = 0, raw_z = 0;
-	HAL_StatusTypeDef status = HAL_OK;
-
-	status = HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, GYRO_XOUT_H, 1, data, 6, HAL_MAX_DELAY);
-
-	raw_x = (int16_t)(data[0] << 8 | data[1]);
-	raw_y = (int16_t)(data[2] << 8 | data[3]);
-	raw_z = (int16_t)(data[4] << 8 | data[5]);
-
-	/* Converting raw values into degrees per second.
-	* Scaling by the sensitivity for the configured scale range.*/
-
-	Data.gyro_x = raw_x / kGryoCorrector;
-	Data.gyro_y = raw_y / kGryoCorrector;
-	Data.gyro_z = raw_z / kGryoCorrector;
-
-	status = HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, ACCEL_XOUT_H, 1, data, 6, HAL_MAX_DELAY);
-
-	raw_x = (int16_t)(data[0] << 8 | data[1]);
-	raw_y = (int16_t)(data[2] << 8 | data[3]);
-	raw_z = (int16_t)(data[4] << 8 | data[5]);
-
-	/* Converting raw values into acceleration in terms of g.
-	*  Scaling by the sensitivity for the configured scale range.*/
-
-	Data.accel_x = raw_x / kAccelCorrector;
-	Data.accel_y = raw_y / kAccelCorrector;
-	Data.accel_z = raw_z / kAccelCorrector;
-
-}
-
-/* Private methods  ---------------------------------------------------------*/
-
-MPU6050::MPU6050(){
-  HAL_I2C_Init(&hi2c1);
-}
-
-void MPU6050::IMUInit (void){
-	//Use this for IMU set up
-	uint8_t imu_check = 0, data_check = 0;
-	HAL_StatusTypeDef wake = HAL_OK;
-
-
-	//Check if device is present and the IMU is the expected device
-
-		if (HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, WHO_AM_I, 1, &imu_check, 1, HAL_MAX_DELAY) == HAL_OK && imu_check == kImuAddr){
-
-				//Wake the sensor up
-				wake = HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, PWR_MGMT_1, 1, &data_check, 1, HAL_MAX_DELAY);
-
-				data_check = 0x07;
-				HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, SMPLRT_DIV, 1, &data_check, 1, HAL_MAX_DELAY);
-
-				//Configure gyro to have range of +/- 250 dps
-				data_check = 0x00;
-				HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, GYRO_CONFIG, 1, &data_check, 1, HAL_MAX_DELAY);
-
-				//Configure Accelerometer to have range of +/- 2g
-				data_check = 0x00;
-				HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, ACCEL_CONFIG, 1, &data_check, 1, HAL_MAX_DELAY);
-			}
-
-
-
-}
-
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
