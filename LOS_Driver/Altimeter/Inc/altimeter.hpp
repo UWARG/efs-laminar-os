@@ -56,7 +56,6 @@ class Altimeter {
         virtual void GetResult(AltimeterData_t& Data) = 0; //
 };
 
-
 #ifdef UNIT_TESTING
 #include "airspeed_Mock.hpp"
 
