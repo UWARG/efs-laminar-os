@@ -1,5 +1,5 @@
-#ifndef INC_BMX160_HPP_
-#define INC_BMX160_HPP_
+#ifndef INC_MPU6050_HPP_
+#define INC_MPU6050_HPP_
 
 #include "imu.hpp"
 

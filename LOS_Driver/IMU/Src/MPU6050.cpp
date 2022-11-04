@@ -8,7 +8,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "imu.hpp"
 #include "BMX160.hpp"
-#include "MPU6060.hpp"
+#include "MPU6050.hpp"
 //#include <Inc/LOS_Link.hpp>
 
 #include <cstdint>
