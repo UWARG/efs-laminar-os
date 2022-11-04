@@ -9,6 +9,7 @@ set(STARTUP_ASM boardfiles/nucleof401re/Core/Startup/startup_stm32f401retx.s)
 set(LINKER_SCRIPT boardfiles/nucleof401re/STM32F401RETX_FLASH.ld)
 set(PROJ_NAME nucelof401re)
 set(FAMILY_NAME STM32F4xx)
+set(PORTABLE_NAME CM4F)
 
 add_definitions(
   -DUSE_HAL_LIB
@@ -33,7 +34,7 @@ set(CMAKE_SIZE arm-none-eabi-size CACHE INTERNAL "")
 
 # ARM compiler options
 set(MCU_CPU cortex-m4)
-set(MCU_FLOAT_ABI soft) # since we don't have a floating point unit on this chip. Otherwise should be hard
+set(MCU_FLOAT_ABI hard)
 set(MCU_FLAGS "-mcpu=${MCU_CPU} -mthumb -mfloat-abi=${MCU_FLOAT_ABI}")
 
 set(COMMON_FLAGS "${MCU_FLAGS} -g -Wall -Wextra -Wno-unused-parameter -ffunction-sections -fdata-sections")
