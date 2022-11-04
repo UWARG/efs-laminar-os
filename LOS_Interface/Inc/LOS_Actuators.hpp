@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 
-class Los_Actuators{
+class LOS_Actuators{
 
     public:
-        Los_Actuators();
+        LOS_Actuators();
         
         void set(uint8_t channel, uint8_t percent);
 

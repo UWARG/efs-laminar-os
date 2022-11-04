@@ -1,11 +1,11 @@
 #include "LOS_Actuators.hpp"
 #include "config.hpp"
 
-Los_Actuators::Los_Actuators() {}
+LOS_Actuators::LOS_Actuators() {}
 
-void Los_Actuators::set(uint8_t channel, uint8_t percent) {
+void LOS_Actuators::set(uint8_t channel, uint8_t percent) {
     if (channel >= NUM_CHANNELS) 
         return;
 
-    MOTOR_CHANNELS[channel]->set(percent);
+    motor_channels_[channel]->set(percent);
 }

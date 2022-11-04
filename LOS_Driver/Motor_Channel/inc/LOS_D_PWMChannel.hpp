@@ -2,18 +2,19 @@
 #define PWM_CHANNEL_HPP_
 
 #include "main.h"
-#include "MotorChannel.hpp"
+#include "LOS_D_MotorChannel.hpp"
 
 class PWMChannel : public MotorChannel {
     public:
-        PWMChannel(uint16_t pinNum, GPIO_TypeDef* port, TIM_HandleTypeDef* timer, uint16_t timerChannel);
+        PWMChannel(uint16_t pin_num, GPIO_TypeDef* port, 
+                    TIM_HandleTypeDef* timer, uint16_t timer_channel);
 
         void set(uint8_t percent);
     private:
-        uint16_t num;
-        GPIO_TypeDef* port;           
-        TIM_HandleTypeDef *timer;     //handle to the timer
-        uint16_t timer_channel;       //channel of the timer
+        uint16_t num_;
+        GPIO_TypeDef* port_;
+        TIM_HandleTypeDef *timer_;     //handle to the timer
+        uint16_t timer_channel_;       //channel of the timer
 
         //values in us
         static const uint32_t PWM_PERIOD = 20000;
