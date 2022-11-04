@@ -69,6 +69,6 @@ const uint8_t NUM_CHANNELS = 2;
 DSHOTChannel    channel1(0, nullptr, nullptr, 0, 0, 0);
 PWMChannel      channel2(1, nullptr, nullptr, 1);
 
-static MotorChannel *motor_channels_[NUM_CHANNELS] = {&channel1, &channel2};
+MotorChannel *motor_channels_[NUM_CHANNELS] = {&channel1, &channel2};
 
 #endif
