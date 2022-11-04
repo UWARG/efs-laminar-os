@@ -15,8 +15,8 @@ class DSHOTChannel : public PWMChannel {
         static const int DSHOT_DATA_FRAME_LEN = 16;
 
         static const int DSHOT_DMA_BUFFER_SIZE    = DSHOT_DATA_FRAME_LEN + 2;
-        static const int DSHOT_MAX_THROTTLE      = 2000;
-        static const int DSHOT_RESERVED_VALUES   = 47;
+        static const int DSHOT_MAX_THROTTLE       = 2000;
+        static const int DSHOT_RESERVED_VALUES    = 47;
         static const int DSHOT_150_BIT_1          = 240;
         static const int DSHOT_150_BIT_0          = 120;
 
