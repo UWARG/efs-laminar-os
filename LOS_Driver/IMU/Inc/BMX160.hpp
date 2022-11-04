@@ -1,3 +1,6 @@
+#ifndef INC_BMX160_HPP_
+#define INC_BMX160_HPP_
+
 #include "imu.hpp";
 
 class BMX160: public IMU {
@@ -33,3 +36,5 @@ private:
 	IMUData_t IMUCalibration;
 	uint8_t powerStatus;
 };
+
+#endif 
