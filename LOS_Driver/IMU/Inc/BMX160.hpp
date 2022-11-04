@@ -37,4 +37,4 @@ private:
 	uint8_t powerStatus;
 };
 
-#endif 
+#endif /* INC_BMX160_HPP_ */
