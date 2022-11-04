@@ -16,14 +16,6 @@ class PPMChannel: public RcReceiver{
 	static RcReceiver& getInstance();
 
 	/**
-	 * How many channels are we expecting in the input port?
-	 * Usually this is only 8
-	 * @param num_channels
-	 * @param disconnect_timeout Number of ms to wait before we consider channel disconnected
-	 */
-	void init();
-
-	/**
 	 * Reconfigure number of channels
 	 * @param num_channels
 	 */
