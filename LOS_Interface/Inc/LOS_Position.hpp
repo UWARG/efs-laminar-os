@@ -9,16 +9,20 @@
 #ifndef INC_LOS_POSITION_HPP_
 #define INC_LOS_POSITION_HPP_
 
-#include "interface_datatypes.hpp"
-
 #include "imu.hpp"
+#include "BMX160.hpp"
+#include "MPU6060.hpp"
+
 #include "airpseed.hpp"
+
 #include "altimeter.hpp"
+
 #include "gps.hpp"
 
-#include "config.hpp"
-
 #include "CommonDataTypes.hpp"
+#include "SensorFusion.hpp"
+
+#include "interface_datatypes.hpp"
 
 class LOS_Position {
         // This class is used to get the current position
@@ -36,17 +40,10 @@ private:
                            AltimeterData_t altimeterData,
                            airspeedData_t airspeedData);
 
-        bool sensor_fusion_;
         PositionData_t position_;
         RawPositionData_t rawPosition_;
 
         SFOutput_t sensorFusionOut_;
-        
-        static IMU *imuObj;
-        static Gps *gpsObj;
-        static Altimeter *altimeterObj;
-        static airspeed *airspeedObj;
-
 };
 
 #endif 
