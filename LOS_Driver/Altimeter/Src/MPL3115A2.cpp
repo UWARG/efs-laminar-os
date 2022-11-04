@@ -1,4 +1,4 @@
-#include "../Inc/altimeter.hpp"
+#include "MPL3115A2.hpp"
 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_i2c.h"

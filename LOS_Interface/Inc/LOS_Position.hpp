@@ -9,19 +9,10 @@
 #ifndef INC_LOS_POSITION_HPP_
 #define INC_LOS_POSITION_HPP_
 
-#include "BMX160.hpp"
-#include "MPU6060.hpp"
-
-#include "airpseed.hpp"
-
-#include "altimeter.hpp"
-
-#include "gps.hpp"
+#include "interface_datatypes.hpp"
 
 #include "CommonDataTypes.hpp"
 #include "SensorFusion.hpp"
-
-#include "interface_datatypes.hpp"
 
 class LOS_Position {
         // This class is used to get the current position

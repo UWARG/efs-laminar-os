@@ -1,3 +1,6 @@
+#ifndef INC_BMX160_HPP_
+#define INC_BMX160_HPP_
+
 #include "imu.hpp"
 
 class MPU6050: public IMU {
@@ -18,3 +21,5 @@ private:
 
 
 };
+
+#endif /* INC_MPU6050_HPP_ */

@@ -12,6 +12,19 @@ const uint8_t LEFT_GIMBAL_GRABBER_CRANE = 6;
 const uint8_t RIGHT_GIMBAL_GRABBER_MOUTH = 7;
 
 /* LOS_Pos */
+#include "imu.hpp"
+#include "BMX160.hpp"
+#include "MPU6050.hpp"
+
+#include "airspeed.hpp"
+#include "MPXV7002DP.hpp"
+
+#include "altimeter.hpp"
+#include "MPL3115A2.hpp"
+
+#include "gps.hpp"
+#include "NEOM8.hpp"
+
 static IMU *g_imuObj = &BMX160::getInstance(); // BMX160 imu
 // g_imuObj = &MPU6050::getInstance(); // MPU6050 imu
 static Altimeter *g_altimeterObj = &MPL3115A2::getInstance(); // MPL3115A2 altimeter

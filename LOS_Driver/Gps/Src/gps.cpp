@@ -10,7 +10,7 @@
  *  Parsing algorithms taken from the custom WARG PicPilot software.
  */
 
-#include "../Inc/gps.hpp"
+#include "NEOM8.hpp"
 #include <cstring>
 // #include "stm32f7xx_hal.h"
 
