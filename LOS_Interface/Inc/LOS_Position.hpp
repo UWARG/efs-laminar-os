@@ -9,7 +9,6 @@
 #ifndef INC_LOS_POSITION_HPP_
 #define INC_LOS_POSITION_HPP_
 
-#include "imu.hpp"
 #include "BMX160.hpp"
 #include "MPU6060.hpp"
 
