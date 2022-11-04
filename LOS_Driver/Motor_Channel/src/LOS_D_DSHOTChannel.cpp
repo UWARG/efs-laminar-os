@@ -16,7 +16,7 @@ DSHOTChannel::DSHOTChannel(uint16_t pin_num, GPIO_TypeDef* port, TIM_HandleTypeD
 }
 
 void DSHOTChannel::set(uint8_t percent) {
-    preparedma_buffer(percent);
+    prepareDMABuffer(percent);
 }
 
 uint16_t DSHOTChannel::prepareFrame(uint8_t throttle_percentage, bool telemetry) {
