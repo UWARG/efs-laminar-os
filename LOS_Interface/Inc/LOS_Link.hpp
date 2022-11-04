@@ -2,7 +2,7 @@
 #define LOS_LINK_HPP_
 
 #include "interface_datatypes.hpp"
-#include "RC_Receiver.hpp"
+#include "RcReceiver.hpp"
 #include "PPM.hpp"
 
 class Los_Link{
@@ -13,7 +13,7 @@ class Los_Link{
         LosLinkRx_t getRx(void);
 
     private:
-        RC_Receiver *rc_receiver;
+        RcReceiver *rc_receiver;
 
         void init(void);
 

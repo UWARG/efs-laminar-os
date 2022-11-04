@@ -3,10 +3,9 @@
 Los_Link::Los_Link()
 {
     #ifdef PPM
-    PPMChannel rxObj(NUM_RX_CHANNELS, 1000);
+    rc_receiver = &PPMChannel::getInstance();
     #endif
-
-    rc_receiver = &rxObj;
+    
 }
 
 LosLinkRx_t Los_Link::getRx(void)
