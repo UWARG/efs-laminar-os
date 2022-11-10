@@ -13,5 +13,8 @@ extern TIM_HandleTypeDef *PPM_TIM;
 #define PPM_TIME_BASE TIM2
 #define PPM_TIM_CHANNEL TIM_CHANNEL_1
 
+/* SD Card Driver */
+extern SPI_HandleTypeDef* LOS_D_SD_SPI;
+
 
 #endif /* INTERFACE_TEMP_PARAMS_HPP_ */
