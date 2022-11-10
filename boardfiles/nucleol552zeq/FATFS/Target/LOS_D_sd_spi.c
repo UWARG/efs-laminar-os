@@ -8,7 +8,7 @@
 #include <string.h>
 
 
-extern SPI_HandleTypeDef LOS_D_SD_SPI;
+extern SPI_HandleTypeDef* LOS_D_SD_SPI;
 
 static volatile DSTATUS Stat = STA_NOINIT;	/* Disk Status */
 static uint8_t CardType;                    /* Type 0:MMC, 1:SDC, 2:Block addressing */
