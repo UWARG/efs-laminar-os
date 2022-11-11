@@ -10,12 +10,20 @@ DSHOTChannel::DSHOTChannel(uint16_t pin_num, GPIO_TypeDef* port, TIM_HandleTypeD
                                                         tim_dma_source_(tim_dma_source) {
     HAL_TIM_PWM_Start(timer, timer_channel);
 
-    preparedma_buffer(0); //init buffer for 0 percent throttle
-    startDMA(); //start DMA... it should never be stopped after this bec it is in circular mode
-    enableDMARequests();
+    //init buffer for 0 percent throttle
+    preparedma_buffer(0); 
+
+    // Start DMA. It should never be stopped after this since it is in circular mode
+    startDMA(); 
+
+    // Enable DMA Requests
+    __HAL_TIM_ENABLE_DMA(timer, time_DMA_source); 
 }
 
 void DSHOTChannel::set(uint8_t percent) {
+    if (percent > 100) {
+        return;
+    }
     prepareDMABuffer(percent);
 }
 
@@ -81,8 +89,4 @@ void DSHOTChannel::startDMA() {
     }
     HAL_DMA_Start(timer->hdma[timDMAHandleIndex], 
         (uint32_t)dma_buffer, destination_buffer, DSHOT_DMA_BUFFER_SIZE);
-}
-
-void DSHOTChannel::enableDMARequests() {
-    __HAL_TIM_ENABLE_DMA(timer, time_DMA_source); 
 }
