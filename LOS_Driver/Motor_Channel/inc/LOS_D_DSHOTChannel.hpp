@@ -12,18 +12,21 @@ class DSHOTChannel : public PWMChannel {
 
         void set(uint8_t percent);
     private:
-        static const int DSHOT_DATA_FRAME_LEN = 16;
+        static constexpr int DSHOT_DATA_FRAME_LEN = 16;
 
-        static const int DSHOT_DMA_BUFFER_SIZE    = DSHOT_DATA_FRAME_LEN + 2;
-        static const int DSHOT_MAX_THROTTLE       = 2000;
-        static const int DSHOT_RESERVED_VALUES    = 47;
-        static const int DSHOT_150_BIT_1          = 240;
-        static const int DSHOT_150_BIT_0          = 120;
+        static constexpr int DSHOT_DMA_BUFFER_SIZE    = DSHOT_DATA_FRAME_LEN + 2;
+        static constexpr int DSHOT_MAX_THROTTLE       = 2000;
+        static constexpr int DSHOT_RESERVED_VALUES    = 47;
+        static constexpr int DSHOT_150_BIT_1          = 240;
+        static constexpr int DSHOT_150_BIT_0          = 120;
 
         volatile uint32_t dma_buffer_[DSHOT_DMA_BUFFER_SIZE];
 
         uint16_t tim_dma_handle_index_;
         uint16_t tim_dma_source_;
+
+        uint32_t prescalar;
+        uint32_t period_ticks;
 
         /**
         * @brief Prepares the Dshot data frame including the data, telemetry bit, and checksum
@@ -45,12 +48,6 @@ class DSHOTChannel : public PWMChannel {
         * @retval None
         */
         void startDMA();
-
-        /**
-        * @brief Enables DMA request 
-        * @retval None
-        */
-        void enableDMARequests();
 
 };
 
