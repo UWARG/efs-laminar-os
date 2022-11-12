@@ -17,25 +17,42 @@ const uint8_t LEFT_GIMBAL_GRABBER_CRANE = 6;
 const uint8_t RIGHT_GIMBAL_GRABBER_MOUTH = 7;
 
 /* LOS_Pos */
-#include "imu.hpp"
+#define BMX160_CONNECTED
+#define MPXV7002DP_CONNECTED
+#define MPL3115A2_CONNECTED
+#define NEOM8_CONNECTED
+
+#ifdef BMX160_CONNECTED
 #include "BMX160.hpp"
-#include "MPU6050.hpp"
-
-#include "airspeed.hpp"
-#include "MPXV7002DP.hpp"
-
-#include "altimeter.hpp"
-#include "MPL3115A2.hpp"
-
-#include "gps.hpp"
-#include "NEOM8.hpp"
-
 static IMU *g_imuObj = &BMX160::getInstance(); // BMX160 imu
-// g_imuObj = &MPU6050::getInstance(); // MPU6050 imu
-static Altimeter *g_altimeterObj = &MPL3115A2::getInstance(); // MPL3115A2 altimeter
-static airspeed *g_airspeedObj = MPXV7002DP::GetInstance(); // MPXV7002DP Airspeed
-static Gps *g_gpsObj = NEOM8::GetInstance(); // NEOM8 Gps
-// g_imuObj = &VN300::getInstance(); // VECTOR NAV - 300 
+#endif
+
+#ifdef MPU6050_CONNECTED
+#include "MPU6050.hpp"
+static IMU g_imuObj = &MPU6050::getInstance(); // MPU6050 imu
+#endif
+
+#ifdef VN300_CONNECTED
+#include "VN300.hpp"
+static IMU g_imuObj = &VN300::getInstance(); // VECTOR NAV - 300 
+#else
 const bool SENSOR_FUSION_ = true;
+#endif
+
+#ifdef MPXV7002DP_CONNECTED
+#include "MPXV7002DP.hpp"
+static airspeed *g_airspeedObj = MPXV7002DP::GetInstance(); // MPXV7002DP Airspeed
+#endif
+
+#ifdef MPL3115A2_CONNECTED
+#include "MPL3115A2.hpp"
+static Altimeter *g_altimeterObj = &MPL3115A2::getInstance(); // MPL3115A2 altimeter
+#endif 
+
+#ifdef NEOM8_CONNECTED
+#include "NEOM8.hpp"
+static Gps *g_gpsObj = NEOM8::GetInstance(); // NEOM8 Gps
+#endif
+
 
 #endif
