@@ -46,12 +46,6 @@ PPMChannel::PPMChannel()
 	HAL_TIM_IC_Start_IT(PPM_TIM, PPM_TIM_CHANNEL);
 }
 
-RcReceiver& PPMChannel::getInstance()
-{
-	static PPMChannel singleton;
-	return singleton;
-}
-
 StatusCode PPMChannel::setLimits(uint8_t channel, uint32_t min, uint32_t max, uint32_t deadzone) {
 	if (channel <= 0 || channel > num_channels_ || min >= max) {
 		return STATUS_CODE_INVALID_ARGS;

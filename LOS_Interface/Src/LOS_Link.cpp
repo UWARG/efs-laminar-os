@@ -1,11 +1,19 @@
 #include "LOS_Link.hpp"
 
+Los_Link& Los_Link::getInstance()
+{
+    static Los_Link singleton;
+    return singleton;
+}
+
 Los_Link::Los_Link()
 {
     #ifdef PPM
-    rc_receiver = &PPMChannel::getInstance();
+    PPMChannel losLinkInstance = PPMChannel(); //TODO: THIS WILL NOT WORK BEC THE INSTANCE WILL BE DESTROYED ONCE IT
+                                               //      IS OUT OF SCOPE. FIND A PLACE TO MAKE IT GLOBAL/ A DIFFERNT METHOD.
     #endif
     
+    rc_receiver = &losLinkInstance;
 }
 
 LosLinkRx_t Los_Link::getRx(void)

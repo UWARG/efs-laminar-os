@@ -11,9 +11,7 @@ enum StatusCode{STATUS_CODE_OK, STATUS_CODE_FAILED, STATUS_CODE_INVALID_ARGS};
 class PPMChannel: public RcReceiver{
  public:
 
-	PPMChannel(const PPMChannel*) = delete;
-
-	static RcReceiver& getInstance();
+	PPMChannel();
 
 	/**
 	 * Reconfigure number of channels
@@ -61,7 +59,6 @@ class PPMChannel: public RcReceiver{
 	bool isDisconnected(uint32_t sys_time);
 
  private:
-	PPMChannel();
  	uint8_t num_channels_ = NUM_RX_CHANNELS;
 	float min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
 	float max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel

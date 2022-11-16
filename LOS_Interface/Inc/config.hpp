@@ -15,9 +15,5 @@ const int32_t ARM_DISARM_CHANNEL_INDEX = 4;
 const uint8_t GIMBAL_GRABBER_TOGGLE_INDEX = 5; // three-way switch for gimbal, grabber, or none
 const uint8_t LEFT_GIMBAL_GRABBER_CRANE = 6;
 const uint8_t RIGHT_GIMBAL_GRABBER_MOUTH = 7;
-extern TIM_HandleTypeDef *PPM_TIM;
-#define PPM_TIME_BASE TIM2
-#define PPM_TIM_CHANNEL TIM_CHANNEL_1
-
 
 #endif
