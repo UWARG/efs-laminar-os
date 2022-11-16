@@ -11,6 +11,11 @@
 #include "LOS_D_PWMChannel.hpp"
 #include "LOS_D_DSHOTChannel.hpp"
 
+#include "main.h"
+
+#include "LOS_D_PWMChannel.hpp"
+#include "LOS_D_DSHOTChannel.hpp"
+
 /* LOS_Link */
 #define PPM
 const uint8_t MAX_PPM_CHANNELS = 12;
