@@ -9,6 +9,11 @@ include_directories(
     ## Any new driver folders Inc dirs must be added here ##
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Common/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Airspeed/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Altimeter/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Gps/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/IMU/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/SensorFusion/Inc
 
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
