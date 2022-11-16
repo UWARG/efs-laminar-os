@@ -8,7 +8,7 @@
 extern TIM_HandleTypeDef *PWM_TIM;
 extern TIM_HandleTypeDef *DSHOT_TIM;
 
-/* PPM Driver */
+/* PPM */
 extern TIM_HandleTypeDef *PPM_TIM;
 #define PPM_TIME_BASE TIM2
 #define PPM_TIM_CHANNEL TIM_CHANNEL_1

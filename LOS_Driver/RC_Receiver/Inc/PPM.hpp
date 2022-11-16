@@ -2,22 +2,16 @@
 #define PPM_HPP_
 
 #include <cstdint>
-#include "RC_Receiver.hpp"
+#include "RcReceiver.hpp"
 #include "driver_params.hpp"
-
-static const uint8_t MAX_PPM_CHANNELS = 12; // TODO: put this into driver_params
+#include "config.hpp"
 
 enum StatusCode{STATUS_CODE_OK, STATUS_CODE_FAILED, STATUS_CODE_INVALID_ARGS};
 
-class PPMChannel: public RC_Receiver{
+class PPMChannel: public RcReceiver{
  public:
-	/**
-	 * How many channels are we expecting in the input port?
-	 * Usually this is only 8
-	 * @param num_channels
-	 * @param disconnect_timeout Number of ms to wait before we consider channel disconnected
-	 */
-	explicit PPMChannel(uint8_t num_channels = 8, uint32_t disconnect_timeout = 1000);
+
+	PPMChannel();
 
 	/**
 	 * Reconfigure number of channels
@@ -55,21 +49,21 @@ class PPMChannel: public RC_Receiver{
 	 * @param num
 	 * @return 0 if an invalid channel number was given
 	 */
-	uint32_t get_us(uint8_t num);
+	uint32_t getUs(uint8_t num);
 
 	/**
 	 * Whether the channel has disconnected based on the timeout
 	 * @param sys_time Current system time in ms
 	 * @return
 	 */
-	bool is_disconnected(uint32_t sys_time);
+	bool isDisconnected(uint32_t sys_time);
 
  private:
- 	uint8_t num_channels = 0;
-	float min_values[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
-	float max_values[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
-	uint32_t disconnect_timeout;
-	bool is_setup = false;
+ 	uint8_t num_channels_ = NUM_RX_CHANNELS;
+	float min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
+	float max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
+	uint32_t disconnect_timeout_ = PPM_TIMEOUT;
+	bool is_setup_ = false;
 
 };
 

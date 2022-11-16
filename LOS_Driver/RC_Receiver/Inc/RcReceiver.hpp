@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-class RC_Receiver{
+class RcReceiver{
     public:
         virtual uint8_t GetResult(uint8_t channel) = 0;
 };

@@ -2,18 +2,22 @@
 #define LOS_LINK_HPP_
 
 #include "interface_datatypes.hpp"
-#include "RC_Receiver.hpp"
+#include "RcReceiver.hpp"
 #include "PPM.hpp"
 
 class Los_Link{
 
     public:
-        Los_Link();
+        Los_Link(const Los_Link*) = delete;
+
+        static Los_Link& getInstance();
         
         LosLinkRx_t getRx(void);
 
     private:
-        RC_Receiver *rc_receiver;
+        Los_Link(); 
+        
+        RcReceiver *rc_receiver;
 
         void init(void);
 
