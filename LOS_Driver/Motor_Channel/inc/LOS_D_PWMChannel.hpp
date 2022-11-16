@@ -16,7 +16,6 @@ class PWMChannel : public MotorChannel {
         TIM_HandleTypeDef *timer_;     //handle to the timer
         uint16_t timer_channel_;       //channel of the timer
 
-        uint32_t prescalar;
         uint32_t period_ticks;
 
         //values in us

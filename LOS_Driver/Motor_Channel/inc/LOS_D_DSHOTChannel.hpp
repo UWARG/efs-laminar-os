@@ -25,9 +25,6 @@ class DSHOTChannel : public PWMChannel {
         uint16_t tim_dma_handle_index_;
         uint16_t tim_dma_source_;
 
-        uint32_t prescalar;
-        uint32_t period_ticks;
-
         /**
         * @brief Prepares the Dshot data frame including the data, telemetry bit, and checksum
         * @param throttle_percentage Trottle percentage output from the PID loop, 0-100%

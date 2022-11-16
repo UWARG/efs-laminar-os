@@ -69,7 +69,7 @@ const uint8_t NUM_CHANNELS = 2;
 DSHOTChannel    channel1(0, nullptr, nullptr, 0, 0, 0);
 PWMChannel      channel2(1, nullptr, nullptr, 1);
 
-MotorChannel *motor_channels_[NUM_CHANNELS] = {&channel1, &channel2};
+constexpr MotorChannel *motor_channels_[NUM_CHANNELS] = {&channel1, &channel2};
 
 // Ensure correct number of motor channels have been set
 static_assert(motor_channels_[NUM_CHANNELS - 1] != nullptr, "Invalid motor channel configuration");
