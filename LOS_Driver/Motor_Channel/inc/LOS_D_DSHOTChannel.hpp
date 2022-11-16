@@ -4,7 +4,7 @@
 #include "LOS_D_PWMChannel.hpp"
 
 
-class DSHOTChannel : public PWMChannel {
+class DSHOTChannel: public MotorChannel{
     public:
         DSHOTChannel(uint16_t pin_num, GPIO_TypeDef* port, TIM_HandleTypeDef* timer, 
                         uint16_t timer_channel, uint16_t tim_DMA_handle_index, 
@@ -24,6 +24,10 @@ class DSHOTChannel : public PWMChannel {
 
         uint16_t tim_dma_handle_index_;
         uint16_t tim_dma_source_;
+        uint16_t pin_num_;
+        GPIO_TypeDef* port_;
+        TIM_HandleTypeDef *timer_;     //handle to the timer
+        uint16_t timer_channel_;       //channel of the timer
 
         /**
         * @brief Prepares the Dshot data frame including the data, telemetry bit, and checksum
