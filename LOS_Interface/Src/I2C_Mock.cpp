@@ -5,23 +5,12 @@
 	Inspired from https://calcium3000.wordpress.com/2016/08/19/i2c-bit-banging-tutorial-part-i/
 */
 
-//#include "gpio.h" // fix these later
-//#include "i2c.h" // ^
 #include "../Inc/i2c_mock.hpp"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_def.h"
 #include "stm32f4xx_hal_i2c.h"
 #include <cstdint>
-
-
-#define I2C_SDA_LOW  HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
-#define I2C_SDA_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
-
-#define I2C_SCL_LOW HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
-#define I2C_SCL_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
-
-#define I2C_Delay HAL_Delay(0.005); // 5 microseconds delay time
 
 void I2C_Comms::I2C_Init() {
 	I2C_SDA_HIGH;

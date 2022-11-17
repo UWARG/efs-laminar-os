@@ -14,6 +14,15 @@
 #include "stm32f4xx_hal_i2c.h"
 #include <cstdint>
 
+
+#define I2C_SDA_LOW  HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
+#define I2C_SDA_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
+
+#define I2C_SCL_LOW HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
+#define I2C_SCL_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
+
+#define I2C_Delay HAL_Delay(0.005); // 5 microseconds delay time
+
 typedef struct CommLines {
 	// define the sda and scl lines here.
 	// ack bit as well?
