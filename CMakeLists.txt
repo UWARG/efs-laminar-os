@@ -7,7 +7,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
 
     ## Any new driver folders Inc dirs must be added here ##
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Common/Inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Common/${FOLDER_NAME}/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Airspeed/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Altimeter/Inc
