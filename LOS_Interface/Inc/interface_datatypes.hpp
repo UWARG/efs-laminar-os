@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include "config.hpp"
+#include "telem_datatypes.hpp"
 
 /* LOS_Link */
 typedef struct LosLinkRx_t{
