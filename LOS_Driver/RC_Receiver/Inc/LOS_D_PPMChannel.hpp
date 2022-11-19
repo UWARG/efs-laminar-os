@@ -2,16 +2,14 @@
 #define PPM_HPP_
 
 #include <cstdint>
-#include "RcReceiver.hpp"
-#include "driver_params.hpp"
-#include "config.hpp"
+#include "LOS_D_RcReceiver.hpp"
 
 enum StatusCode{STATUS_CODE_OK, STATUS_CODE_FAILED, STATUS_CODE_INVALID_ARGS};
 
 class PPMChannel: public RcReceiver{
  public:
 
-	PPMChannel();
+	PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels);
 
 	/**
 	 * Reconfigure number of channels
@@ -59,10 +57,31 @@ class PPMChannel: public RcReceiver{
 	bool isDisconnected(uint32_t sys_time);
 
  private:
- 	uint8_t num_channels_ = NUM_RX_CHANNELS;
+
+	/* Constants */
+	static constexpr float SEC_TO_MICROSEC 			= 1000000.0f;
+	static constexpr float BASE_FREQUENCY 			= 48000000.0f;
+	static constexpr float PULSE_WIDTH 				= 310.0f; // in us
+	static constexpr float MIN_WIDTH_OF_RESET_PULSE = 3000.0f; // not really a pulse, this is slightly smaller than the difference in time between sequential PPM packets
+	static constexpr float MIN_PULSE_WIDTH 			= 700.0f;
+	static constexpr float MAX_PULSE_WIDTH			= 1670.0f;
+	static constexpr uint8_t MAX_PPM_CHANNELS 		= 12;
+
+
+	/* Helper Functions */
+	float counterToTime(uint32_t count, uint32_t psc);
+	uint8_t timeToPercentage(uint32_t max, uint32_t min, float time);
+
+	/* Interrupt callback function */
+	void interrupt_callback(TIM_HandleTypeDef * timer);
+
+	/* Member Variables */
+ 	TIM_HandleTypeDef* timer_;
+	uint16_t timer_channel_;
+	volatile float ppm_values_[MAX_PPM_CHANNELS];
+ 	uint8_t num_channels_;
 	float min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
 	float max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
-	uint32_t disconnect_timeout_ = PPM_TIMEOUT;
 	bool is_setup_ = false;
 
 };

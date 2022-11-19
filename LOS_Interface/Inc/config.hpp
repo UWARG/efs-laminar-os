@@ -5,26 +5,17 @@
 #include "main.h"
 #include "tim.h"
 
-
-#include "main.h"
-
 #include "LOS_D_PWMChannel.hpp"
 #include "LOS_D_DSHOTChannel.hpp"
-
-#include "main.h"
-
-#include "LOS_D_PWMChannel.hpp"
-#include "LOS_D_DSHOTChannel.hpp"
+#include "LOS_D_PPMChannel.hpp"
 
 /* LOS_Link */
-#define PPM
-const uint8_t MAX_PPM_CHANNELS = 12;
-const uint8_t NUM_RX_CHANNELS = 5;
-const uint16_t PPM_TIMEOUT = 1000;
-const int32_t ARM_DISARM_CHANNEL_INDEX = 4;
-const uint8_t GIMBAL_GRABBER_TOGGLE_INDEX = 5; // three-way switch for gimbal, grabber, or none
-const uint8_t LEFT_GIMBAL_GRABBER_CRANE = 6;
-const uint8_t RIGHT_GIMBAL_GRABBER_MOUTH = 7;
+static constexpr uint8_t NUM_RC_RECEIVER_INSTANCES = 1;
+static constexpr uint8_t NUM_RX_CHANNELS = 5;
+
+PPMChannel ppm_channel(&htim2, TIM_CHANNEL_1, NUM_RX_CHANNELS);
+
+constexpr RcReceiver* rc_receivers[NUM_RC_RECEIVER_INSTANCES] = {&ppm_channel};
 
 /* LOS_Pos */
 #define BMX160_CONNECTED
