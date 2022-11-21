@@ -31,10 +31,10 @@ typedef struct CommLines {
 
 class I2C_Comms {
 
-public:
-/*	I2C_Comms();
-	~I2C_Comms(); not really needed */
-private:
+  public:
+
+
+  private:
     /**
      * @brief Initialize I2C interface
     */

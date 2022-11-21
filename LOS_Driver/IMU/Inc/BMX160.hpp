@@ -1,22 +1,19 @@
 #ifndef INC_BMX160_HPP_
 #define INC_BMX160_HPP_
 
-#include "imu.hpp";
+#include "imu.hpp"
 
-class BMX160: public IMU {
+class IMUMock : public IMU {
 
 public:
 
 	static IMU& getInstance();
 
-	BMX160(const BMX160*) = delete;
-
 	void GetResult(IMUData_t &Data);
 	void updateData();
-
+	IMUMock();
 private:
 
-	BMX160();
 	void setAllPowerModesToNormal(void);
 	void configAcc(void);
 	void configGyro(void);
@@ -28,8 +25,6 @@ private:
 	void calibrate(void);
 
 	void IMUInit(void);
-
-	bool scan(void); // Check that the slave device exists
 
 	// Variables:
 	uint8_t rawImuData[20];

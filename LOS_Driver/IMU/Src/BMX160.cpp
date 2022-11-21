@@ -7,9 +7,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "BMX160.hpp"
+#include "I2C_Mock.hpp"
 //#include <Inc/LOS_Link.hpp>
 
-#include <cstdint>
+#include <stdint>
 
 /* Private define ------------------------------------------------------------*/
 
@@ -17,16 +18,14 @@
  Taken from datasheet: https://www.mouser.com/pdfdocs/BST-BMX160-DS000-11.pdf
  */
 
-static constexpr uint8_t BMX160_READ_BIT = 0x01;
-static constexpr uint8_t BMX160_WRITE_BIT = 0x00;
-static constexpr uint8_t BMX160_DUMMY_BYTE = 0x00;
+
+static constexpr uint8_t IMU_DUMMY_ADDRESS = 0x1E;
 
 static constexpr uint8_t BMX160_I2C_ADDR = (0x68 << 1); // Left-aligned slave address
 
-static constexpr uint8_t CHIP_ID_REG = 0x00;
 static constexpr uint8_t DATA_REG = 0x04;
 static constexpr uint8_t STATUS_REG = 0x1B;
-static constexpr uint8_t CMD_REG = 0x7E;
+static constexpr uint8_t  = 0x7E;
 static constexpr uint8_t PMU_STATUS_REG = 0x03;
 
 // Registers for configuring accelerometer, gyroscope, and magnetometer
@@ -86,50 +85,24 @@ static int16_t gyrXLog[2000];
 static int16_t gyrYLog[2000];
 static int16_t gyrZLog[2000];
 
-static uint16_t index;
-static uint8_t cnter;
-
-
-/* MPU6050 defines */ //Might need some cleaning
-
-#define WHO_AM_I 0x75 // Use to check if device is there
-
-#define MPU6050_ADDRESS (0x68 << 1) // 7-bit address
-
-#define PWR_MGMT_1 0x6B
-
-#define SMPLRT_DIV 0x19
-
-//Config
-#define GYRO_CONFIG 0x1B
-#define ACCEL_CONFIG 0x1C
-
-//Gryo registers
-#define GYRO_XOUT_H 0x43
-#define GYRO_XOUT_L 0x44
-#define GYRO_YOUT_H 0x44
-#define GYRO_YOUT_L 0x46
-#define GYRO_ZOUT_H 0x47
-#define GYRO_ZOUT_L 0x48
-
-//Accelerometer register
-#define ACCEL_XOUT_H 0x3B
-
-// constants
-
-const uint8_t kImuAddr = 104;
-const double kGryoCorrector = 131.0;
-const double kAccelCorrector = 16384.0;
-
-
 /* Private variables ---------------------------------------------------------*/
 //I2C_HandleTypeDef hi2c1;
 
+ /* Private Methods ---------------------------------------------------------*/
 
-// /* Private Methods ---------------------------------------------------------*/
+uint8_t AccBuffer[5]; // holding all of the acc stuff we want to send. 
+AccBuffer[0] = 0x40;
+AccBuffer[1] = 0x41;
+AccBuffer[2] = 0x11;
+AccBuffer[3] = 0x08;
+AccBuffer[4] = 0x0B;
 
-void BMX160::configAcc() {
+uint8_t MagBuffer[5];
+MagBuffer[1] = 
+void IMUMock::configAcc() {
 	// Configure acceleration sampling rate as 800 Hz and every four are averaged
+	I2C_Transmit(IMU_DUMMY_ADDRESS, uint8_t data[], uint8_t size);
+	
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, ACC_CONF_REG,
 			I2C_MEMADD_SIZE_8BIT, &ACC_ODR_800_OSR4, 1, HAL_MAX_DELAY);
 
@@ -138,7 +111,7 @@ void BMX160::configAcc() {
 			I2C_MEMADD_SIZE_8BIT, &ACC_RANGE_8G, 1, HAL_MAX_DELAY);
 }
 
-void BMX160::configGyro() {
+void IMUMock::configGyro() {
 	// Configure gyro sampling rate as 800 Hz and every four samples are averaged
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, GYR_CONF_REG,
 			I2C_MEMADD_SIZE_8BIT, &GYRO_ODR_800_OSR4, 1, HAL_MAX_DELAY);
@@ -148,7 +121,7 @@ void BMX160::configGyro() {
 			I2C_MEMADD_SIZE_8BIT, &GYRO_RANGE_1000, 1, HAL_MAX_DELAY);
 }
 
-void BMX160::configMag() {
+void IMUMock::configMag() {
 
 	/*
 	 Steps for Magnetometer Configuration:
@@ -190,7 +163,7 @@ void BMX160::configMag() {
 
 }
 
-bool BMX160::scan() {
+bool IMUMock::scan() {
 	if (HAL_I2C_IsDeviceReady(&hi2c1, BMX160_I2C_ADDR, 50, HAL_MAX_DELAY)
 			== HAL_OK) {
 		return true;
@@ -199,7 +172,7 @@ bool BMX160::scan() {
 }
 
 // Calibrates IMU so that any drift or offset is accounted for
-void BMX160::calibrate(void) {
+void IMUMock::calibrate(void) {
 	const int nSamplesForReliableAverage = 100;
 	IMUData_t TempImuData;
 	IMUData_t TempImuCalibration;
@@ -251,18 +224,18 @@ void BMX160::calibrate(void) {
 
 // /* Public Methods  ---------------------------------------------------------*/
 
-IMU& BMX160::getInstance() {
+IMU& IMUMock::getInstance() {
 	static BMX160 singleton;
 	return singleton;
 }
 
-void BMX160::updateData(void) {
+void IMUMock::updateData(void) {
 	// Just updates the rawIMUData and conducts some processing on it
 	HAL_I2C_Mem_Read(&hi2c1, BMX160_I2C_ADDR, DATA_REG, I2C_MEMADD_SIZE_8BIT,
 			rawImuData, 20, HAL_MAX_DELAY);
 }
 
-void BMX160::GetResult(IMUData_t &Data) {
+void IMUMock::GetResult(IMUData_t &Data) {
 	// // The 15:8 and 7:0 bits are in different registers. The bitmasking below joins them into one 16 bit integer
 	this->updateData();
 	int16_t magx = (rawImuData[1] << 8) | rawImuData[0];
@@ -292,13 +265,13 @@ void BMX160::GetResult(IMUData_t &Data) {
 			- IMUCalibration.gyro_z;
 }
 
-BMX160::BMX160() {
+IMUMock::IMUMock() {
 	HAL_I2C_Init(&hi2c1);
 	IMUInit();
 	this->calibrate(); // Calibrate IMU and populate callibration struct for use
 }
 
-void BMX160::IMUInit(void) {
+void IMUMock::IMUInit(void) {
 	if (scan()) {
 		setAllPowerModesToNormal();
 		configAcc();
@@ -312,7 +285,7 @@ void BMX160::IMUInit(void) {
 	}
 }
 
-void BMX160::setAllPowerModesToNormal() {
+void IMUMock::setAllPowerModesToNormal() {
 
 	// Set gyro to normal mode
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
