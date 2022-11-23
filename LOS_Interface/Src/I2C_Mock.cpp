@@ -2,10 +2,10 @@
 	I2C mocked interface
 	Author: Jack Greenwood
 	Date: November 10, 2022
-	Inspired from https://calcium3000.wordpress.com/2016/08/19/i2c-bit-banging-tutorial-part-i/
+	Inspired from https://github.com/PascalPolygon/stm32_bitbang_i2c
 */
 
-#include "../Inc/i2c_mock.hpp"
+#include "I2C_Mock.hpp"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_def.h"

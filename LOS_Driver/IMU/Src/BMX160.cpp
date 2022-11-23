@@ -9,8 +9,8 @@
 #include "BMX160.hpp"
 #include "I2C_Mock.hpp"
 //#include <Inc/LOS_Link.hpp>
-
-#include <stdint>
+#include <cstdint>
+#include <math.h>
 
 /* Private define ------------------------------------------------------------*/
 
@@ -23,34 +23,7 @@ static constexpr uint8_t IMU_DUMMY_ADDRESS = 0x1E;
 
 static constexpr uint8_t BMX160_I2C_ADDR = (0x68 << 1); // Left-aligned slave address
 
-static constexpr uint8_t DATA_REG = 0x04;
-static constexpr uint8_t STATUS_REG = 0x1B;
-static constexpr uint8_t  = 0x7E;
-static constexpr uint8_t PMU_STATUS_REG = 0x03;
-
-// Registers for configuring accelerometer, gyroscope, and magnetometer
-static constexpr uint8_t ACC_CONF_REG = 0x40;
-static constexpr uint8_t ACC_RANGE_REG = 0x41;
-static constexpr uint8_t GYR_CONF_REG = 0x42;
-static constexpr uint8_t GYR_RANGE_REG = 0x43;
-static constexpr uint8_t MAG_CONF_REG = 0x44;
-static constexpr uint8_t MAG_IF_0_REG = 0x4C;
-static constexpr uint8_t MAG_IF_1_REG = 0x4D;
-static constexpr uint8_t MAG_IF_2_REG = 0x4E;
-static constexpr uint8_t MAG_IF_3_REG = 0x4F;
-
 static constexpr uint8_t MAX_BUFF_SIZE = 21;
-
-static uint8_t MAG_REPZ_REG = 0x52;
-static uint8_t MAG_REPXY_REG = 0x51;
-static uint8_t MAG_MODE_REG = 0x4B;
-
-// Registers for setting power mode to normal
-static uint8_t ACC_NORMAL_MODE_CMD = 0x11;
-static uint8_t GYRO_NORMAL_MODE_CMD = 0x15;
-static uint8_t MAG_NORMAL_MODE_CMD = 0x19;
-
-static uint8_t ACC_RANGE_8G = 0x08;
 
 // From datasheet - last four bits (1011 indicates a sampling rate of 800 Hz)
 // The first four bits indicate OSR4 - data is sampled at an oversampling rate of 4
@@ -61,16 +34,7 @@ static uint8_t GYRO_RANGE_1000 = 0x01;
 // From datasheet - last four bits (1011 indicates a sampling rate of 800 Hz)
 // The first four bits indicate OSR4 - data is sampled at an oversampling rate of 4
 static uint8_t GYRO_ODR_800_OSR4 = 0x0B; // 0b00001011
-static uint8_t MAG_SETUP_EN = 0x80;
-static uint8_t MAG_SETUP_DIS = 0x00;
-static uint8_t REP_XY_REGULAR_PRESET = 0x04; // TODO there is also a high accuracy preset. Not too sure what that's about.
 static uint8_t REP_Z_REGULAR_PRESET = 0x0E;
-static uint8_t MAG_IF_3_DATA_MODE = 0x02;
-static uint8_t MAG_IF_2_DATA_MODE = 0x4C;
-static uint8_t MAG_IF_1_DATA_MODE = 0x42;
-static uint8_t MAG_REFRESH_200_HZ = 0x09;
-static uint8_t MAG_REFRESH_50_HZ = 0x07;
-static uint8_t MAG_SLEEP_MODE = 0x01;
 
 constexpr float GYRO_RANGE_1000_FACTOR = 1879.3f; // lsb/rad/s
 constexpr float ACC_RANGE_8_FACTOR = 4.096f; // lsb/mg
@@ -86,39 +50,82 @@ static int16_t gyrYLog[2000];
 static int16_t gyrZLog[2000];
 
 /* Private variables ---------------------------------------------------------*/
-//I2C_HandleTypeDef hi2c1;
-
+I2C_Comms methods;
  /* Private Methods ---------------------------------------------------------*/
 
-uint8_t AccBuffer[5]; // holding all of the acc stuff we want to send. 
+uint8_t AccBuffer[5]; 
 AccBuffer[0] = 0x40;
 AccBuffer[1] = 0x41;
 AccBuffer[2] = 0x11;
 AccBuffer[3] = 0x08;
 AccBuffer[4] = 0x0B;
 
-uint8_t MagBuffer[5];
-MagBuffer[1] = 
+uint8_t GyroBuffer[5];
+GyroBuffer[0] = 0x42;
+GyroBuffer[1] = 0x43;
+GyroBuffer[2] = 0x15;
+GyroBuffer[3] = 0x01;
+GyroBuffer[4] = 0x0B;
+
+uint8_t MagBuffer[17];
+MagBuffer[0]  = 0x44;
+MagBuffer[1]  = 0x4C;
+MagBuffer[2]  = 0x4D;
+MagBuffer[3]  = 0x4E;
+MagBuffer[4]  = 0x4F;
+MagBuffer[5]  = 0x52;
+MagBuffer[6]  = 0x51;
+MagBuffer[7]  = 0x4B;
+MagBuffer[8]  = 0x19;
+MagBuffer[9]  = 0x80;
+MagBuffer[10] = 0x00;
+MagBuffer[11] = 0x02;
+MagBuffer[12] = 0x4C;
+MagBuffer[13] = 0x42;
+MagBuffer[14] = 0x09;
+MagBuffer[15] = 0x07;
+MagBuffer[16] = 0x01;
+
+uint8_t Registers[4];
+Registers[0] = 0x04;
+Registers[1] = 0x1B;
+Registers[2] = 0x7E;
+Registers[3] = 0x03; 
+
+rawImuData[0] = 100;
+rawImuData[2] = 100;
+rawImuData[4] = 100;
+rawImuData[6] = 50;
+rawImuData[8] = 50;
+rawImuData[10] = 50;
+rawImuData[12] = 50;
+rawImuData[14] = 1000;
+rawImuData[16] = 1000;
+rawImuData[18] = 1000;
+
 void IMUMock::configAcc() {
 	// Configure acceleration sampling rate as 800 Hz and every four are averaged
-	I2C_Transmit(IMU_DUMMY_ADDRESS, uint8_t data[], uint8_t size);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &AccBuffer[0], 1);
 	
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, ACC_CONF_REG,
-			I2C_MEMADD_SIZE_8BIT, &ACC_ODR_800_OSR4, 1, HAL_MAX_DELAY);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, ACC_CONF_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &ACC_ODR_800_OSR4, 1, HAL_MAX_DELAY);
 
 	// Configure accelerometer to have range of +- 8g
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, ACC_RANGE_REG,
-			I2C_MEMADD_SIZE_8BIT, &ACC_RANGE_8G, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &AccBuffer[3], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, ACC_RANGE_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &ACC_RANGE_8G, 1, HAL_MAX_DELAY);
 }
 
 void IMUMock::configGyro() {
 	// Configure gyro sampling rate as 800 Hz and every four samples are averaged
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, GYR_CONF_REG,
-			I2C_MEMADD_SIZE_8BIT, &GYRO_ODR_800_OSR4, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, GYR_CONF_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &GYRO_ODR_800_OSR4, 1, HAL_MAX_DELAY);
 
 	// Configure gyroscope to have a range of +- 1000 deg/s
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, GYR_RANGE_REG,
-			I2C_MEMADD_SIZE_8BIT, &GYRO_RANGE_1000, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[3], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, GYR_RANGE_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &GYRO_RANGE_1000, 1, HAL_MAX_DELAY);
 }
 
 void IMUMock::configMag() {
@@ -136,39 +143,48 @@ void IMUMock::configMag() {
 	 9.) Write 0x00 to 0x4C
 	 */
 	HAL_Delay(650);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_0_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_SETUP_EN, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_SLEEP_MODE, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_MODE_REG, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
-			I2C_MEMADD_SIZE_8BIT, &REP_XY_REGULAR_PRESET, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_REPXY_REG, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
-			I2C_MEMADD_SIZE_8BIT, &REP_Z_REGULAR_PRESET, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_REPZ_REG, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_IF_3_DATA_MODE, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_IF_2_DATA_MODE, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_1_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_IF_1_DATA_MODE, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_CONF_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_REFRESH_50_HZ, 1, HAL_MAX_DELAY);
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_0_REG,
-			I2C_MEMADD_SIZE_8BIT, &MAG_SETUP_DIS, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &MagBuffer[9], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_0_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &MAG_SETUP_EN, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &MagBuffer[16], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
+	//		I2C_MEMADD_SIZE_8BIT, &MAG_SLEEP_MODE, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_MODE_REG, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &REP_XY_REGULAR_PRESET, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_REPXY_REG, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &REP_Z_REGULAR_PRESET, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_REPZ_REG, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_IF_3_DATA_MODE, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_IF_2_DATA_MODE, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_1_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_IF_1_DATA_MODE, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_CONF_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_REFRESH_50_HZ, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[4], 1);
+	// HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_0_REG,
+	// 		I2C_MEMADD_SIZE_8BIT, &MAG_SETUP_DIS, 1, HAL_MAX_DELAY);
 
 }
 
+// Nothing to scan, return true
 bool IMUMock::scan() {
-	if (HAL_I2C_IsDeviceReady(&hi2c1, BMX160_I2C_ADDR, 50, HAL_MAX_DELAY)
-			== HAL_OK) {
-		return true;
-	}
-	return false;
+	return true;
 }
 
 // Calibrates IMU so that any drift or offset is accounted for
@@ -225,29 +241,42 @@ void IMUMock::calibrate(void) {
 // /* Public Methods  ---------------------------------------------------------*/
 
 IMU& IMUMock::getInstance() {
-	static BMX160 singleton;
-	return singleton;
+	// static BMX160 singleton;
+	// return singleton;
 }
 
 void IMUMock::updateData(void) {
 	// Just updates the rawIMUData and conducts some processing on it
-	HAL_I2C_Mem_Read(&hi2c1, BMX160_I2C_ADDR, DATA_REG, I2C_MEMADD_SIZE_8BIT,
-			rawImuData, 20, HAL_MAX_DELAY);
+	if !(rawImuData[0] > 1.1) {
+		rawImuData[0] = sqrt(rawImuData[0]);
+		rawImuData[2] = sqrt(rawImuData[2]);
+		rawImuData[4] = sqrt(rawImuData[4]);
+		rawImuData[6] = sqrt(rawImuData[6]);
+		rawImuData[8] = sqrt(rawImuData[8]);
+		rawImuData[10] = sqrt(rawImuData[10]);
+		rawImuData[12] = sqrt(rawImuData[12]);
+		rawImuData[14] = sqrt(rawImuData[14]);
+		rawImuData[16] = sqrt(rawImuData[16]);
+		rawImuData[18] = sqrt(rawImuData[18]);
+	}
+	methods.I2C_Receive(IMU_DUMMY_ADDRESS, &Registers[0], rawImuData, 20, 1);
+	//HAL_I2C_Mem_Read(&hi2c1, BMX160_I2C_ADDR, DATA_REG, I2C_MEMADD_SIZE_8BIT,
+	//		rawImuData, 20, HAL_MAX_DELAY);
 }
 
 void IMUMock::GetResult(IMUData_t &Data) {
 	// // The 15:8 and 7:0 bits are in different registers. The bitmasking below joins them into one 16 bit integer
 	this->updateData();
-	int16_t magx = (rawImuData[1] << 8) | rawImuData[0];
-	int16_t magy = (rawImuData[3] << 8) | rawImuData[2];
-	int16_t magz = (rawImuData[5] << 8) | rawImuData[4];
-	int16_t rhall = (rawImuData[7] << 8) | rawImuData[6];
-	int16_t gyrx = (rawImuData[9] << 8) | rawImuData[8];
-	int16_t gyry = (rawImuData[11] << 8) | rawImuData[10];
-	int16_t gyrz = (rawImuData[13] << 8) | rawImuData[12];
-	int16_t accx = (rawImuData[15] << 8) | rawImuData[14];
-	int16_t accy = (rawImuData[17] << 8) | rawImuData[16];
-	int16_t accz = (rawImuData[19] << 8) | rawImuData[18];
+	int16_t magx = rawImuData[0];
+	int16_t magy = rawImuData[2];
+	int16_t magz = rawImuData[4];
+	int16_t rhall = rawImuData[6];
+	int16_t gyrx = rawImuData[8];
+	int16_t gyry = rawImuData[10];
+	int16_t gyrz = rawImuData[12];
+	int16_t accx = rawImuData[14];
+	int16_t accy = rawImuData[16];
+	int16_t accz = rawImuData[18];
 
 	Data.mag_x = (static_cast<float>(magx) / MAG_ADJUST_FACTOR);
 	Data.mag_y = (static_cast<float>(magy) / MAG_ADJUST_FACTOR);
@@ -266,7 +295,6 @@ void IMUMock::GetResult(IMUData_t &Data) {
 }
 
 IMUMock::IMUMock() {
-	HAL_I2C_Init(&hi2c1);
 	IMUInit();
 	this->calibrate(); // Calibrate IMU and populate callibration struct for use
 }
@@ -277,31 +305,30 @@ void IMUMock::IMUInit(void) {
 		configAcc();
 		configGyro();
 		configMag();
-		HAL_I2C_Mem_Read(&hi2c1, BMX160_I2C_ADDR, PMU_STATUS_REG,
-				I2C_MEMADD_SIZE_8BIT, &powerStatus, 1, HAL_MAX_DELAY);
-	} else {
-		// The device doesn't exist or isn't responding - there is some error
-		// TODO: Implement error protocol
-	}
+		methods.I2C_Receive(IMU_DUMMY_ADDRESS, &Registers[3], &powerStatus, 1, 1);
+		//HAL_I2C_Mem_Read(&hi2c1, BMX160_I2C_ADDR, PMU_STATUS_REG,
+		//		I2C_MEMADD_SIZE_8BIT, &powerStatus, 1, HAL_MAX_DELAY);
+	} 
 }
 
 void IMUMock::setAllPowerModesToNormal() {
 
 	// Set gyro to normal mode
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
-			&GYRO_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &GyroBuffer[2], 1); // Writing one byte 
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
+	//		&GYRO_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
 	HAL_Delay(10);
 
 	// Set accelerometer to normal mode
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
-			&ACC_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &AccBuffer[2], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
+	//		&ACC_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
 	HAL_Delay(10);
 
 	// Set magnetometer to normal mode
-	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
-			&MAG_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
+	methods.I2C_Transmit(IMU_DUMMY_ADDRESS, &MagBuffer[8], 1);
+	//HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT,
+	//		&MAG_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
 	HAL_Delay(10);
 
 }
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
