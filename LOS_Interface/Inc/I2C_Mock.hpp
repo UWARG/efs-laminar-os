@@ -1,20 +1,19 @@
 /*
-	I2C mocked interface
-	Author: Jack Greenwood
-	Date: November 10, 2022
-*/
+ *	I2C mocked interface
+ * 	Author: Jack Greenwood
+ *	Date: November 10, 2022
+ */
 
 #ifndef I2C_MOCK_HPP_
 #define I2C_MOCK_HPP_
 
-//#include "gpio.h" // fix these later
-//#include "i2c.h" // ^
+#include "stm32f4xx_hal_gpio.h" // fix these later" // ^
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_def.h"
 #include "stm32f4xx_hal_i2c.h"
 #include <cstdint>
 
-
+// Could use cleaning
 #define I2C_SDA_LOW  HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
 #define I2C_SDA_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
 
@@ -23,18 +22,12 @@
 
 #define I2C_Delay HAL_Delay(0.005); // 5 microseconds delay time
 
-typedef struct CommLines {
-	// define the sda and scl lines here.
-	// ack bit as well?
-	// Move the definitions in source here?
-};
-
 class I2C_Comms {
 
-  public:
-
-
   private:
+
+
+  public:
     /**
      * @brief Initialize I2C interface
     */
@@ -142,10 +135,12 @@ class I2C_Comms {
      * @brief Recieve function for data from specified register
      *
      * @param Register we would like to receive from
+     * 
+     * @param place we would like to store our bytes 
      *
-     * @param Size of register we are receiving from - Needed?
+     * @param Size of register we are receiving from 
      *
-     * @param Max acceptable time until timeout
+     * @param Number of bytes we would like to receive
 	*/
 	bool I2C_Receive(uint8_t address, uint8_t reg[], uint8_t *data, uint8_t reg_size, uint8_t size);
 

@@ -26,6 +26,8 @@ private:
 
 	void IMUInit(void);
 
+	bool scan();
+
 	// Variables:
 	uint8_t rawImuData[20];
 	IMUData_t IMUCalibration;
