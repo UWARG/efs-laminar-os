@@ -8,7 +8,11 @@ Los_Actuators& Los_Actuators::getInstance()
     return singleton;
 }
 
-Los_Actuators::Los_Actuators() {}
+Los_Actuators::Los_Actuators() {
+  for (int i = 0; i < NUM_ACTUATOR_CHANNELS; i++) {
+    motor_channels_[i].setup();
+  }
+}
 
 void Los_Actuators::set(uint8_t channel, uint8_t percent) {
     if (channel >= NUM_ACTUATOR_CHANNELS) 
