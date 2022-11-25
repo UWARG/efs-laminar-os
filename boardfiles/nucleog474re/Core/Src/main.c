@@ -66,7 +66,7 @@ void MX_FREERTOS_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-int losInit(void)
+void losInit(void)
 {
   HAL_Init();
 
