@@ -10,7 +10,7 @@ DSHOTChannel::DSHOTChannel(uint16_t pin_num, GPIO_TypeDef* port, TIM_HandleTypeD
                                                         tim_dma_source_(tim_dma_source) {}
 
 void DSHOTChannel::setup(void) {
-  HAL_TIM_PWM_Start(timer, timer_channel);
+  HAL_TIM_PWM_Start(timer_, timer_channel_);
 
   //init buffer for 0 percent throttle
   prepareDMABuffer(0); 
@@ -19,13 +19,13 @@ void DSHOTChannel::setup(void) {
   startDMA(); 
 
   // Enable DMA Requests
-  __HAL_TIM_ENABLE_DMA(timer, tim_dma_source_); 
+  __HAL_TIM_ENABLE_DMA(timer_, tim_dma_source_); 
 
-  setup = true;
+  isSetup = true;
 }
 
 void DSHOTChannel::set(uint8_t percent) {
-    if (percent > 100 || !setup) {
+    if (percent > 100 || !isSetup) {
         return;
     }
     prepareDMABuffer(percent);

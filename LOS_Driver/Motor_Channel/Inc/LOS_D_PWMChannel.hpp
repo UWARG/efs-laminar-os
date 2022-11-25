@@ -9,6 +9,7 @@ class PWMChannel : public MotorChannel {
         PWMChannel(uint16_t pin_num, GPIO_TypeDef* port, 
                     TIM_HandleTypeDef* timer, uint16_t timer_channel);
 
+        void setup(void);
         void set(uint8_t percent);
     private:
         uint16_t pin_num_;

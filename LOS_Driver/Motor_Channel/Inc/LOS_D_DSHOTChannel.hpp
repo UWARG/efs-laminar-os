@@ -10,6 +10,7 @@ class DSHOTChannel: public MotorChannel{
                         uint16_t timer_channel, uint16_t tim_DMA_handle_index, 
                         uint16_t tim_dma_source);
 
+        void setup(void);
         void set(uint8_t percent);
     private:
         static constexpr int DSHOT_DATA_FRAME_LEN = 16;

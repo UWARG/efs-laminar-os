@@ -10,7 +10,7 @@ Los_Actuators& Los_Actuators::getInstance()
 
 Los_Actuators::Los_Actuators() {
   for (int i = 0; i < NUM_ACTUATOR_CHANNELS; i++) {
-    motor_channels_[i].setup();
+    motor_channels_[i]->setup();
   }
 }
 

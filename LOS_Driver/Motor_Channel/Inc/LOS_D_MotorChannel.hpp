@@ -5,9 +5,9 @@
 
 class MotorChannel {
     public:
-        virtual void set(uint8_t percent) = 0;
         virtual void setup(void) = 0;
-    private:
+        virtual void set(uint8_t percent) = 0;
+    protected:
         bool isSetup = false;
 };
 

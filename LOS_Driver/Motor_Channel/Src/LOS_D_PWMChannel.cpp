@@ -8,13 +8,13 @@ PWMChannel::PWMChannel(uint16_t pin_num, GPIO_TypeDef* port, TIM_HandleTypeDef* 
 }
 
 void PWMChannel::setup(void) {
-  HAL_TIM_PWM_Start(timer, timer_channel);
+  HAL_TIM_PWM_Start(timer_, timer_channel_);
 
-  setup = true;
+  isSetup = true;
 }
 
 void PWMChannel::set(uint8_t percent) {
-    if (percent > 100 || !setup) {
+    if (percent > 100 || !isSetup) {
         return;
     }
 
