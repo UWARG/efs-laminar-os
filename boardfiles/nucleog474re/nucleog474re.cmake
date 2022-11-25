@@ -6,7 +6,7 @@
 
 set(FOLDER_NAME nucleog474re)
 set(STARTUP_ASM boardfiles/nucleog474re/Core/Startup/startup_stm32g474retx.s)
-set(LINKER_SCRIPT boardfiles/nucleog474re/STM32g474RETX_FLASH.ld)
+set(LINKER_SCRIPT boardfiles/nucleog474re/STM32G474RETX_FLASH.ld)
 set(PROJ_NAME nucelog474re)
 set(FAMILY_NAME STM32G4xx)
 set(PORTABLE_NAME CM4F)
