@@ -10,8 +10,6 @@
 
 #include "LOS_D_MotorChannel.hpp"
 
-#include "main.h"
-
 /* LOS_Link */
 #define PPM
 const uint8_t MAX_PPM_CHANNELS = 12;
