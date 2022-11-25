@@ -6,7 +6,7 @@
 
 set(FOLDER_NAME nucleof401re)
 set(STARTUP_ASM boardfiles/nucleof401re/Core/Startup/startup_stm32f401retx.s)
-set(LINKER_SCRIPT boardfiles/nucleof401re/STM32F401RETX_FLASH.ld)
+set(LINKER_SCRIPT boardfiles/nucleof401re/STM32F401RETx_FLASH.ld)
 set(PROJ_NAME nucelof401re)
 set(FAMILY_NAME STM32F4xx)
 set(PORTABLE_NAME CM4F)
