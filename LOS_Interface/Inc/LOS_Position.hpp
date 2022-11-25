@@ -28,7 +28,7 @@ private:
         LOS_Position();
         void sensor_fusion(IMUData_t new_imuData, GpsData_t gpsData,
                            AltimeterData_t altimeterData,
-                           airspeedData_t airspeedData);
+                           AirspeedData_t airspeedData);
 
         PositionData_t position_;
         RawPositionData_t rawPosition_;

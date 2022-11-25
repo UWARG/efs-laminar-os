@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 void SensorFusionInterfaceInit(void);
-void SensorFusionInterfaceExecute(IMUData_t, GpsData_t, AltimeterData_t, airspeedData_t);
+void SensorFusionInterfaceExecute(IMUData_t, GpsData_t, AltimeterData_t,AirspeedData_t);
 
 #ifdef __cplusplus
 }

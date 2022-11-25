@@ -14,15 +14,6 @@
  * Definitions
  **********************************************************************************************************************/
 
-struct AltimeterData_t 
-{
-    float pressure, altitude, temp;
-    
-    bool isDataNew; 
-    SensorErrorCodes status;
-    uint32_t utcTime;
-};
-
 /**
  * This union is of no use to the user.
  * It is for internal use by the module only.
