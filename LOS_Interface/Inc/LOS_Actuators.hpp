@@ -3,12 +3,19 @@
 
 #include <stdint.h>
 
-class LOS_Actuators{
+class Los_Actuators{
 
     public:
-        LOS_Actuators();
+        Los_Actuators(const Los_Actuators*) = delete;
+
+        static Los_Actuators& getInstance();
         
         void set(uint8_t channel, uint8_t percent);
+    
+    private:
+        Los_Actuators();
+        
+        void init(void);
 
 };
 
