@@ -1,8 +1,8 @@
 #include "driver_params.hpp"
-#include "config.h"
+#include "config.hpp"
 
-#include "LOS_D_DSHOTChannel.h"
-#include "LOS_D_PWMChannel.h"
+#include "LOS_D_DSHOTChannel.hpp"
+#include "LOS_D_PWMChannel.hpp"
 
 #define PWM1_PIN  0 
 #define PWM1_PORT nullptr
