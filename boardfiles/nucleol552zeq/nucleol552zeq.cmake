@@ -3,6 +3,7 @@ set(STARTUP_ASM boardfiles/nucleol552zeq/Core/Startup/startup_stm32l552zetxq.s)
 set(LINKER_SCRIPT boardfiles/nucleol552zeq/STM32L552ZETXQ_FLASH.ld)
 set(PROJ_NAME nucleol552zeq)
 set(FAMILY_NAME STM32L5xx)
+set(PORTABLE_NAME CM33_NTZ/non_secure)
 
 add_definitions(
   -DUSE_HAL_LIB

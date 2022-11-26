@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.2.0)
 
 project(LaminarOS C CXX)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
@@ -22,6 +24,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
+    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
 )
