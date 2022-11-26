@@ -91,11 +91,14 @@ void losInit(void) {
   MX_DMA_Init();
 
   /* Init scheduler */
+  osKernelInitialize();
   MX_FREERTOS_Init();
+  
+}
 
+void losKernelStart(void) {
   /* Start scheduler */
   osKernelStart();
-  
 }
 /* USER CODE END 0 */
 

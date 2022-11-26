@@ -54,6 +54,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 void losInit(void);
+void losKernelStart(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
