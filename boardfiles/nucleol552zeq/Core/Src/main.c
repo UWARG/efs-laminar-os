@@ -20,6 +20,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
+#include "dma.h"
 #include "i2c.h"
 #include "usart.h"
 #include "rtc.h"
@@ -63,7 +64,6 @@ void MX_FREERTOS_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void losInit(void) {
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* Configure the system clock */
@@ -87,6 +87,11 @@ void losInit(void) {
   MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM4_Init();
+  MX_TIM5_Init();
+  MX_DMA_Init();
+
+  /* Init scheduler */
+  MX_FREERTOS_Init();
 
   /* Start scheduler */
   osKernelStart();
