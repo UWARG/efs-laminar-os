@@ -65,11 +65,12 @@ void MX_FREERTOS_Init(void);
 
 void losInit(void)
 {
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* Configure the system clock */
   SystemClock_Config();
 
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_DMA_Init();
@@ -84,9 +85,12 @@ void losInit(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
 
-  /* Call init function for freertos objects (in freertos.c) */
+  /* Init scheduler */
+  osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
+}
 
+void losKernelStart(void) {
   /* Start scheduler */
   osKernelStart();
 }

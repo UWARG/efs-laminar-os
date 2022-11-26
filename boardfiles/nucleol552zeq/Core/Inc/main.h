@@ -28,6 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l5xx_hal.h"
+
 #include "stm32l5xx_ll_ucpd.h"
 #include "stm32l5xx_ll_bus.h"
 #include "stm32l5xx_ll_cortex.h"
@@ -60,13 +61,12 @@ extern "C" {
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void losInit(void);
+void losKernelStart(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
