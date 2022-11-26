@@ -1,7 +1,0 @@
-#ifndef INTERFACE_TEMP_PARAMS_HPP_
-#define INTERFACE_TEMP_PARAMS_HPP_
-
-#include <cstdint>
-
-
-#endif /* INTERFACE_TEMP_PARAMS_HPP_ */

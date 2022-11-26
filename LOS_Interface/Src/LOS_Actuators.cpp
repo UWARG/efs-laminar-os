@@ -1,6 +1,5 @@
 #include "LOS_Actuators.hpp"
 #include "config.hpp"
-#include "driver_params.hpp"
 
 Los_Actuators& Los_Actuators::getInstance()
 {
