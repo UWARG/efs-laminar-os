@@ -54,7 +54,7 @@ uint8_t PPMChannel::GetResult(uint8_t channel)
 		return 0;
 	}
 
-	uint8_t percentage = timeToPercentage(max_values_[channel], min_values_[channel], ppm_values_[channel]);
+	uint8_t percentage = timeToPercentage(channel);
 	return percentage;
 }
 
@@ -69,7 +69,10 @@ float PPMChannel::counterToTime(uint32_t count, uint32_t psc)
 }
 
 
-uint8_t PPMChannel::timeToPercentage(uint32_t max, uint32_t min, float time) {
+uint8_t PPMChannel::timeToPercentage(uint8_t channel) {
+	uint32_t min = min_values_[channel];
+	uint32_t max = max_values_[channel];
+	float time = ppm_values_[channel];
 
 	float percentage = ((time - min) / (max - min)) * 100.0f;
 
