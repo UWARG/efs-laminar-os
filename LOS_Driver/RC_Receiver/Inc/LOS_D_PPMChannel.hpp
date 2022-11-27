@@ -56,6 +56,10 @@ class PPMChannel: public RcReceiver{
 	 */
 	bool isDisconnected(uint32_t sys_time);
 
+	/* Helper Functions */
+	float counterToTime(uint32_t count, uint32_t psc);
+	uint8_t timeToPercentage(uint8_t channel);
+
  private:
 
 	/* Constants */
@@ -68,9 +72,6 @@ class PPMChannel: public RcReceiver{
 	static constexpr uint8_t MAX_PPM_CHANNELS 		= 12;
 
 
-	/* Helper Functions */
-	float counterToTime(uint32_t count, uint32_t psc);
-	uint8_t timeToPercentage(uint32_t max, uint32_t min, float time);
 
 	/* Interrupt callback function */
 	void interrupt_callback(TIM_HandleTypeDef * timer);
@@ -80,8 +81,8 @@ class PPMChannel: public RcReceiver{
 	uint16_t timer_channel_;
 	volatile float ppm_values_[MAX_PPM_CHANNELS];
  	uint8_t num_channels_;
-	float min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
-	float max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
+	uint32_t min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
+	uint32_t max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
 	bool is_setup_ = false;
 
 };
