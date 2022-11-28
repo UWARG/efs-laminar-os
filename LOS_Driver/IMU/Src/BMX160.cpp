@@ -11,6 +11,8 @@
 //#include <Inc/LOS_Link.hpp>
 #include <cstdint>
 #include <math.h>
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h"
 
 /* Private define ------------------------------------------------------------*/
 
@@ -53,55 +55,46 @@ static int16_t gyrZLog[2000];
 I2C_Comms methods;
  /* Private Methods ---------------------------------------------------------*/
 
-uint8_t AccBuffer[5]; 
-AccBuffer[0] = 0x40;
-AccBuffer[1] = 0x41;
-AccBuffer[2] = 0x11;
-AccBuffer[3] = 0x08;
-AccBuffer[4] = 0x0B;
+int Array[2];
 
-uint8_t GyroBuffer[5];
-GyroBuffer[0] = 0x42;
-GyroBuffer[1] = 0x43;
-GyroBuffer[2] = 0x15;
-GyroBuffer[3] = 0x01;
-GyroBuffer[4] = 0x0B;
+uint8_t AccBuffer[5] = {0x40, 0x41, 0x11, 0x08, 0x0B}; 
+// AccBuffer[0] = 0x40;
+// AccBuffer[1] = 0x41;
+// AccBuffer[2] = 0x11;
+// AccBuffer[3] = 0x08;
+// AccBuffer[4] = 0x0B;
 
-uint8_t MagBuffer[17];
-MagBuffer[0]  = 0x44;
-MagBuffer[1]  = 0x4C;
-MagBuffer[2]  = 0x4D;
-MagBuffer[3]  = 0x4E;
-MagBuffer[4]  = 0x4F;
-MagBuffer[5]  = 0x52;
-MagBuffer[6]  = 0x51;
-MagBuffer[7]  = 0x4B;
-MagBuffer[8]  = 0x19;
-MagBuffer[9]  = 0x80;
-MagBuffer[10] = 0x00;
-MagBuffer[11] = 0x02;
-MagBuffer[12] = 0x4C;
-MagBuffer[13] = 0x42;
-MagBuffer[14] = 0x09;
-MagBuffer[15] = 0x07;
-MagBuffer[16] = 0x01;
+uint8_t GyroBuffer[5] = {0x42, 0x43, 0x15, 0x01, 0x0B};
+// GyroBuffer[0] = 0x42;
+// GyroBuffer[1] = 0x43;
+// GyroBuffer[2] = 0x15;
+// GyroBuffer[3] = 0x01;
+// GyroBuffer[4] = 0x0B;
 
-uint8_t Registers[4];
-Registers[0] = 0x04;
-Registers[1] = 0x1B;
-Registers[2] = 0x7E;
-Registers[3] = 0x03; 
+uint8_t MagBuffer[17] = {0x44, 0x4C, 0x4D, 0x4E, 0x4F, 0x52, 0x51, 0x4B, 0x19, 0x80, 0x00, 0x02, 0x4C, 0x42, 0x09, 0x07, 0x01};
+// MagBuffer[0]  = 0x44;
+// MagBuffer[1]  = 0x4C;
+// MagBuffer[2]  = 0x4D;
+// MagBuffer[3]  = 0x4E;
+// MagBuffer[4]  = 0x4F;
+// MagBuffer[5]  = 0x52;
+// MagBuffer[6]  = 0x51;
+// MagBuffer[7]  = 0x4B;
+// MagBuffer[8]  = 0x19;
+// MagBuffer[9]  = 0x80;
+// MagBuffer[10] = 0x00;
+// MagBuffer[11] = 0x02;
+// MagBuffer[12] = 0x4C;
+// MagBuffer[13] = 0x42;
+// MagBuffer[14] = 0x09;
+// MagBuffer[15] = 0x07;
+// MagBuffer[16] = 0x01;
 
-rawImuData[0] = 100;
-rawImuData[2] = 100;
-rawImuData[4] = 100;
-rawImuData[6] = 50;
-rawImuData[8] = 50;
-rawImuData[10] = 50;
-rawImuData[12] = 50;
-rawImuData[14] = 1000;
-rawImuData[16] = 1000;
-rawImuData[18] = 1000;
+uint8_t Registers[4] = {0x04, 0x1B, 0x7E, 0x03};
+// Registers[0] = 0x04;
+// Registers[1] = 0x1B;
+// Registers[2] = 0x7E;
+// Registers[3] = 0x03; 
 
 void IMUMock::configAcc() {
 	// Configure acceleration sampling rate as 800 Hz and every four are averaged
@@ -247,7 +240,7 @@ IMU& IMUMock::getInstance() {
 
 void IMUMock::updateData(void) {
 	// Just updates the rawIMUData and conducts some processing on it
-	if !(rawImuData[0] > 1.1) {
+	if (!(rawImuData[0] > 1.1)) {
 		rawImuData[0] = sqrt(rawImuData[0]);
 		rawImuData[2] = sqrt(rawImuData[2]);
 		rawImuData[4] = sqrt(rawImuData[4]);
@@ -300,6 +293,17 @@ IMUMock::IMUMock() {
 }
 
 void IMUMock::IMUInit(void) {
+	rawImuData[0] = 100;
+	rawImuData[2] = 100;
+	rawImuData[4] = 100;	
+	rawImuData[6] = 50;
+	rawImuData[8] = 50;
+	rawImuData[10] = 50;
+	rawImuData[12] = 50;
+	rawImuData[14] = 1000;
+	rawImuData[16] = 1000;
+	rawImuData[18] = 1000;
+	
 	if (scan()) {
 		setAllPowerModesToNormal();
 		configAcc();

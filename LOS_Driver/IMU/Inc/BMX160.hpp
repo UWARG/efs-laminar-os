@@ -1,7 +1,16 @@
 #ifndef INC_BMX160_HPP_
 #define INC_BMX160_HPP_
 
-#include "imu.hpp"
+struct IMUData_t {
+  double gyro_x, gyro_y, gyro_z;
+  double accel_x, accel_y, accel_z;
+  double mag_x, mag_y, mag_z;
+};
+
+class IMU {
+  public:
+    virtual void GetResult(IMUData_t& Data) = 0;
+};
 
 class IMUMock : public IMU {
 

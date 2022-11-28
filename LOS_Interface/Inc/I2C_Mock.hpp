@@ -146,4 +146,4 @@ class I2C_Comms {
 
 };
 
-#endif I2C_MOCK_HPP_ /* Mock I2C interface */
+#endif /* I2C_MOCK_HPP_  Mock I2C interface */
