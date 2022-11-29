@@ -232,11 +232,7 @@ void IMUMock::calibrate(void) {
 }
 
 // /* Public Methods  ---------------------------------------------------------*/
-
-IMU& IMUMock::getInstance() {
-	// static BMX160 singleton;
-	// return singleton;
-}
+//removed the git instance nature of singleton design. Add later?
 
 void IMUMock::updateData(void) {
 	// Just updates the rawIMUData and conducts some processing on it
@@ -296,13 +292,13 @@ void IMUMock::IMUInit(void) {
 	rawImuData[0] = 100;
 	rawImuData[2] = 100;
 	rawImuData[4] = 100;	
-	rawImuData[6] = 50;
-	rawImuData[8] = 50;
-	rawImuData[10] = 50;
-	rawImuData[12] = 50;
-	rawImuData[14] = 1000;
-	rawImuData[16] = 1000;
-	rawImuData[18] = 1000;
+	rawImuData[6] = 100;
+	rawImuData[8] = 100;
+	rawImuData[10] = 100;
+	rawImuData[12] = 100;
+	rawImuData[14] = 100;
+	rawImuData[16] = 100;
+	rawImuData[18] = 100;
 	
 	if (scan()) {
 		setAllPowerModesToNormal();

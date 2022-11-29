@@ -1,11 +1,17 @@
 #ifndef INC_BMX160_HPP_
 #define INC_BMX160_HPP_
 
+#include "stdint.h"
+
 struct IMUData_t {
   double gyro_x, gyro_y, gyro_z;
   double accel_x, accel_y, accel_z;
   double mag_x, mag_y, mag_z;
 };
+
+uint8_t rawImuData[20];
+IMUData_t IMUCalibration;
+uint8_t powerStatus;
 
 class IMU {
   public:
@@ -15,8 +21,6 @@ class IMU {
 class IMUMock : public IMU {
 
 public:
-
-	static IMU& getInstance();
 
 	void GetResult(IMUData_t &Data);
 	void updateData();
@@ -38,9 +42,9 @@ private:
 	bool scan();
 
 	// Variables:
-	uint8_t rawImuData[20];
-	IMUData_t IMUCalibration;
-	uint8_t powerStatus;
+	// uint8_t rawImuData[20];
+	// IMUData_t IMUCalibration;
+	// uint8_t powerStatus;
 };
 
 #endif 

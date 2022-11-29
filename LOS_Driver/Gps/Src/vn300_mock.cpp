@@ -5,12 +5,13 @@
  *      Sourced from: Christopher Chung
  */
 
-#include <vectorNav.hpp>
+#include <vn300_mock.hpp>
+#include "stm32f4xx_hal_uart.h"
 
 const char* GPS_HEADER = "$VNGPS";
 const char* IMU_HEADER = "$VNIMU";
 
-extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart3; 
 
 const char ANT_A_OFFSET_COMMAND[] = "$VNWRG,57,0.1,0,0*XX";                     //ASCII command to set the Antenna A Offset {0.1,0,0}
 const char ANT_B_OFFSET_COMMAND[] = "$VNWRG,93,1.5,0,0,0.038,0.038,0.038*XX";   //ACSII command to set the Antenna A Offset {0.2,0,0} and uncertainly {0.0254, 0.0254, 0.0254} 
@@ -22,7 +23,7 @@ const uint16_t PAYLOAD_SIZE = 74;                            //Size of custom me
 uint8_t payload_data[PAYLOAD_SIZE] = {0};                    //RX buffer to hold incoming data
 
 /* Public Methods  ---------------------------------------------------------*/
-
+// not really needed
 Position& VN300::getInstance(){
     static VN300 singleton;
     return singleton;

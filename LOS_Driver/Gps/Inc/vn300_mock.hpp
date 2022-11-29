@@ -8,7 +8,7 @@
 #ifndef INC_VECTORNAV_HPP_
 #define INC_VECTORNAV_HPP_
 
-#include <main.hpp>
+//#include <main.hpp>
 #include <stdint.h>
 #include <stdbool.h>
 #include <math.h>
@@ -82,7 +82,7 @@ class VN300: public Position{
 
     private:
 
-        //I think this calls the constructor and makes our single instance
+        // Adhere to the singleton design pattern given the nature of this project?
         VN300();
 
         /**
