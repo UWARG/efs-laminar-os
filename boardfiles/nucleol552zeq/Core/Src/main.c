@@ -22,6 +22,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "i2c.h"
+#include "icache.h"
 #include "usart.h"
 #include "rtc.h"
 #include "spi.h"
