@@ -91,6 +91,9 @@ void losInit(void) {
   MX_TIM5_Init();
   MX_DMA_Init();
 
+  /* init IC's */
+  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
+
   /* Init scheduler */
   osKernelInitialize();
   MX_FREERTOS_Init();
