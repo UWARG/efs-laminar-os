@@ -22,11 +22,13 @@
 #include "adc.h"
 #include "dma.h"
 #include "i2c.h"
+#include "icache.h"
 #include "usart.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
 #include "ucpd.h"
+#include "usb.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -89,6 +91,9 @@ void losInit(void) {
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_DMA_Init();
+
+//  HAL_TIM_Base_Start(&htim2);
+//  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 
   /* Init scheduler */
   osKernelInitialize();
