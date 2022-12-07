@@ -64,7 +64,7 @@ class PPMChannel: public RcReceiver{
 
 	/* Constants */
 	static constexpr float SEC_TO_MICROSEC 			= 1000000.0f;
-	static constexpr float BASE_FREQUENCY 			= 48000000.0f;
+	static constexpr float BASE_FREQUENCY 			= 110000000.0f;
 	static constexpr float PULSE_WIDTH 				= 310.0f; // in us
 	static constexpr float MIN_WIDTH_OF_RESET_PULSE = 3000.0f; // not really a pulse, this is slightly smaller than the difference in time between sequential PPM packets
 	static constexpr float MIN_PULSE_WIDTH 			= 700.0f;
