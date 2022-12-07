@@ -1,6 +1,7 @@
 #include "LOS_D_PPMChannel.hpp"
 #include "tim.h"
 #include "RSSI.hpp"
+#include <stdint.h>
 
 PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels): timer_(timer),
 																								timer_channel_(timer_channel),
