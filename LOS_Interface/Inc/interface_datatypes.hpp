@@ -66,4 +66,11 @@ typedef struct {
 
 } RawPositionData_t;
 
+
+/* LOS_Comms */
+typedef struct {
+    uint8_t* ring_buffer;       // Ring bufffer to store new data
+    uint8_t size;               // Size of data to be transferred in bytes
+} LosCommsRx_t;
+
 #endif /* INC_INTERFACE_DATATYPES_HPP_ */
