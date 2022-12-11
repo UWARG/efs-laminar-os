@@ -22,10 +22,14 @@ class JetsonComms: public AirComms{
          * @param length Number of bytes to transfer
          * @return uint8_t Actual number of bytes transferred
          */
-        uint8_t GetResult(uint8_t* buffer, uint8_t length);
+        uint8_t GetResult(uint8_t* buffer, uint16_t length);
 
     private:
         
+        void transferBytes(uint8_t* buffer, uint16_t length);
+
+        uint16_t getSize();
+
         /**
          * @brief Dequeues certain about of bytes from the ring buffer
          * 
@@ -67,13 +71,14 @@ class JetsonComms: public AirComms{
          */
         void interrupt_callback();
 
-        UART_HandleTypeDef* uart;
+        UART_HandleTypeDef* uart_;
         uint16_t uart_dma_handle_index_;
-        static constexpr uint8_t BUFFER_SIZE_ = 100;
-        uint8_t interupt_buffer_[BUFFER_SIZE_];
-        uint8_t ring_buffer_[BUFFER_SIZE_ * 5];
-        uint8_t head;
-        uint8_t tail;
+        static constexpr uint16_t INT_BUFFER_SIZE_ = 100;
+        static constexpr uint16_t RING_BUFFER_SIZE_ = INT_BUFFER_SIZE_ * 5;
+        uint8_t interupt_buffer_[INT_BUFFER_SIZE_];
+        uint8_t ring_buffer_[RING_BUFFER_SIZE_];
+        uint8_t head_;
+        uint8_t tail_;
 
 };
 
