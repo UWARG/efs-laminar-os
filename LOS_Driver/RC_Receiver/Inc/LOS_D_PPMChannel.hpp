@@ -25,7 +25,7 @@ class PPMChannel: public RcReceiver{
 	 * @param deadzone time in us for deadzone. ie. if deadzone is set to 50, a signal that is received
 	 * 		with a 1050us length will still be considered 0%
 	 */
-	StatusCode setLimits(uint8_t channel, uint32_t min, uint32_t max, uint32_t deadzone);
+	StatusCode setLimits(uint8_t channel, float min, float max, uint32_t deadzone);
 
 	/**
 	 * Set the disconnect timeout
@@ -56,22 +56,21 @@ class PPMChannel: public RcReceiver{
 	 */
 	bool isDisconnected(uint32_t sys_time);
 
-	/* Helper Functions */
-	float counterToTime(uint32_t count, uint32_t psc);
-	uint8_t timeToPercentage(uint8_t channel);
-
  private:
+	/* Helper Functions */
+		float counterToTime(uint32_t count, uint32_t psc);
+		uint8_t timeToPercentage(uint8_t channel);
 
 	/* Constants */
 	static constexpr float SEC_TO_MICROSEC 			= 1000000.0f;
-	static constexpr float BASE_FREQUENCY 			= 110000000.0f;
 	static constexpr float PULSE_WIDTH 				= 310.0f; // in us
-	static constexpr float MIN_WIDTH_OF_RESET_PULSE = 3000.0f; // not really a pulse, this is slightly smaller than the difference in time between sequential PPM packets
+
+	// not really a pulse, this is slightly smaller than the difference in time between sequential
+	// PPM packets
+	static constexpr float MIN_WIDTH_OF_RESET_PULSE = 3000.0f; 
 	static constexpr float MIN_PULSE_WIDTH 			= 700.0f;
 	static constexpr float MAX_PULSE_WIDTH			= 1670.0f;
 	static constexpr uint8_t MAX_PPM_CHANNELS 		= 12;
-
-
 
 	/* Interrupt callback function */
 	void interrupt_callback(TIM_HandleTypeDef * timer);
@@ -81,9 +80,10 @@ class PPMChannel: public RcReceiver{
 	uint16_t timer_channel_;
 	volatile float ppm_values_[MAX_PPM_CHANNELS];
  	uint8_t num_channels_;
-	uint32_t min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
-	uint32_t max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
+	float min_values_[MAX_PPM_CHANNELS]; //stores min microsecond values for each channel
+	float max_values_[MAX_PPM_CHANNELS]; //stores max microsecond values for each channel
 	bool is_setup_ = false;
+	float base_frequency_;
 
 };
 
