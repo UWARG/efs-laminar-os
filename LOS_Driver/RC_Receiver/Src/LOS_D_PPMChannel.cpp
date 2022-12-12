@@ -14,12 +14,6 @@ PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t
 	min_values_[i] = MIN_PULSE_WIDTH;
 	max_values_[i] = MAX_PULSE_WIDTH;
 	}
-
-	//Get the base frequency our timers are running at
-	base_frequency_ = HAL_RCC_GetPCLK1Freq();
-	
-	//start the input capture timer in interrupt mode
-	HAL_TIM_IC_Start_IT(timer_, timer_channel_);
 }
 
 void PPMChannel::init()
