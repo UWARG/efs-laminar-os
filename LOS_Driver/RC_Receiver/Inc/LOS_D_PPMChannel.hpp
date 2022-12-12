@@ -12,6 +12,12 @@ class PPMChannel: public RcReceiver{
 	PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels);
 
 	/**
+	 * @brief Initilize peripherals
+	 * 
+	 */
+	void init();
+
+	/**
 	 * Reconfigure number of channels
 	 * @param num_channels
 	 */

@@ -22,6 +22,15 @@ PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t
 	HAL_TIM_IC_Start_IT(timer_, timer_channel_);
 }
 
+void PPMChannel::init()
+{
+	//Get the base frequency our timers are running at
+	base_frequency_ = HAL_RCC_GetPCLK1Freq();
+	
+	//start the input capture timer in interrupt mode
+	HAL_TIM_IC_Start_IT(timer_, timer_channel_);
+}
+
 StatusCode PPMChannel::setLimits(uint8_t channel, float min, float max, uint32_t deadzone) {
 	if (channel <= 0 || channel > num_channels_ || min >= max) {
 		return STATUS_CODE_INVALID_ARGS;
