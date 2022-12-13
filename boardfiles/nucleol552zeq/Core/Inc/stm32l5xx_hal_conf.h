@@ -38,7 +38,7 @@
 /*#define HAL_COMP_MODULE_ENABLED   */
 /*#define HAL_CRC_MODULE_ENABLED   */
 /*#define HAL_CRYP_MODULE_ENABLED   */
-/*#define HAL_DAC_MODULE_ENABLED   */
+#define HAL_DAC_MODULE_ENABLED
 /*#define HAL_DFSDM_MODULE_ENABLED   */
 /*#define HAL_FDCAN_MODULE_ENABLED   */
 /*#define HAL_GTZC_MODULE_ENABLED   */
@@ -85,7 +85,7 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-  #define HSE_VALUE    8000000UL /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    16000000UL /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
@@ -214,7 +214,7 @@
 #define USE_HAL_SMBUS_REGISTER_CALLBACKS      0U
 #define USE_HAL_SPI_REGISTER_CALLBACKS        0U
 #define USE_HAL_SRAM_REGISTER_CALLBACKS       0U
-#define USE_HAL_TIM_REGISTER_CALLBACKS        1U
+#define USE_HAL_TIM_REGISTER_CALLBACKS        0U
 #define USE_HAL_TSC_REGISTER_CALLBACKS        0U
 #define USE_HAL_UART_REGISTER_CALLBACKS       0U
 #define USE_HAL_USART_REGISTER_CALLBACKS      0U
