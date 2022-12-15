@@ -7,13 +7,13 @@
 #ifndef I2C_MOCK_HPP_
 #define I2C_MOCK_HPP_
 
-#include "stm32f4xx_hal_gpio.h" // fix these later" // ^
+#include "stm32f4xx_hal_gpio.h" 
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_hal_def.h"
 #include "stm32f4xx_hal_i2c.h"
 #include <cstdint>
 
-// Could use cleaning
+// Could be done better
 #define I2C_SDA_LOW  HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_RESET);
 #define I2C_SDA_HIGH HAL_GPIO_WritePin(I2C1_SDA_GPIO_Port, I2C1_SDA_Pin, GPIO_PIN_SET);
 
