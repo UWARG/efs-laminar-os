@@ -4,7 +4,7 @@ project(LaminarOS C CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(LOS_INCLUDES    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
+set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
 
                     # Include the config header folder
@@ -23,9 +23,9 @@ set(LOS_INCLUDES    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
 )
-message("los includes: ${LOS_INCLUDES}")
+set(LOS_INCLUDES ${INCLUDE_PATHS} PARENT_SCOPE)
 include_directories(
-    ${LOS_INCLUDES}
+    ${INCLUDE_PATHS}
 )
 
 set(HAL_DRIVERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers)
@@ -66,7 +66,3 @@ file(GLOB_RECURSE CXX_SOURCES ${HAL_CORE_CXX_SOURCES}
                               ${CORE_CXX_SOURCES})
 
 add_library(${PROJECT_NAME} ${C_SOURCES} ${CXX_SOURCES})
-
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    LOS_INCLUDES ${LOS_INCLUDES}
-)
