@@ -4,25 +4,28 @@ project(LaminarOS C CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
+
+                    # Include the config header folder
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Common/${FOLDER_NAME}/Inc
+
+                    ## Any new driver folders Inc dirs must be added here ##
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Motor_Channel/Inc
+
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
+)
+set(LOS_INCLUDES ${INCLUDE_PATHS} PARENT_SCOPE)
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
-
-    # Include the config header folder
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Common/${FOLDER_NAME}/Inc
-
-    ## Any new driver folders Inc dirs must be added here ##
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Motor_Channel/Inc
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
+    ${INCLUDE_PATHS}
 )
 
 set(HAL_DRIVERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers)
