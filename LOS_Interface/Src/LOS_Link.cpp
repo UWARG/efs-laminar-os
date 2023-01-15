@@ -6,7 +6,12 @@ Los_Link& Los_Link::getInstance()
     return singleton;
 }
 
-Los_Link::Los_Link(){}
+Los_Link::Los_Link(){
+    for (uint8_t instance = 0; instance < NUM_RC_RECEIVER_INSTANCES; instance++)
+    {
+        rc_receivers_[instance]->init();
+    }
+}
 
 LosLinkRx_t Los_Link::getRx(uint8_t instance)
 {
