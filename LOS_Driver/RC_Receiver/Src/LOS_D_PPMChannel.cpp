@@ -1,10 +1,12 @@
 #include "LOS_D_PPMChannel.hpp"
 #include "tim.h"
 #include "RSSI.hpp"
+#include <stdint.h>
 
-PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels): timer_(timer),
-																								timer_channel_(timer_channel),
-																								num_channels_(num_channels)
+PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels):
+																timer_(timer),
+																timer_channel_(timer_channel),
+																num_channels_(num_channels)
 {
 	for (int i = 0; i < MAX_PPM_CHANNELS; i++)
 	{
@@ -12,11 +14,18 @@ PPMChannel::PPMChannel(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t
 	min_values_[i] = MIN_PULSE_WIDTH;
 	max_values_[i] = MAX_PULSE_WIDTH;
 	}
+}
 
+void PPMChannel::init()
+{
+	//Get the base frequency our timers are running at
+	base_frequency_ = HAL_RCC_GetPCLK1Freq();
+	
+	//start the input capture timer in interrupt mode
 	HAL_TIM_IC_Start_IT(timer_, timer_channel_);
 }
 
-StatusCode PPMChannel::setLimits(uint8_t channel, uint32_t min, uint32_t max, uint32_t deadzone) {
+StatusCode PPMChannel::setLimits(uint8_t channel, float min, float max, uint32_t deadzone) {
 	if (channel <= 0 || channel > num_channels_ || min >= max) {
 		return STATUS_CODE_INVALID_ARGS;
 	}
@@ -54,13 +63,13 @@ uint8_t PPMChannel::GetResult(uint8_t channel)
 		return 0;
 	}
 
-	uint8_t percentage = timeToPercentage(max_values_[channel], min_values_[channel], ppm_values_[channel]);
+	uint8_t percentage = timeToPercentage(channel);
 	return percentage;
 }
 
 float PPMChannel::counterToTime(uint32_t count, uint32_t psc)
 {
-	float ticksPerSecond = (BASE_FREQUENCY / (psc + 1.0f));
+	float ticksPerSecond = (base_frequency_ / (psc + 1.0f));
 	float ticksPerMicroSecond = ticksPerSecond / SEC_TO_MICROSEC;
 
 	float lengthOfPulse = count / ticksPerMicroSecond;
@@ -69,7 +78,10 @@ float PPMChannel::counterToTime(uint32_t count, uint32_t psc)
 }
 
 
-uint8_t PPMChannel::timeToPercentage(uint32_t max, uint32_t min, float time) {
+uint8_t PPMChannel::timeToPercentage(uint8_t channel) {
+	float min = min_values_[channel];
+	float max = max_values_[channel];
+	float time = ppm_values_[channel];
 
 	float percentage = ((time - min) / (max - min)) * 100.0f;
 

@@ -4,7 +4,7 @@
 
 /* Los_Link */
 #include "LOS_D_PPMChannel.hpp"
-PPMChannel ppm_channel(&htim2, TIM_CHANNEL_1, NUM_RX_CHANNELS);
+PPMChannel ppm_channel(&htim4, TIM_CHANNEL_1, NUM_RX_CHANNELS);
 
 RcReceiver* rc_receivers_[NUM_RC_RECEIVER_INSTANCES] = {&ppm_channel};
 

@@ -7,6 +7,7 @@
 class RcReceiver{
     public:
         virtual uint8_t GetResult(uint8_t channel) = 0;
+        virtual void init() = 0;
         virtual void interrupt_callback(TIM_HandleTypeDef* timer) = 0;
 };
 
