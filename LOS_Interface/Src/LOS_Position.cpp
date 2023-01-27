@@ -25,10 +25,12 @@ LOS_Position& LOS_Position::getInstance() {
 
 LOS_Position::LOS_Position() {
 
+    /*
     if (SENSOR_FUSION_ == true)
     {
         SF_Init();
     }
+    */
 
 }
 
@@ -37,7 +39,7 @@ LOS_Position::LOS_Position() {
  *        position from data from sensors
  * 
  */
-
+/*
 void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
                                  AltimeterData_t new_altimeterData,
                                  airspeedData_t new_airspeedData)
@@ -105,6 +107,7 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
     position_.pitch_rate = sensorFusionOut_.pitchRate;
     position_.yaw_rate = sensorFusionOut_.yawRate;
 }
+*/
 
 /**
  * @brief updates the position struct calling
@@ -114,9 +117,11 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
 
 void LOS_Position::updatePosition() {
 
-    IMUData_t imuData;
     g_imuObj->GetResult(imuData);
 
+
+
+    /*
     if (SENSOR_FUSION_)
     {   
         GpsData_t gpsData;
@@ -127,6 +132,8 @@ void LOS_Position::updatePosition() {
         g_airspeedObj->GetResult(airspeedData);
         sensor_fusion(imuData, gpsData, altimeterData, airspeedData);
     }
+    */
+    /*
     else
     {
         /* Vector Nav */
@@ -158,7 +165,7 @@ void LOS_Position::updatePosition() {
         // position_.roll_rate = 
         // position_.pitch_rate = 
         // position_.yaw_rate = 
-    }
+    //}
 }
 
 /**
@@ -173,4 +180,10 @@ PositionData_t* LOS_Position::getPosition() {
 	
     // returns pointer to the position struct
     return &position_;
+}
+
+IMUData_t* LOS_Position::getImuTest() {
+    updatePosition();
+    
+    return &imuData;
 }

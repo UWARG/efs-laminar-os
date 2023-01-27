@@ -17,3 +17,10 @@ PWMChannel pwmChannel = PWMChannel(0, nullptr,
                     &htim3, TIM_CHANNEL_1);
 
 MotorChannel* motor_channels_[NUM_ACTUATOR_CHANNELS] = {&pwmChannel};
+
+/* Los_Pos */
+#ifdef BMX160_CONNECTED
+#include "imu.hpp"
+IMU *g_imuObj = &BMX160::getInstance(); // BMX160 imu
+
+#endif

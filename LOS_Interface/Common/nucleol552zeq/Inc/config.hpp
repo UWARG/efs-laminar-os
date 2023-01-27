@@ -19,4 +19,12 @@ const uint8_t NUM_ACTUATOR_CHANNELS = 1;
 
 extern MotorChannel* motor_channels_[];
 
+/* Los Position */
+#define BMX160_CONNECTED
+
+#ifdef BMX160_CONNECTED
+#include "imu.hpp"
+extern IMU* g_imuObj; // BMX160 imu
+#endif
+
 #endif // CONFIG_HPP_
