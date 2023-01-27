@@ -38,7 +38,7 @@
 /*#define HAL_COMP_MODULE_ENABLED   */
 /*#define HAL_CRC_MODULE_ENABLED   */
 /*#define HAL_CRYP_MODULE_ENABLED   */
-/*#define HAL_DAC_MODULE_ENABLED   */
+#define HAL_DAC_MODULE_ENABLED
 /*#define HAL_DFSDM_MODULE_ENABLED   */
 /*#define HAL_FDCAN_MODULE_ENABLED   */
 /*#define HAL_GTZC_MODULE_ENABLED   */
@@ -85,7 +85,7 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-  #define HSE_VALUE    8000000UL /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    16000000UL /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
@@ -168,7 +168,7 @@
   */
 
 #define  VDD_VALUE					  3300UL /*!< Value of VDD in mv */
-#define  TICK_INT_PRIORITY            0UL    /*!< tick interrupt priority */
+#define  TICK_INT_PRIORITY            7UL    /*!< tick interrupt priority */
 #define  USE_RTOS                     0U
 
 /* ########################## Assert Selection ############################## */

@@ -6,23 +6,20 @@ Los_Link& Los_Link::getInstance()
     return singleton;
 }
 
-Los_Link::Los_Link()
-{
-    #ifdef PPM
-    PPMChannel losLinkInstance = PPMChannel(); //TODO: THIS WILL NOT WORK BEC THE INSTANCE WILL BE DESTROYED ONCE IT
-                                               //      IS OUT OF SCOPE. FIND A PLACE TO MAKE IT GLOBAL/ A DIFFERNT METHOD.
-    #endif
-    
-    rc_receiver = &losLinkInstance;
+Los_Link::Los_Link(){
+    for (uint8_t instance = 0; instance < NUM_RC_RECEIVER_INSTANCES; instance++)
+    {
+        rc_receivers_[instance]->init();
+    }
 }
 
-LosLinkRx_t Los_Link::getRx(void)
+LosLinkRx_t Los_Link::getRx(uint8_t instance)
 {
     LosLinkRx_t rx_data;
 
     for (uint8_t channel = 0; channel < NUM_RX_CHANNELS; channel++)
     {
-        rx_data.rx_channels[channel] = rc_receiver->GetResult(channel);
+        rx_data.rx_channels[channel] = rc_receivers_[instance]->GetResult(channel);
     }
 
     rx_data.rssi = 0; //RSSI has not been implemented so it will be set to 0
@@ -30,7 +27,10 @@ LosLinkRx_t Los_Link::getRx(void)
     return rx_data;
 }
 
-void Los_Link::init(void)
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-    //Does nothing, no initialization of the PPM driver needs to occur
+    for (uint8_t i = 0; i < NUM_RC_RECEIVER_INSTANCES; i++)
+    {
+        rc_receivers_[i]->interrupt_callback(htim);
+    }
 }

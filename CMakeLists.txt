@@ -2,27 +2,30 @@ cmake_minimum_required(VERSION 3.2.0)
 
 project(LaminarOS C CXX)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
+
+                    # Include the config header folder
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Common/${FOLDER_NAME}/Inc
+
+                    ## Any new driver folders Inc dirs must be added here ##
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Motor_Channel/Inc
+
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
+)
+set(LOS_INCLUDES ${INCLUDE_PATHS} PARENT_SCOPE)
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Core/Inc
-
-    ## Any new driver folders Inc dirs must be added here ##
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Common/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Airspeed/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Altimeter/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Gps/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/IMU/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/SensorFusion/Inc
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/include
+    ${INCLUDE_PATHS}
 )
 
 set(HAL_DRIVERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers)
@@ -30,7 +33,7 @@ set(HAL_DRIVERS_C_SOURCES "${HAL_DRIVERS_DIR}/${FAMILY_NAME}_HAL_Driver/Src/*.c"
 
 set(FREE_RTOS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source)
 set(FREE_RTOS_C_SOURCES "${FREE_RTOS_DIR}/*.c"
-                        "${FREE_RTOS_DIR}/CMSIS_RTOS/*.c"
+                        "${FREE_RTOS_DIR}/CMSIS_RTOS_V2/*.c"
                         "${FREE_RTOS_DIR}/portable/GCC/ARM_${PORTABLE_NAME}/*.c"
                         "${FREE_RTOS_DIR}/portable/MemMang/*.c")
 
@@ -39,8 +42,8 @@ set(HAL_CORE_C_SOURCES "${HAL_CORE}/Src/*.c")
 set(HAL_CORE_CXX_SOURCES "${HAL_CORE}/Src/*.cpp")
 
 set(INTERFACE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface)
-set(INTERFACE_C_SOURCES "${INTERFACE_DIR}/Src/*.c")
-set(INTERFACE_CXX_SOURCES "${INTERFACE_DIR}/Src/*.cpp")
+set(INTERFACE_C_SOURCES "${INTERFACE_DIR}/Src/*.c" "${INTERFACE_DIR}/Common/${FOLDER_NAME}/Src/*.c")
+set(INTERFACE_CXX_SOURCES "${INTERFACE_DIR}/Src/*.cpp" "${INTERFACE_DIR}/Common/${FOLDER_NAME}/Src/*.cpp")
 
 set(DRIVERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver)
 set(DRIVERS_C_SOURCES "${DRIVERS_DIR}/*/Src/*.c")
