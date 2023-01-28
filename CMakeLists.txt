@@ -14,6 +14,7 @@ set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/RC_Receiver/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Motor_Channel/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/IMU/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/SensorFusion/Inc
 
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc

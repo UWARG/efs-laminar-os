@@ -22,8 +22,4 @@ DSHOTChannel dshotChannel = DSHOTChannel(0, nullptr, &htim1,
 MotorChannel *motor_channels_[NUM_ACTUATOR_CHANNELS] = {&pwmChannel, &dshotChannel};
 
 /* Los_Pos */
-#ifdef BMX160_CONNECTED
-#include "imu.hpp"
-IMU *g_imuObj = &BMX160::getInstance(); // BMX160 imu
 
-#endif

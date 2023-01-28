@@ -21,10 +21,16 @@ extern MotorChannel* motor_channels_[];
 
 /* Los Position */
 #define BMX160_CONNECTED
+#define TARGET_BUILD
+#define SENSOR_FUSION
+
+#ifdef SENSOR_FUSION
+#include "SensorFusion.hpp"
+#endif
 
 #ifdef BMX160_CONNECTED
 #include "imu.hpp"
-extern IMU* g_imuObj; // BMX160 imu
+IMU* g_imuObj = &BMX160::getInstance(); // BMX160 imu
 #endif
 
 #endif // CONFIG_HPP_

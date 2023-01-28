@@ -25,12 +25,9 @@ LOS_Position& LOS_Position::getInstance() {
 
 LOS_Position::LOS_Position() {
 
-    /*
-    if (SENSOR_FUSION_ == true)
-    {
-        SF_Init();
-    }
-    */
+    #ifdef SENSOR_FUSION
+        SensorFusionInterfaceInit();
+    #endif
 
 }
 
@@ -39,43 +36,45 @@ LOS_Position::LOS_Position() {
  *        position from data from sensors
  * 
  */
-/*
-void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
+
+/*void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
                                  AltimeterData_t new_altimeterData,
                                  airspeedData_t new_airspeedData)
+*/
+void LOS_Position::sensorFusion()
 {
     // imu
-    rawPosition_.gyrx = new_imuData.gyro_x; 
-    rawPosition_.gyry = new_imuData.gyro_y;
-    rawPosition_.gyrz = new_imuData.gyro_z;
+    rawPosition_.gyrx = imuData.gyro_x; 
+    rawPosition_.gyry = imuData.gyro_y;
+    rawPosition_.gyrz = imuData.gyro_z;
 
-    rawPosition_.accx = new_imuData.accel_x;
-    rawPosition_.accy = new_imuData.accel_y;
-    rawPosition_.accz = new_imuData.accel_z;
+    rawPosition_.accx = imuData.accel_x;
+    rawPosition_.accy = imuData.accel_y;
+    rawPosition_.accz = imuData.accel_z;
 
-    rawPosition_.magx = new_imuData.mag_x;
-    rawPosition_.magy = new_imuData.mag_y;
-    rawPosition_.magz = new_imuData.mag_z;
-
+    rawPosition_.magx = imuData.mag_x;
+    rawPosition_.magy = imuData.mag_y;
+    rawPosition_.magz = imuData.mag_z;
+    
     // airspeed
-    rawPosition_.airspeed = new_airspeedData.airspeed; 
+    rawPosition_.airspeed = 0; 
 
     // gps
-    rawPosition_.latitude = new_gpsData.latitude;
-    rawPosition_.longitude = new_gpsData.longitude;
-    rawPosition_.utcTime =  new_gpsData.utcTime;
-    rawPosition_.groundSpeed = new_gpsData.groundSpeed;
-    rawPosition_.altitude_gps = new_gpsData.altitude;
-    rawPosition_.heading = new_gpsData.heading;
-    rawPosition_.numSatellites = new_gpsData.numSatellites;
-    rawPosition_.fixStatus = new_gpsData.fixStatus;
+    rawPosition_.latitude = 0;
+    rawPosition_.longitude = 0;
+    rawPosition_.utcTime =  0;
+    rawPosition_.groundSpeed = 0;
+    rawPosition_.altitude_gps = 0;
+    rawPosition_.heading = 0;
+    rawPosition_.numSatellites = 0;
+    rawPosition_.fixStatus = 0;
 
     // altimeter
-    rawPosition_.pressure = new_altimeterData.pressure;
-    rawPosition_.altitude_alt = new_altimeterData.altitude;
-    rawPosition_.temp =  new_altimeterData.temp;
+    rawPosition_.pressure = 0;
+    rawPosition_.altitude_alt = 0;
+    rawPosition_.temp = 0;
 
-    SF_GenerateNewResult(new_imuData, new_gpsData, new_altimeterData, new_airspeedData);
+    SensorFusionInterfaceExecute();
     SF_GetResult(&sensorFusionOut_);
     
     // lat and long
@@ -107,7 +106,7 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
     position_.pitch_rate = sensorFusionOut_.pitchRate;
     position_.yaw_rate = sensorFusionOut_.yawRate;
 }
-*/
+
 
 /**
  * @brief updates the position struct calling
@@ -117,25 +116,20 @@ void LOS_Position::sensor_fusion(IMUData_t new_imuData, GpsData_t new_gpsData,
 
 void LOS_Position::updatePosition() {
 
-    g_imuObj->GetResult(imuData);
+    
 
-
-
-    /*
-    if (SENSOR_FUSION_)
-    {   
+    #ifdef SENSOR_FUSION
+        g_imuObj->GetResult(imuData);
+        /*
         GpsData_t gpsData;
         AltimeterData_t altimeterData;
         airspeedData_t airspeedData;
         g_gpsObj->GetResult(gpsData);
         g_altimeterObj->GetResult(altimeterData);
         g_airspeedObj->GetResult(airspeedData);
-        sensor_fusion(imuData, gpsData, altimeterData, airspeedData);
-    }
-    */
-    /*
-    else
-    {
+        */
+        (*this).sensorFusion();
+    #else
         /* Vector Nav */
         // lat and long
         // position_.latitude = 
@@ -165,7 +159,7 @@ void LOS_Position::updatePosition() {
         // position_.roll_rate = 
         // position_.pitch_rate = 
         // position_.yaw_rate = 
-    //}
+    #endif
 }
 
 /**
@@ -180,10 +174,4 @@ PositionData_t* LOS_Position::getPosition() {
 	
     // returns pointer to the position struct
     return &position_;
-}
-
-IMUData_t* LOS_Position::getImuTest() {
-    updatePosition();
-    
-    return &imuData;
 }

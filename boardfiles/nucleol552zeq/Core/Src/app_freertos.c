@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../../../../LOS_Interface/Inc/LOS_Position_Interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,6 +54,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
 };
+/* Definitions for LOS_Pos */
+osThreadId_t LOS_PosHandle;
+const osThreadAttr_t LOS_Pos_attributes = {
+  .name = "LOS_Pos",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 128 * 4
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -61,6 +68,7 @@ const osThreadAttr_t defaultTask_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
+void StartLosPosition(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -71,7 +79,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+	LOS_Pos_Init();
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -93,6 +101,9 @@ void MX_FREERTOS_Init(void) {
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of LOS_Pos */
+  LOS_PosHandle = osThreadNew(StartLosPosition, NULL, &LOS_Pos_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -120,6 +131,26 @@ void StartDefaultTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_StartLosPosition */
+/**
+* @brief Function implementing the LOS_Pos thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLosPosition */
+void StartLosPosition(void *argument)
+{
+  /* USER CODE BEGIN StartLosPosition */
+
+  /* Infinite loop */
+  for(;;)
+  {
+	  LOS_Pos_Execute();
+    osDelay(1);
+  }
+  /* USER CODE END StartLosPosition */
 }
 
 /* Private application code --------------------------------------------------*/
