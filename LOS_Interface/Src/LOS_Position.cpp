@@ -116,8 +116,6 @@ void LOS_Position::sensorFusion()
 
 void LOS_Position::updatePosition() {
 
-    
-
     #ifdef SENSOR_FUSION
         g_imuObj->GetResult(imuData);
         /*
