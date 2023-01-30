@@ -21,7 +21,7 @@ public:
         static LOS_Position& getInstance();
 
         PositionData_t* getPosition();
-        PositionData_t* getRawPosition();
+        RawPositionData_t* getRawPosition();
         
         void updatePosition();
 

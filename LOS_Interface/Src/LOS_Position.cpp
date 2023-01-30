@@ -172,3 +172,11 @@ PositionData_t* LOS_Position::getPosition() {
     // returns pointer to the position struct
     return &position_;
 }
+
+RawPositionData_t* LOS_Position::getRawPosition() {
+	// update position
+    updatePosition();
+	
+    // returns pointer to the position struct
+    return &rawPosition_;
+}
