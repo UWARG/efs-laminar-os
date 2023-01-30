@@ -8,5 +8,6 @@ void SensorFusionInterfaceInit(void) {
 }
 
 void SensorFusionInterfaceExecute(void) {
-	SFError_t err = SF_GenerateNewResult();
+	// will not be used (should call on los pos execute instead)
+	//SFError_t err = SF_GenerateNewResult();
 }

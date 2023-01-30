@@ -564,14 +564,10 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 	return SFError;
 }
 
-SFError_t SF_GenerateNewResult() {
+SFError_t SF_GenerateNewResult(IMUData_t &imuData) {
 	SFError_t SFError;
 	SFError.errorCode = 0;
 
-	
-	IMUData_t imuData;
-	IMU& imuObj = BMX160::getInstance();
-	imuObj.GetResult(imuData);
 	
 #ifdef AUTOPILOT
     GpsData_t GpsData;

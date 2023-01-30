@@ -43,6 +43,15 @@ LOS_Position::LOS_Position() {
 */
 void LOS_Position::sensorFusion()
 {
+    g_imuObj->GetResult(imuData);
+    /*
+    GpsData_t gpsData;
+    AltimeterData_t altimeterData;
+    airspeedData_t airspeedData;
+    g_gpsObj->GetResult(gpsData);
+    g_altimeterObj->GetResult(altimeterData);
+    g_airspeedObj->GetResult(airspeedData);
+    */
     // imu
     rawPosition_.gyrx = imuData.gyro_x; 
     rawPosition_.gyry = imuData.gyro_y;
@@ -74,7 +83,7 @@ void LOS_Position::sensorFusion()
     rawPosition_.altitude_alt = 0;
     rawPosition_.temp = 0;
 
-    SensorFusionInterfaceExecute();
+    SF_GenerateNewResult(imuData);
     SF_GetResult(&sensorFusionOut_);
     
     // lat and long
@@ -117,15 +126,7 @@ void LOS_Position::sensorFusion()
 void LOS_Position::updatePosition() {
 
     #ifdef SENSOR_FUSION
-        g_imuObj->GetResult(imuData);
-        /*
-        GpsData_t gpsData;
-        AltimeterData_t altimeterData;
-        airspeedData_t airspeedData;
-        g_gpsObj->GetResult(gpsData);
-        g_altimeterObj->GetResult(altimeterData);
-        g_airspeedObj->GetResult(airspeedData);
-        */
+        
         (*this).sensorFusion();
     #else
         /* Vector Nav */

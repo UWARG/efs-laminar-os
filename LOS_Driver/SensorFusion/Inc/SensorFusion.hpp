@@ -14,6 +14,7 @@ extern "C"
 
 #include "../../CControl/Inc/CControlFunctions.h"
 #include "CommonDataTypes.hpp"
+#include "imu.hpp"
 
 //Frequency of SF calculations in Hz
 const int SF_FREQ = 100;
@@ -100,7 +101,7 @@ void SF_Init(void);
 /**
  * Generates fused sensor data. Should be called at a constant rate defined by SF_FREQ after SF_Init has been called once.
  */
-SFError_t SF_GenerateNewResult();
+SFError_t SF_GenerateNewResult(IMUData_t &imuData);
 
 /**
  * Get latest fused sensor data. Can be called any time data is needed after SF_init has been called once. Waits until the output struct is not being accessed by another task.
