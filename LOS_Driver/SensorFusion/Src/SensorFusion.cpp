@@ -564,19 +564,23 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 	return SFError;
 }
 
-SFError_t SF_GenerateNewResult(IMUData_t &imuData) {
+SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData, 
+							AltimeterData_t &altimeterData, 
+							airspeedData_t &airspeedData) {
 	SFError_t SFError;
 	SFError.errorCode = 0;
 
 	
 #ifdef AUTOPILOT
+	/*
     GpsData_t GpsData;
     AltimeterData_t altimeterData;
     airspeedData_t airspeedData;
-    gpsObj->GetResult(GpsData);
+    
+	gpsObj->GetResult(GpsData);
     altimeterObj->GetResult(altimeterData);
     airspeedObj->GetResult(airspeedData);
-
+	*/
     //Send gps timestamp
     #ifndef UNIT_TESTING
     TimeStampingPOGI *timeStamper = TimeStampingPOGI::GetInstance();
@@ -640,14 +644,16 @@ SFError_t SF_GetResult(SFOutput_t *output) {
 	return SFError;
 }
 
+
+// Intending to get all raw data in LOS Pos
 IMU_Data_t SF_GetRawIMU() {
 	IMUData_t imuData;
 	//imuObj->GetResult(imuData);
-	IMU& imuObj = BMX160::getInstance();
-	imuObj.GetResult(imuData);
+	//IMU& imuObj = BMX160::getInstance();
+	//imuObj.GetResult(imuData);
 	IMU_Data_t imuOutput;
 
-	std: memcpy(&imuOutput, &imuData, sizeof(IMU_Data_t));
+	//std: memcpy(&imuOutput, &imuData, sizeof(IMU_Data_t));
 
 	return imuOutput;
 }

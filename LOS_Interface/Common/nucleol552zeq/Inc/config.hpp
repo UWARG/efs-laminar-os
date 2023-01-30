@@ -24,12 +24,17 @@ extern MotorChannel* motor_channels_[];
 #define TARGET_BUILD
 #define SENSOR_FUSION
 
+#include "imu.hpp"
+#include "gps.hpp"
+#include "airspeed.hpp"
+#include "altimeter.hpp"
+
 #ifdef SENSOR_FUSION
 #include "SensorFusion.hpp"
 #endif
 
 #ifdef BMX160_CONNECTED
-#include "imu.hpp"
+#include "BMX160.hpp"
 IMU* g_imuObj = &BMX160::getInstance(); // BMX160 imu
 #endif
 

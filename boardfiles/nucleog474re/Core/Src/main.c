@@ -20,7 +20,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "dma.h"
-#include "i2c.h"
 #include "usart.h"
 #include "tim.h"
 #include "gpio.h"

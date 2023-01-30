@@ -1,5 +1,5 @@
 /* Includes ------------------------------------------------------------------*/
-#include "imu.hpp"
+#include "bmx160.hpp"
 #include "gpio.h"
 #include "i2c.h"
 #include <cstdint>
