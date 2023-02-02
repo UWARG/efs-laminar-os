@@ -2,6 +2,7 @@
 #define INC_BMX160_HPP_
 
 #include "imu.hpp"
+#include "CommonDataTypes.hpp"
 
 class BMX160 : public IMU {
 

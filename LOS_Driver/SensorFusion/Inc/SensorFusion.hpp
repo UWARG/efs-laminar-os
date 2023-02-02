@@ -7,10 +7,7 @@
 #ifndef ZP_PROTO_PORT_SENSORFUSION_HPP
 #define ZP_PROTO_PORT_SENSORFUSION_HPP
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+
 
 #include "../../CControl/Inc/CControlFunctions.h"
 #include "CommonDataTypes.hpp"
@@ -116,7 +113,7 @@ SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData,
  */
 SFError_t SF_GetResult(SFOutput_t *SFoutput);
 
-/**
+/**9
  * Get raw IMU data. Can be called any time raw data is needed.
  * @return IMU struct.
  */
@@ -142,8 +139,5 @@ Gps_Data_t SF_GetRawGPS();
 Altimeter_Data_t SF_GetRawAltimeter();
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif //ZP_PROTO_PORT_SENSORFUSION_HPP

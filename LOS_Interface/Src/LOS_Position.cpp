@@ -26,7 +26,7 @@ LOS_Position& LOS_Position::getInstance() {
 LOS_Position::LOS_Position() {
 
     #ifdef SENSOR_FUSION
-        SensorFusionInterfaceInit();
+        SF_Init();
     #endif
 
 }
@@ -39,7 +39,8 @@ LOS_Position::LOS_Position() {
 
 void LOS_Position::sensorFusion()
 {
-    g_imuObj->GetResult(imuData);
+    imuObj = &BMX160::getInstance();
+    imuObj->GetResult(imuData);
     
     GpsData_t gpsData;
     AltimeterData_t altimeterData;
@@ -171,4 +172,12 @@ PositionData_t* LOS_Position::getPosition() {
 	
     // returns pointer to the position struct
     return &position_;
+}
+
+RawPositionData_t* LOS_Position::getRawPosition() {
+	// update position
+    updatePosition();
+	
+    // returns pointer to the position struct
+    return &rawPosition_;
 }

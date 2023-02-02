@@ -93,9 +93,9 @@ float pitch;
 */
 void SF_Init(void) {
 #ifdef TARGET_BUILD
-    imuObj = &BMX160::getInstance();
+    //imuObj = &BMX160::getInstance();
 #ifdef AUTOPILOT
-    gpsObj = NEOM8::GetInstance();
+    //gpsObj = NEOM8::GetInstance();
     //Waiting for definitions
     //altimeterObj = MS5637::GetInstance();
     //airspeedObj = dummyairspeed::GetInstance();
@@ -110,7 +110,7 @@ void SF_Init(void) {
 #endif
 
 	//imuObj = &BMX160::getInstance();
-    IMU& imuObj = BMX160::getInstance();
+    //IMU& imuObj = BMX160::getInstance();
 
 	//Set initial state to be unknown
 	for (int i = 0; i < NUM_KALMAN_VALUES; i++)

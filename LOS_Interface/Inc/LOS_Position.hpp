@@ -21,7 +21,7 @@ public:
         static LOS_Position& getInstance();
 
         PositionData_t* getPosition();
-        PositionData_t* getRawPosition();
+        RawPositionData_t* getRawPosition();
         
         void updatePosition();
 
@@ -33,6 +33,8 @@ private:
         RawPositionData_t rawPosition_;
 
         SFOutput_t sensorFusionOut_;
+
+        IMU* imuObj;
 };
 
 #endif 

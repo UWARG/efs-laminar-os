@@ -1,0 +1,10 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/LaminarOS/boardfiles/nucleol552zeq/Core/Startup/startup_stm32l552zetxq.s
+

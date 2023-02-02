@@ -9,7 +9,7 @@
 
 #include <cstdint>
 #include <stdint.h>
-#include "CommonDataTypes.hpp"
+#include "../../SensorFusion/Inc/CommonDataTypes.hpp"
 /***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
@@ -19,7 +19,7 @@ struct AltimeterData_t
     float pressure, altitude, temp;
     
     bool isDataNew; 
-    SensorErrorCodes status;
+    //SensorErrorCodes status;
     uint32_t utcTime;
 };
 

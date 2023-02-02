@@ -18,4 +18,7 @@ PWMChannel pwmChannel = PWMChannel(0, nullptr,
 MotorChannel *motor_channels_[NUM_ACTUATOR_CHANNELS] = {&pwmChannel};
 
 /* Los_Pos */
+#ifdef BMX160_CONNECTED
+#include "BMX160.hpp"
 
+#endif

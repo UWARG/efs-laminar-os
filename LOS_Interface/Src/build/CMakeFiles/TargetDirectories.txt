@@ -1,0 +1,16 @@
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/ZeroPilot.elf.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/ZeroPilot.bin.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/UPLOAD.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/edit_cache.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/rebuild_cache.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/list_install_components.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/install.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/install/local.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/CMakeFiles/install/strip.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/LaminarOS.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/edit_cache.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/rebuild_cache.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/list_install_components.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/install.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/install/local.dir
+C:/Users/mahus/Desktop/Warg/WARG_1B/ZeroPilot-Comp-2023/build/LaminarOS/CMakeFiles/install/strip.dir

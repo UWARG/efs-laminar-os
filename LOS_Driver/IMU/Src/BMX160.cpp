@@ -1,6 +1,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "bmx160.hpp"
 #include "gpio.h"
+
 #include "i2c.h"
 #include <cstdint>
 
@@ -248,9 +249,7 @@ void BMX160::IMUInit(void) {
 		// TODO: Implement error protocol
 		while(1)
 		{
-			// LED onboard flashes to denote device not existing / responding
-			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-			HAL_Delay(1000);
+
 		}
 	}
 }
