@@ -13,27 +13,24 @@ typedef struct LosLinkRx_t{
 /* LOS_Position*/
 typedef struct {
     // Longitude and Latitude
-    double longitude, latitude; // decimal degrees
-    double longitude_speed, latitude_speed; // m/s
+    long double longitude, latitude; // decimal degrees
+    long double longitudeSpeed, latitudeSpeed; // m/s
 
     // altitude
     float altitude; // m
 
     // rate of climb
-	float climb_rate; // m/s
+	float rateOfClimb; // m/s
 
     // track & heading
-    float track, heading; // degrees
+    double track, heading; // degrees
 
     // air speed
-    float air_speed; // m/s
-
-    // ground speed
-    float ground_speed; // m/s
+    double airspeed; // m/s
 
     // orientation
     float roll, pitch, yaw; // radians
-    float roll_rate, pitch_rate, yaw_rate; // radians/s
+    float rollRate, pitchRate, yawRate; // radians/s
     	
 } PositionData_t;
 

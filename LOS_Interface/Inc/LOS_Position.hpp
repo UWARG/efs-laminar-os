@@ -10,7 +10,6 @@
 #define INC_LOS_POSITION_HPP_
 
 #include "interface_datatypes.hpp"
-#include "SF_Interface.h"
 #include "config.hpp"
 
 class LOS_Position {

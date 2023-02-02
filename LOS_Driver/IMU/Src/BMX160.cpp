@@ -1,7 +1,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "bmx160.hpp"
 #include "gpio.h"
-
+#include "main.h"
+#include "cmsis_os2.h"
 #include "i2c.h"
 #include <cstdint>
 
@@ -118,7 +119,7 @@ void BMX160::configMag() {
 	8.) Write 0x__ to MAG_CONF_REG to set ODR to 800 Hz - done
 	9.) Write 0x00 to 0x4C
 	*/
-	HAL_Delay(650);
+	osDelay(650);
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_0_REG, I2C_MEMADD_SIZE_8BIT, &MAG_SETUP_EN, 1, HAL_MAX_DELAY);
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_3_REG, I2C_MEMADD_SIZE_8BIT, &MAG_SLEEP_MODE, 1, HAL_MAX_DELAY);
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, MAG_IF_2_REG, I2C_MEMADD_SIZE_8BIT, &MAG_MODE_REG, 1, HAL_MAX_DELAY);
@@ -161,7 +162,7 @@ void BMX160::calibrate(void) {
     {
         this->updateData();
 
-        HAL_Delay(7);
+        osDelay(7);
 
         this->GetResult(TempImuData);
 
@@ -258,14 +259,14 @@ void BMX160::setAllPowerModesToNormal(){
 
 	// Set gyro to normal mode
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT, &GYRO_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
-	HAL_Delay(10);
+	osDelay(10);
 
 	// Set accelerometer to normal mode
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT, &ACC_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
-	HAL_Delay(10);
+	osDelay(10);
 
 	// Set magnetometer to normal mode
 	HAL_I2C_Mem_Write(&hi2c1, BMX160_I2C_ADDR, CMD_REG, I2C_MEMADD_SIZE_8BIT, &MAG_NORMAL_MODE_CMD, 1, HAL_MAX_DELAY);
-	HAL_Delay(10);
+	osDelay(10);
 
 }

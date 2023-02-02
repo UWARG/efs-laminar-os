@@ -29,7 +29,7 @@ struct airspeedData_t
 {
     double airspeed;        // in m/s
 
-    //SensorErrorCodes sensorStatus;       // report any errors, possible malfunctions 
+    SensorErrorCodes sensorStatus;       // report any errors, possible malfunctions 
     bool isDataNew;         // is the data fresh?
     float utcTime;          // 4 Bytes. Time in seconds since 00:00 
 };

@@ -29,8 +29,7 @@ extern MotorChannel* motor_channels_[];
 #endif
 
 #ifdef BMX160_CONNECTED
-#include "imu.hpp"
-extern IMU* g_imuObj; // BMX160 imu
+#include "BMX160.hpp"
 #endif
 
 

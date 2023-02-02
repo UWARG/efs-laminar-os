@@ -19,7 +19,7 @@ struct AltimeterData_t
     float pressure, altitude, temp;
     
     bool isDataNew; 
-    //SensorErrorCodes status;
+    SensorErrorCodes status;
     uint32_t utcTime;
 };
 

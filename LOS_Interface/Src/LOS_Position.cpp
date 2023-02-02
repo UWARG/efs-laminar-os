@@ -27,6 +27,7 @@ LOS_Position::LOS_Position() {
 
     #ifdef SENSOR_FUSION
         SF_Init();
+        imuObj = &BMX160::getInstance();
     #endif
 
 }
@@ -39,17 +40,18 @@ LOS_Position::LOS_Position() {
 
 void LOS_Position::sensorFusion()
 {
-    imuObj = &BMX160::getInstance();
     imuObj->GetResult(imuData);
     
-    GpsData_t gpsData;
-    AltimeterData_t altimeterData;
-    airspeedData_t airspeedData;
     /*
         g_gpsObj->GetResult(gpsData);
         g_altimeterObj->GetResult(altimeterData);
         g_airspeedObj->GetResult(airspeedData);
     */
+
+    GpsData_t gpsData;
+    AltimeterData_t altimeterData;
+    airspeedData_t airspeedData;
+    
     // imu
     rawPosition_.gyrx = imuData.gyro_x; 
     rawPosition_.gyry = imuData.gyro_y;
@@ -88,30 +90,30 @@ void LOS_Position::sensorFusion()
     position_.latitude = sensorFusionOut_.latitude;
     position_.longitude = sensorFusionOut_.longitude;
 
-    position_.latitude_speed = sensorFusionOut_.latitudeSpeed;
-    position_.longitude_speed = sensorFusionOut_.longitudeSpeed;
+    position_.latitudeSpeed = sensorFusionOut_.latitudeSpeed;
+    position_.longitudeSpeed = sensorFusionOut_.longitudeSpeed;
 
     // rate of climb
-    position_.climb_rate = sensorFusionOut_.rateOfClimb;
+    position_.rateOfClimb = sensorFusionOut_.rateOfClimb;
 
     // track and heading
     position_.track = sensorFusionOut_.track;
     position_.heading = sensorFusionOut_.heading;
 
     // air speed
-    position_.air_speed = sensorFusionOut_.airspeed;
+    position_.airspeed = sensorFusionOut_.airspeed;
 
     // ground speed
-    position_.ground_speed = sensorFusionOut_.groundSpeed;
+    //position_.ground_speed = sensorFusionOut_.groundSpeed;
 
     // orientation
     position_.roll = sensorFusionOut_.roll;
     position_.pitch = sensorFusionOut_.pitch;
     position_.yaw = sensorFusionOut_.yaw;
     
-    position_.roll_rate = sensorFusionOut_.rollRate; 
-    position_.pitch_rate = sensorFusionOut_.pitchRate;
-    position_.yaw_rate = sensorFusionOut_.yawRate;
+    position_.rollRate = sensorFusionOut_.rollRate; 
+    position_.pitchRate = sensorFusionOut_.pitchRate;
+    position_.yawRate = sensorFusionOut_.yawRate;
 }
 
 

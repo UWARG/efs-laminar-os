@@ -232,7 +232,7 @@ SFError_t SF_GetAttitude(SFAttitudeOutput_t *Output, IMUData_t *imudata) {
         imudata->magz = 0.0f;
     }
 
-    MahonyAHRSupdate(imudata->gyrx, imudata->gyry, imudata->gyrz, imudata->accx, imudata->accy, imudata->accz, imudata->magx, imudata->magy, imudata->magz);
+    MahonyAHRSupdate(imudata->gyro_x, imudata->gyro_y, imudata->gyro_z, imudata->accel_x, imudata->accel_y, imudata->accel_z, imudata->mag_x, imudata->mag_y, imudata->mag_z);
 #else //Safety does not currently use a magnetometer
 	MahonyAHRSupdateIMU(imudata->gyro_x, imudata->gyro_y, imudata->gyro_z,
 			imudata->accel_x, imudata->accel_y, imudata->accel_z);
