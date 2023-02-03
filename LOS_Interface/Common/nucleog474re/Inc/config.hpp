@@ -20,7 +20,6 @@ const uint8_t NUM_ACTUATOR_CHANNELS = 2;
 extern MotorChannel* motor_channels_[];
 
 /* Los Position */
-#define TARGET_BUILD
 #define BMX160_CONNECTED
 #define SENSOR_FUSION
 
@@ -32,5 +31,8 @@ extern MotorChannel* motor_channels_[];
 #include "BMX160.hpp"
 #endif
 
+#ifdef NEOM8_CONNECTED
+//#include 
+#endif
 
 #endif // CONFIG_HPP_

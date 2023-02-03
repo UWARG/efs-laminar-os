@@ -6,6 +6,7 @@
 
 #ifndef ZP_PROTO_PORT_SENSORFUSION_HPP
 #define ZP_PROTO_PORT_SENSORFUSION_HPP
+#define TARGET_BUILD
 
 #ifdef __cplusplus
 extern "C"

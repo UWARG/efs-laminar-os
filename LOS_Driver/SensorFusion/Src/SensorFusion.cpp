@@ -9,23 +9,18 @@
 #include "../Inc/MahonyAHRS.hpp"
 #include <cmath>
 #include "../Inc/MathConstants.hpp"
-//#define TARGET_BUILD
+#include "timeStampingPOGI.hpp"
+#define TARGET_BUILD
+#define AUTOPILOT
+//#define ALTIMETER
 
 // TODO: switch to interface
 #include "imu.hpp"
-
+#include "gps.hpp"
 #ifdef AUTOPILOT
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "../../CControl/Inc/CControlFunctions.h"
-
-#ifdef __cplusplus
-}
-#endif
 
 typedef struct {
 	float roll, pitch, yaw; //Degrees. Yaw of 180 is north.
@@ -56,11 +51,13 @@ struct SFIterationData_t {
 
 //static IMU *imuObj;
 //IMU& testimu = BMX160::getInstance();
+/*
 #ifdef AUTOPILOT
 static Gps *gpsObj;
 static Altimeter *altimeterObj;
 static airspeed *airspeedObj;
 #endif
+*/
 static SFIterationData_t iterData;
 static SFOutput_t SFOutput;
 
@@ -101,16 +98,13 @@ void SF_Init(void) {
     //airspeedObj = dummyairspeed::GetInstance();
 #endif
 #elif defined(UNIT_TESTING)
-    imuObj = TestIMU::GetInstance();
+    //imuObj = TestIMU::GetInstance();
 #ifdef AUTOPILOT
-    gpsObj = TestGps::GetInstance();
-    altimeterObj = TestAltimeter::GetInstance();
-    airspeedObj = TestAirspeed::GetInstance();
+    //gpsObj = TestGps::GetInstance();
+    //altimeterObj = TestAltimeter::GetInstance();
+    //airspeedObj = TestAirspeed::GetInstance();
 #endif
 #endif
-
-	//imuObj = &BMX160::getInstance();
-    //IMU& imuObj = BMX160::getInstance();
 
 	//Set initial state to be unknown
 	for (int i = 0; i < NUM_KALMAN_VALUES; i++)
@@ -222,14 +216,14 @@ SFError_t SF_GetAttitude(SFAttitudeOutput_t *Output, IMUData_t *imudata) {
     // Checks if magnetometer values are not a number (NAN) and converts them to zero if they are (ensures Madgwick does not break)
     // NOTE TO FUTURE DEVELOPERS: At the time of making, our IMU did not have a magnetometer (so for now we set the values to NAN).
     // If your IMU does have one, you can remove this
-    if (std::isnan(imudata->magx)) {
-        imudata->magx = 0.0f;
+    if (std::isnan(imudata->mag_x)) {
+        imudata->mag_x = 0.0f;
     }
-    if (std::isnan(imudata->magy)) {
-        imudata->magy = 0.0f;
+    if (std::isnan(imudata->mag_y)) {
+        imudata->mag_y = 0.0f;
     }
-    if (std::isnan(imudata->magz)) {
-        imudata->magz = 0.0f;
+    if (std::isnan(imudata->mag_z)) {
+        imudata->mag_z = 0.0f;
     }
 
     MahonyAHRSupdate(imudata->gyro_x, imudata->gyro_y, imudata->gyro_z, imudata->accel_x, imudata->accel_y, imudata->accel_z, imudata->mag_x, imudata->mag_y, imudata->mag_z);
@@ -271,9 +265,10 @@ SFError_t SF_GetAttitude(SFAttitudeOutput_t *Output, IMUData_t *imudata) {
 }
 
 SFError_t SF_GetPosition(SFPathOutput_t *Output,
-#ifdef Autopilot
-        AltimeterData_t *altimeterdata, GpsData_t *gpsdata, //Params used not used in Safety
+#ifdef ALTIMETER
+        AltimeterData_t *altimeterdata,
 #endif
+		GpsData_t *gpsdata,
 		IMUData_t *imudata, SFAttitudeOutput_t *attitudedata,
 		SFIterationData_t *iterdata) {
 	//Error output
@@ -284,7 +279,7 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 	float dt = 1 / freq;
 
 	//Set currently unused sensors to zero
-#ifdef Autopilot
+#ifdef ALTIMETER
     altimeterdata->altitude = 0;
 #endif
 	imudata->accel_x = 0;
@@ -585,9 +580,9 @@ SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData,
     #ifndef UNIT_TESTING
     TimeStampingPOGI *timeStamper = TimeStampingPOGI::GetInstance();
 
-    if(GpsData.ggaDataIsNew)
+    if(gpsData.ggaDataIsNew)
     {
-        timeStamper->setGPSTime(&GpsData);
+        timeStamper->setGPSTime(&gpsData);
     }
     #endif
 #endif
@@ -602,7 +597,10 @@ SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData,
 #ifdef AUTOPILOT
     SFError = SF_GetPosition(
         &pathOutput,
-        &altimeterData, &GpsData,
+		#ifdef ALTIMETER
+        &altimeterData,
+		#endif
+		&gpsData,
         &imuData, &attitudeOutput, &iterData);
     if(SFError.errorCode != 0) return SFError;
 #else
@@ -645,12 +643,13 @@ SFError_t SF_GetResult(SFOutput_t *output) {
 }
 
 
-// Intending to get all raw data in LOS Pos
+// LOS Pos returns raw data
+/*
 IMU_Data_t SF_GetRawIMU() {
 	IMUData_t imuData;
-	//imuObj->GetResult(imuData);
-	//IMU& imuObj = BMX160::getInstance();
-	//imuObj.GetResult(imuData);
+	imuObj->GetResult(imuData);
+	IMU& imuObj = BMX160::getInstance();
+	imuObj.GetResult(imuData);
 	IMU_Data_t imuOutput;
 
 	//std: memcpy(&imuOutput, &imuData, sizeof(IMU_Data_t));
@@ -658,7 +657,6 @@ IMU_Data_t SF_GetRawIMU() {
 	return imuOutput;
 }
 
-#ifdef AUTOPILOT
 Airspeed_Data_t SF_GetRawAirspeed()
 {
     airspeedData_t airspeedData;
@@ -695,3 +693,4 @@ Altimeter_Data_t SF_GetRawAltimeter()
     return altimeterOutput;
 }
 #endif
+*/

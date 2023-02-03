@@ -32,4 +32,8 @@ extern MotorChannel* motor_channels_[];
 #include "BMX160.hpp"
 #endif
 
+#ifdef NEOM8_CONNECTED
+//#include 
+#endif
+
 #endif // CONFIG_HPP_

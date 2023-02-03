@@ -27,7 +27,14 @@ LOS_Position::LOS_Position() {
 
     #ifdef SENSOR_FUSION
         SF_Init();
+    #endif
+
+    #ifdef BMX160_CONNECTED
         imuObj = &BMX160::getInstance();
+    #endif
+
+    #ifdef NEOM8_CONNECTED
+
     #endif
 
 }
@@ -47,10 +54,6 @@ void LOS_Position::sensorFusion()
         g_altimeterObj->GetResult(altimeterData);
         g_airspeedObj->GetResult(airspeedData);
     */
-
-    GpsData_t gpsData;
-    AltimeterData_t altimeterData;
-    airspeedData_t airspeedData;
     
     // imu
     rawPosition_.gyrx = imuData.gyro_x; 
@@ -83,7 +86,7 @@ void LOS_Position::sensorFusion()
     rawPosition_.altitude_alt = 0;
     rawPosition_.temp = 0;
 
-    SF_GenerateNewResult(imuData, gpsData, altimeterData, airspeedData);
+    SF_GenerateNewResult((*this).imuData, (*this).gpsData, (*this).altimeterData, (*this).airspeedData);
     SF_GetResult(&sensorFusionOut_);
     
     // lat and long
@@ -126,7 +129,6 @@ void LOS_Position::sensorFusion()
 void LOS_Position::updatePosition() {
 
     #ifdef SENSOR_FUSION
-        
         (*this).sensorFusion();
     #else
         /* Vector Nav */

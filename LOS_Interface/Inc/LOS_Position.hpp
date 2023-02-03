@@ -27,6 +27,9 @@ public:
 private:
         void sensorFusion();
         IMUData_t imuData;
+        GpsData_t gpsData;
+        AltimeterData_t altimeterData;
+        airspeedData_t airspeedData;
 
         PositionData_t position_;
         RawPositionData_t rawPosition_;
@@ -34,6 +37,7 @@ private:
         SFOutput_t sensorFusionOut_;
 
         IMU* imuObj;
+        Gps* gpsObj;
 };
 
 #endif 

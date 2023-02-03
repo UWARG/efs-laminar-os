@@ -8,6 +8,7 @@
 #ifndef CCONTROLFUNCTIONS_H
 #define CCONTROLFUNCTIONS_H
 
+
 /*
  * Necessary libraries
  */
@@ -20,7 +21,10 @@
 #include <stdbool.h>
 #define MAX_ITERATION_COUNT_SVD 30   // Maximum number of iterations for svd_jacobi_one_sided.c
 
-/*
+#ifdef __cplusplus
+extern "C" {
+#endif
+/* 
  * Control engineering
  */
 void mpc(float* A, float* B, float* C, float* x, float* u, float* r, uint8_t ADIM, uint8_t YDIM, uint8_t RDIM, uint8_t HORIZON, uint8_t ITERATION_LIMIT, bool has_integration);
@@ -84,5 +88,9 @@ void Astar(int *map, int *path_x, int *path_y, int x_start, int y_start, int x_s
 void rls(uint8_t NP, uint8_t NZ, uint8_t NZE, float* theta, float u, float y, uint8_t* count, float* past_e, float* past_y, float* past_u, float* phi, float* P, float Pq, float forgetting);
 void okid(float* u, float* y, float* g, uint16_t row, uint16_t column);
 void era(float* u, float* y, uint16_t row, uint16_t column, float* A, float* B, float* C, uint8_t row_a, uint8_t inputs_outputs);
+
+#ifdef __cplusplus
+}
+#endif 
 
 #endif /* CCONTROL_FUNCTIONS_H_ */
