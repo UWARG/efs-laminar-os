@@ -38,6 +38,8 @@ private:
 
         IMU* imuObj;
         Gps* gpsObj;
+
+        SFError_t SFerrorStatus;
 };
 
 #endif 

@@ -86,7 +86,10 @@ void LOS_Position::sensorFusion()
     rawPosition_.altitude_alt = 0;
     rawPosition_.temp = 0;
 
-    SF_GenerateNewResult((*this).imuData, (*this).gpsData, (*this).altimeterData, (*this).airspeedData);
+    (*this).SFerrorStatus = SF_GenerateNewResult((*this).imuData, 
+                                                (*this).gpsData,
+                                                (*this).altimeterData, 
+                                                (*this).airspeedData);
     SF_GetResult(&sensorFusionOut_);
     
     // lat and long
