@@ -7,7 +7,7 @@
 #define	GPS_HPP
 
 #include <stdint.h>
-#include "../../SensorFusion/Inc/CommonDataTypes.hpp"
+#include "LOS_D_SF_CommonDataTypes.hpp"
 #include "main.h"
 /** What UART interface the device is connected to */
 #define GPS_UART_INTERFACE 1
@@ -31,14 +31,13 @@ struct GpsData_t{
     uint8_t numSatellites;    // 1 Byte
 	uint8_t fixStatus; //0 = No GPS, 1 = GPS fix, 2 = DGSP Fix, 3 = Estimated/Dead Recoking Fix
 
-    //SensorErrorCodes sensorStatus; // 0 = good, 1 = error
+    SensorErrorCodes sensorStatus; // 0 = good, 1 = error
     bool dataIsNew; // true if data has been refreshed since the previous time GetResult was called, false otherwise.
 	bool timeIsNew;
 
 	//Added these so autopilot knows which data is new
 	bool ggaDataIsNew; //Position, altitude, time, and number of satellites
 	bool vtgDataIsNew; //Groundspeed and Heading
-
 };
 
 class Gps

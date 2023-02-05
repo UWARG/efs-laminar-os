@@ -130,16 +130,16 @@ void losKernelStart(void);
 #define MATEKSYS3901_RX_GPIO_Port GPIOC
 #define VN300_TX_Pin GPIO_PIN_5
 #define VN300_TX_GPIO_Port GPIOD
-#define BMX_160_SDA_Pin GPIO_PIN_13
-#define BMX_160_SDA_GPIO_Port GPIOG
-#define BMX_160_SCL_Pin GPIO_PIN_14
-#define BMX_160_SCL_GPIO_Port GPIOG
 #define UCPD_DBN_Pin GPIO_PIN_5
 #define UCPD_DBN_GPIO_Port GPIOB
 #define RFD900_TX_Pin GPIO_PIN_6
 #define RFD900_TX_GPIO_Port GPIOB
 #define LED_BLUE_Pin GPIO_PIN_7
 #define LED_BLUE_GPIO_Port GPIOB
+#define BMX_160_SCL_Pin GPIO_PIN_8
+#define BMX_160_SCL_GPIO_Port GPIOB
+#define BMX_160_SDA_Pin GPIO_PIN_9
+#define BMX_160_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

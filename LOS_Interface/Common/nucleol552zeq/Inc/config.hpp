@@ -20,22 +20,26 @@ const uint8_t NUM_ACTUATOR_CHANNELS = 1;
 extern MotorChannel* motor_channels_[];
 
 /* Los Position */
-#define BMX160_CONNECTED
-#define TARGET_BUILD
-#define SENSOR_FUSION
-
-#include "imu.hpp"
+#include "LOS_D_IMU.hpp"
 #include "gps.hpp"
 #include "airspeed.hpp"
 #include "altimeter.hpp"
 
+// defining the connected sensors to select which sensors are used
+#define BMX160_CONNECTED
+//#define NEOM8_CONNECTED
+#define SENSOR_FUSION
+
 #ifdef SENSOR_FUSION
-#include "SensorFusion.hpp"
+#include "LOS_D_SensorFusion.hpp"
 #endif
 
 #ifdef BMX160_CONNECTED
-#include "imu.hpp"
-extern IMU* g_imuObj; // BMX160 imu
+#include "LOS_D_BMX160.hpp"
+#endif
+
+#ifdef NEOM8_CONNECTED
+//#include 
 #endif
 
 #endif // CONFIG_HPP_

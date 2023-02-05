@@ -67,7 +67,8 @@ void losInit(void)
 {
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
+  
+  SensorFusionInterfaceInit();
   SystemClock_Config();
 
   /* Initialize all configured peripherals */
