@@ -65,8 +65,8 @@ all: main-build
 main-build: LaminarOS_nL552ZEQ.elf secondary-outputs
 
 # Tool invocations
-LaminarOS_nL552ZEQ.elf LaminarOS_nL552ZEQ.map: $(OBJS) $(USER_OBJS) C:\Users\mahus\Desktop\Warg\WARG_1B\ZeroPilot-Comp-2023\LaminarOS\boardfiles\nucleol552zeq\STM32L552ZETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "LaminarOS_nL552ZEQ.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Users\mahus\Desktop\Warg\WARG_1B\ZeroPilot-Comp-2023\LaminarOS\boardfiles\nucleol552zeq\STM32L552ZETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="LaminarOS_nL552ZEQ.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+LaminarOS_nL552ZEQ.elf LaminarOS_nL552ZEQ.map: $(OBJS) $(USER_OBJS) C:\Codes_Programming\LaminarOSWorkplace\LaminarOS\boardfiles\nucleol552zeq\STM32L552ZETXQ_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "LaminarOS_nL552ZEQ.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m33 -T"C:\Codes_Programming\LaminarOSWorkplace\LaminarOS\boardfiles\nucleol552zeq\STM32L552ZETXQ_FLASH.ld" --specs=nosys.specs -Wl,-Map="LaminarOS_nL552ZEQ.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

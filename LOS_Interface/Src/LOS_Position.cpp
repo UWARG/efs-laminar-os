@@ -34,7 +34,7 @@ LOS_Position::LOS_Position() {
     #endif
 
     #ifdef NEOM8_CONNECTED
-
+        gpsObj = &NEO_GPS::getInstance();
     #endif
 
 }
@@ -48,9 +48,10 @@ LOS_Position::LOS_Position() {
 void LOS_Position::sensorFusion()
 {
     imuObj->GetResult(imuData);
+    gpsObj->GetResult(gpsData);
     
     /*
-        g_gpsObj->GetResult(gpsData);
+        
         g_altimeterObj->GetResult(altimeterData);
         g_airspeedObj->GetResult(airspeedData);
     */
@@ -72,14 +73,14 @@ void LOS_Position::sensorFusion()
     rawPosition_.airspeed = 0; 
 
     // gps
-    rawPosition_.latitude = 0;
-    rawPosition_.longitude = 0;
-    rawPosition_.utcTime =  0;
-    rawPosition_.groundSpeed = 0;
-    rawPosition_.altitude_gps = 0;
-    rawPosition_.heading = 0;
-    rawPosition_.numSatellites = 0;
-    rawPosition_.fixStatus = 0;
+    rawPosition_.latitude = gpsData.latitude;
+    rawPosition_.longitude = gpsData.longitude;
+    rawPosition_.utcTime =  gpsData.utcTime;
+    rawPosition_.groundSpeed = gpsData.groundSpeed;
+    rawPosition_.altitude_gps = gpsData.altitude;
+    rawPosition_.heading = gpsData.heading;
+    rawPosition_.numSatellites = gpsData.numSatellites;
+    rawPosition_.fixStatus = gpsData.fixStatus;
 
     // altimeter
     rawPosition_.pressure = 0;

@@ -25,8 +25,8 @@ struct GpsData_t{
     long double latitude;  // 8 Bytes
     long double longitude; // 8 Bytes
     float utcTime;     // 4 Bytes. Time in seconds since 00:00 (midnight)
-    float groundSpeed; // in m/s
     int altitude; // in m
+    float groundSpeed; // in m/s
     int16_t heading; // in degrees. Should be between 0-360 at all times, but using integer just in case
     uint8_t numSatellites;    // 1 Byte
 	uint8_t fixStatus; //0 = No GPS, 1 = GPS fix, 2 = DGSP Fix, 3 = Estimated/Dead Recoking Fix
