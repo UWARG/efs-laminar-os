@@ -37,6 +37,10 @@ LOS_Position::LOS_Position() {
         gpsObj = &NEO_GPS::getInstance();
     #endif
 
+    #ifdef AIRSPEED_CONNECTED
+        airspeedObj = &AIRSPEED::getInstance();
+    #endif
+
 }
 
 /**
@@ -49,6 +53,7 @@ void LOS_Position::sensorFusion()
 {
     imuObj->GetResult(imuData);
     gpsObj->GetResult(gpsData);
+    airspeedObj->GetResult(airspeedData);
     
     /*
         
@@ -108,7 +113,7 @@ void LOS_Position::sensorFusion()
     position.heading = sensor_fusion_out.heading;
 
     // air speed
-    position.airspeed = sensor_fusion_out.airspeed;
+    position.airspeed = airspeedData.airspeed;
 
     // ground speed
     //position_.ground_speed = sensor_fusion_out.groundSpeed;
