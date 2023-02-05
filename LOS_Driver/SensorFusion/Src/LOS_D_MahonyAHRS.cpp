@@ -14,8 +14,8 @@
 //---------------------------------------------------------------------------------------------------
 // Header files
 
-#include "../Inc/MahonyAHRS.hpp"
-#include "../Inc/SensorFusion.hpp"
+#include "LOS_D_MahonyAHRS.hpp"
+#include "LOS_D_SensorFusion.hpp"
 #include <math.h>
 
 //---------------------------------------------------------------------------------------------------

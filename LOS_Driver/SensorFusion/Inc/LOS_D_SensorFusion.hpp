@@ -13,10 +13,10 @@ extern "C"
 {
 #endif
 
-#include "../../CControl/Inc/CControlFunctions.h"
-#include "CommonDataTypes.hpp"
-#include "imu.hpp"
-#include "bmx160.hpp"
+#include "LOS_D_CControlFunctions.h"
+#include "LOS_D_SF_CommonDataTypes.hpp"
+#include "LOS_D_IMU.hpp"
+#include "LOS_D_BMX160.hpp"
 #include "gps.hpp"
 #include "altimeter.hpp"
 #include "airspeed.hpp"
@@ -46,6 +46,9 @@ typedef struct {
     double heading; //Degrees. Heading of 0 is north.
 } SFOutput_t;
 
+// Since the following structs are for raw sensor data (which will now be retrieved from LOS)
+// they are not needed at the moment.
+/*
 //Following structs store the raw sensor data so other modules can have direct access to them without including sensor header files
 typedef struct
 {
@@ -97,6 +100,8 @@ typedef struct  {
     int utcTime; //Last time GetResult was called
 } Altimeter_Data_t;
 
+*/
+
 
 /**
  * Initialize sensor fusion.
@@ -105,6 +110,8 @@ void SF_Init(void);
 
 /**
  * Generates fused sensor data. Should be called at a constant rate defined by SF_FREQ after SF_Init has been called once.
+ * This has also changed to take in the different data structs since SF is no longer calling on drivers directly.
+ * Drivers are called from LOS Pos and data is sent to SF.
  */
 SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData, 
 							AltimeterData_t &altimeterData, 
@@ -117,31 +124,37 @@ SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData,
  */
 SFError_t SF_GetResult(SFOutput_t *SFoutput);
 
-/**
+
+
+// This portion is commented out as it will not be used
+// rather, LOS Pos would store all the raw data into a signle struct
+
+/*
  * Get raw IMU data. Can be called any time raw data is needed.
  * @return IMU struct.
  */
-IMU_Data_t SF_GetRawIMU();
+//IMU_Data_t SF_GetRawIMU();
 
-#ifdef AUTOPILOT
+//#ifdef AUTOPILOT
 /**
  * Get raw Airspeed data. Can be called any time raw data is needed.
  * @return Airspeed struct.
  */
-Airspeed_Data_t SF_GetRawAirspeed();
+//Airspeed_Data_t SF_GetRawAirspeed();
 
 /**
  * Get raw GPS data. Can be called any time raw data is needed.
  * @return GPS struct.
  */
-Gps_Data_t SF_GetRawGPS();
+//Gps_Data_t SF_GetRawGPS();
 
 /**
  * Get raw Altimeter data. Can be called any time raw data is needed.
  * @return Altimeter struct.
  */
-Altimeter_Data_t SF_GetRawAltimeter();
-#endif
+//Altimeter_Data_t SF_GetRawAltimeter();
+//#endif
+
 
 #ifdef __cplusplus
 }

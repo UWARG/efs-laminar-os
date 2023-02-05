@@ -5,7 +5,7 @@
  *      Author: Daniel Mårtensson
  */
 
-#include "../Inc/CControlFunctions.h"
+#include "LOS_D_CControlFunctions.h"
 
 /*
  * Do LU LU-decomposition with partial pivoting

@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include "i2c.h"
 #include "main.h"
-#include "../../SensorFusion/Inc/CommonDataTypes.hpp"
+#include "LOS_D_SF_CommonDataTypes.hpp"
 
 /* Exported functions prototypes ---------------------------------------------*/
 // void Error_Handler();

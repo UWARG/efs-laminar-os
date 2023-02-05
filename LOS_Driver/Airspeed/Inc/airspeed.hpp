@@ -18,7 +18,7 @@
 #define AIRSPEED_HPP
 
 #include <cstdint>
-#include "../../SensorFusion/Inc/CommonDataTypes.hpp"
+#include "LOS_D_SF_CommonDataTypes.hpp"
 /*
     Currently there is only one airspeed sensor used, if this is 
     changed to a different sensor, part numbers and a selection

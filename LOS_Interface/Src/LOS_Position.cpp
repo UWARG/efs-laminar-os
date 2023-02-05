@@ -30,7 +30,7 @@ LOS_Position::LOS_Position() {
     #endif
 
     #ifdef BMX160_CONNECTED
-        imuObj = &BMX160::getInstance();
+        imu_obj = &BMX160::getInstance();
     #endif
 
     #ifdef NEOM8_CONNECTED
@@ -47,7 +47,7 @@ LOS_Position::LOS_Position() {
 
 void LOS_Position::sensorFusion()
 {
-    imuObj->GetResult(imuData);
+    imu_obj->GetResult(imu_data);
     
     /*
         g_gpsObj->GetResult(gpsData);
@@ -56,70 +56,70 @@ void LOS_Position::sensorFusion()
     */
     
     // imu
-    rawPosition_.gyrx = imuData.gyro_x; 
-    rawPosition_.gyry = imuData.gyro_y;
-    rawPosition_.gyrz = imuData.gyro_z;
+    raw_position.gyrx = imu_data.gyro_x; 
+    raw_position.gyry = imu_data.gyro_y;
+    raw_position.gyrz = imu_data.gyro_z;
 
-    rawPosition_.accx = imuData.accel_x;
-    rawPosition_.accy = imuData.accel_y;
-    rawPosition_.accz = imuData.accel_z;
+    raw_position.accx = imu_data.accel_x;
+    raw_position.accy = imu_data.accel_y;
+    raw_position.accz = imu_data.accel_z;
 
-    rawPosition_.magx = imuData.mag_x;
-    rawPosition_.magy = imuData.mag_y;
-    rawPosition_.magz = imuData.mag_z;
+    raw_position.magx = imu_data.mag_x;
+    raw_position.magy = imu_data.mag_y;
+    raw_position.magz = imu_data.mag_z;
     
     // airspeed
-    rawPosition_.airspeed = 0; 
+    raw_position.airspeed = 0; 
 
     // gps
-    rawPosition_.latitude = 0;
-    rawPosition_.longitude = 0;
-    rawPosition_.utcTime =  0;
-    rawPosition_.groundSpeed = 0;
-    rawPosition_.altitude_gps = 0;
-    rawPosition_.heading = 0;
-    rawPosition_.numSatellites = 0;
-    rawPosition_.fixStatus = 0;
+    raw_position.latitude = 0;
+    raw_position.longitude = 0;
+    raw_position.utcTime =  0;
+    raw_position.groundSpeed = 0;
+    raw_position.altitude_gps = 0;
+    raw_position.heading = 0;
+    raw_position.numSatellites = 0;
+    raw_position.fixStatus = 0;
 
     // altimeter
-    rawPosition_.pressure = 0;
-    rawPosition_.altitude_alt = 0;
-    rawPosition_.temp = 0;
+    raw_position.pressure = 0;
+    raw_position.altitude_alt = 0;
+    raw_position.temp = 0;
 
-    (*this).SFerrorStatus = SF_GenerateNewResult((*this).imuData, 
-                                                (*this).gpsData,
-                                                (*this).altimeterData, 
-                                                (*this).airspeedData);
-    SF_GetResult(&sensorFusionOut_);
+    SF_error_status = SF_GenerateNewResult((*this).imu_data, 
+                                           (*this).gps_data,
+                                           (*this).altimeter_data, 
+                                           (*this).airspeed_data);
+    SF_GetResult(&sensor_fusion_out);
     
     // lat and long
-    position_.latitude = sensorFusionOut_.latitude;
-    position_.longitude = sensorFusionOut_.longitude;
+    position.latitude = sensor_fusion_out.latitude;
+    position.longitude = sensor_fusion_out.longitude;
 
-    position_.latitudeSpeed = sensorFusionOut_.latitudeSpeed;
-    position_.longitudeSpeed = sensorFusionOut_.longitudeSpeed;
+    position.latitudeSpeed = sensor_fusion_out.latitudeSpeed;
+    position.longitudeSpeed = sensor_fusion_out.longitudeSpeed;
 
     // rate of climb
-    position_.rateOfClimb = sensorFusionOut_.rateOfClimb;
+    position.rateOfClimb = sensor_fusion_out.rateOfClimb;
 
     // track and heading
-    position_.track = sensorFusionOut_.track;
-    position_.heading = sensorFusionOut_.heading;
+    position.track = sensor_fusion_out.track;
+    position.heading = sensor_fusion_out.heading;
 
     // air speed
-    position_.airspeed = sensorFusionOut_.airspeed;
+    position.airspeed = sensor_fusion_out.airspeed;
 
     // ground speed
-    //position_.ground_speed = sensorFusionOut_.groundSpeed;
+    //position_.ground_speed = sensor_fusion_out.groundSpeed;
 
     // orientation
-    position_.roll = sensorFusionOut_.roll;
-    position_.pitch = sensorFusionOut_.pitch;
-    position_.yaw = sensorFusionOut_.yaw;
+    position.roll = sensor_fusion_out.roll;
+    position.pitch = sensor_fusion_out.pitch;
+    position.yaw = sensor_fusion_out.yaw;
     
-    position_.rollRate = sensorFusionOut_.rollRate; 
-    position_.pitchRate = sensorFusionOut_.pitchRate;
-    position_.yawRate = sensorFusionOut_.yawRate;
+    position.rollRate = sensor_fusion_out.rollRate; 
+    position.pitchRate = sensor_fusion_out.pitchRate;
+    position.yawRate = sensor_fusion_out.yawRate;
 }
 
 
@@ -131,40 +131,40 @@ void LOS_Position::sensorFusion()
 
 void LOS_Position::updatePosition() {
 
-    #ifdef SENSOR_FUSION
-        (*this).sensorFusion();
-    #else
-        /* Vector Nav */
-        
-        // lat and long
-        // position_.latitude = 
-        // position_.longitude = 
+#ifdef SENSOR_FUSION
+    (*this).sensorFusion();
+#else
+    /* Vector Nav */
+    
+    // lat and long
+    // position_.latitude = 
+    // position_.longitude = 
 
-        // position_.latitude_speed = 
-        // position_.longitude_speed =
+    // position_.latitude_speed = 
+    // position_.longitude_speed =
 
-        // rate of climb
-        // position_.climb_rate =
+    // rate of climb
+    // position_.climb_rate =
 
-        // track and heading
-        // position_.track =
-        // position_.heading =
+    // track and heading
+    // position_.track =
+    // position_.heading =
 
-        // airspeed
-        // position_.air_speed =
-        
-        // ground speed
-        // position_.ground_speed =
+    // airspeed
+    // position_.air_speed =
+    
+    // ground speed
+    // position_.ground_speed =
 
-        // orientation
-        // position_.roll = 
-        // position_.pitch = 
-        // position_.yaw = 
-        
-        // position_.roll_rate = 
-        // position_.pitch_rate = 
-        // position_.yaw_rate = 
-    #endif
+    // orientation
+    // position_.roll = 
+    // position_.pitch = 
+    // position_.yaw = 
+    
+    // position_.roll_rate = 
+    // position_.pitch_rate = 
+    // position_.yaw_rate = 
+#endif
 }
 
 /**
@@ -174,17 +174,11 @@ void LOS_Position::updatePosition() {
  */
 
 PositionData_t* LOS_Position::getPosition() {
-	// update position
-    updatePosition();
-	
     // returns pointer to the position struct
-    return &position_;
+    return &position;
 }
 
 RawPositionData_t* LOS_Position::getRawPosition() {
-	// update position
-    updatePosition();
-	
     // returns pointer to the position struct
-    return &rawPosition_;
+    return &raw_position;
 }
