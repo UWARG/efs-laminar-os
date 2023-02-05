@@ -14,32 +14,32 @@
 
 class LOS_Position {
         // This class is used to get the current position
-        // and attitude of the plane
+        // and attitude of the aircraft
 public:
         LOS_Position();
         static LOS_Position& getInstance();
+        void updatePosition();
 
         PositionData_t* getPosition();
         RawPositionData_t* getRawPosition();
-        
-        void updatePosition();
 
 private:
         void sensorFusion();
-        IMUData_t imuData;
-        GpsData_t gpsData;
-        AltimeterData_t altimeterData;
-        airspeedData_t airspeedData;
 
-        PositionData_t position_;
-        RawPositionData_t rawPosition_;
+        IMUData_t imu_data;
+        GpsData_t gps_data;
+        AltimeterData_t altimeter_data;
+        airspeedData_t airspeed_data;
 
-        SFOutput_t sensorFusionOut_;
+        PositionData_t position;
+        RawPositionData_t raw_position;
 
-        IMU* imuObj;
-        Gps* gpsObj;
+        SFOutput_t sensor_fusion_out;
 
-        SFError_t SFerrorStatus;
+        IMU* imu_obj;
+        Gps* gps_obj;
+
+        SFError_t SF_error_status;
 };
 
 #endif 

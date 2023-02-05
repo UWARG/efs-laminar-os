@@ -1,7 +1,7 @@
 #ifndef INC_BMX160_HPP_
 #define INC_BMX160_HPP_
 
-#include "imu.hpp"
+#include "LOS_D_IMU.hpp"
 
 class BMX160 : public IMU {
 

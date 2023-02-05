@@ -5,7 +5,7 @@
  *      Author: Daniel Mårtensson
  */
 
-#include "CControlFunctions.h"
+#include "LOS_D_CControlFunctions.h"
 
 /*
  * C = A*B

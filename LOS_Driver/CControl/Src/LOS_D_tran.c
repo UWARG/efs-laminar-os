@@ -5,7 +5,7 @@
  *      Author: Daniel Mårtensson
  */
 
-#include "../Inc/CControlFunctions.h"
+#include "LOS_D_CControlFunctions.h"
 
 /*
  * Turn A into transponse A^T

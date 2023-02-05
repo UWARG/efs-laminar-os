@@ -5,22 +5,22 @@
  * Author: Lucy Gong, Dhruv Rawat, Anthony Bertnyk, Anthony Luo
  */
 
-#include "../Inc/SensorFusion.hpp"
-#include "../Inc/MahonyAHRS.hpp"
+#include "LOS_D_SensorFusion.hpp"
+#include "LOS_D_MahonyAHRS.hpp"
 #include <cmath>
-#include "../Inc/MathConstants.hpp"
+#include "LOS_D_MathConstants.hpp"
 #include "timeStampingPOGI.hpp"
 #define TARGET_BUILD
 #define AUTOPILOT
 //#define ALTIMETER
 
 // TODO: switch to interface
-#include "imu.hpp"
+#include "LOS_D_IMU.hpp"
 #include "gps.hpp"
 #ifdef AUTOPILOT
 #endif
 
-#include "../../CControl/Inc/CControlFunctions.h"
+#include "LOS_D_CControlFunctions.h"
 
 typedef struct {
 	float roll, pitch, yaw; //Degrees. Yaw of 180 is north.
@@ -48,6 +48,9 @@ struct SFIterationData_t {
 	float prevX[NUM_KALMAN_VALUES];
 	float prevP[NUM_KALMAN_VALUES * NUM_KALMAN_VALUES];
 };
+
+// All the following initializations are commneted out since LOS Pos
+// will be handeling drivers
 
 //static IMU *imuObj;
 //IMU& testimu = BMX160::getInstance();
@@ -89,22 +92,26 @@ float roll;
 float pitch;
 */
 void SF_Init(void) {
-#ifdef TARGET_BUILD
+
+// Following portion is commented out as LOS_Pos will take care
+// of drivers
+
+//#ifdef TARGET_BUILD
     //imuObj = &BMX160::getInstance();
-#ifdef AUTOPILOT
+//#ifdef AUTOPILOT
     //gpsObj = NEOM8::GetInstance();
     //Waiting for definitions
     //altimeterObj = MS5637::GetInstance();
     //airspeedObj = dummyairspeed::GetInstance();
-#endif
-#elif defined(UNIT_TESTING)
+//#endif
+//#elif defined(UNIT_TESTING)
     //imuObj = TestIMU::GetInstance();
-#ifdef AUTOPILOT
+//#ifdef AUTOPILOT
     //gpsObj = TestGps::GetInstance();
     //altimeterObj = TestAltimeter::GetInstance();
     //airspeedObj = TestAirspeed::GetInstance();
-#endif
-#endif
+//#endif
+//#endif
 
 	//Set initial state to be unknown
 	for (int i = 0; i < NUM_KALMAN_VALUES; i++)
@@ -266,6 +273,7 @@ SFError_t SF_GetAttitude(SFAttitudeOutput_t *Output, IMUData_t *imudata) {
 
 SFError_t SF_GetPosition(SFPathOutput_t *Output,
 #ifdef ALTIMETER
+		// currently no altimeter 
         AltimeterData_t *altimeterdata,
 #endif
 		GpsData_t *gpsdata,
@@ -398,18 +406,13 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
                     altimeterdata->altitude,
         (float) gpsdata->altitude,
 #else //These sensor measurements are not used in Safety
-			0, 0,
+			0, (float) gpsdata->altitude,
 #endif
 			xyPos[0], //Latitude
 			xyPos[1], //Longitude
 			0, //Vertical speed (Currently unused)
-#ifdef Autopilot
-                    gpsdata->groundSpeed * cos(DEG_TO_RAD(gpsdata->heading)), //North speed
-        gpsdata->groundSpeed * sin(DEG_TO_RAD(gpsdata->heading)) //East speed
-#else
-			0,
-			0,
-#endif
+			gpsdata->groundSpeed * cos(DEG_TO_RAD(gpsdata->heading)), //North speed
+        	gpsdata->groundSpeed * sin(DEG_TO_RAD(gpsdata->heading)) //East speed
 			};
 
 	//Defines the confidence to have in each sensor variable
@@ -559,6 +562,7 @@ SFError_t SF_GetPosition(SFPathOutput_t *Output,
 	return SFError;
 }
 
+// data is now passed in from LOS POS
 SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData, 
 							AltimeterData_t &altimeterData, 
 							airspeedData_t &airspeedData) {
@@ -568,6 +572,8 @@ SFError_t SF_GenerateNewResult(IMUData_t &imuData, GpsData_t &gpsData,
 	
 #ifdef AUTOPILOT
 	/*
+	No longer getting results from here, but
+	from los pos instead
     GpsData_t GpsData;
     AltimeterData_t altimeterData;
     airspeedData_t airspeedData;
