@@ -78,7 +78,6 @@ class Airspeed
 	    float get_pressure() const;
 	    float get_temperature() const;
 	    float get_airspeed( ) const;
-        static getInstance();
         virtual void GetResult(airspeedData_t& Data) = 0; 
 };
 

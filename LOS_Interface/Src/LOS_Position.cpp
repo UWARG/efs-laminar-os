@@ -38,7 +38,7 @@ LOS_Position::LOS_Position() {
     #endif
 
     #ifdef AIRSPEED_CONNECTED
-        airspeedObj = &AIRSPEED::getInstance();
+
     #endif
 
 }

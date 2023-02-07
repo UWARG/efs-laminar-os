@@ -26,20 +26,18 @@ void Airspeed::init()
 		uint8_t buf[4];
 		buf[0] = 0x00;
 		HAL_StatusTypeDef ret;
-		ret = HAL_I2C_Master_Transmit(I2C, (uint16_t)MS4525D0_I2C_ADDR1 << 1, buf, 1, 50);
+		ret = HAL_I2C_Master_Transmit(I2C, (uint16_t)MS4525D0_I2C_ADDR1 << 1, buf, 1, 2);
 	    if ( ret != HAL_OK ) {
           outputAirspeed.sensorStatus = SENSOR_FAIL;
           outputAirspeed.isDataNew = false;
-	      return false;
 	    } else {
 
 	      for(int i = 0; i < 5000; i++);
 	      // Read 4 bytes from the airspeed register
-	      ret = HAL_I2C_Master_Receive(I2C, ((uint16_t)MS4525D0_I2C_ADDR1 << 1 )| 0x01, buf, 4, 50);
+	      ret = HAL_I2C_Master_Receive(I2C, ((uint16_t)MS4525D0_I2C_ADDR1 << 1 )| 0x01, buf, 4, 2);
 	      if ( ret != HAL_OK ) {
             outputAirspeed.sensorStatus = SENSOR_FAIL;
             outputAirspeed.isDataNew = false;
-	        return false;
 	      } else {
 
 	        //interpreting raw data
@@ -54,7 +52,6 @@ void Airspeed::init()
 			  {
                   outputAirspeed.sensorStatus = SENSOR_FAIL;
                   outputAirspeed.isDataNew = false;
-				  return false;
 			  }
               else {
                 outputAirspeed.sensorStatus = SENSOR_SUCCESS;
@@ -63,11 +60,14 @@ void Airspeed::init()
               
 	      }
 	    }
-	    calculate_pressure();
-	    calculate_temperature();
-	    calculate_airspeed();
 
-	    return true;
+	    if ( outputAirspeed.isDataNew == true ) {
+	    	calculate_pressure();
+	        calculate_temperature();
+	        calculate_airspeed();
+	    }
+
+
 }
 
 void Airspeed::calculate_pressure()
@@ -111,11 +111,6 @@ float Airspeed::get_airspeed( ) const
 	return airspeed;
 }
 
-Airspeed::getInstance()
-{
-	static Airspeed singleton;
-	return singleton;
-}
 
 void Airspeed::GetResult(airspeedData_t& Data)
 {
