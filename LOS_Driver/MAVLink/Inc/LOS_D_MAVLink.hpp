@@ -8,7 +8,7 @@
 #ifndef INC_LOS_D_MAVLINK_HPP_
 #define INC_LOS_D_MAVLINK_HPP_
 
-#include "MAVLink\ardupilotmega\mavlink.h"
+#include "MAVLink/ardupilotmega/mavlink.h"
 #include "stm32l5xx_hal.h"
 
 typedef struct MAVLink_Message {
@@ -26,10 +26,8 @@ class MAVLink {
 
 		MAVLink(UART_HandleTypeDef* uart_handle);
 
-		static MAVLink& getInstance(void);
-
 	private:
-        const UART_HandleTypeDef* uart_handle;
+        UART_HandleTypeDef* uart_handle;
 		/* We are representing ground station, so our system ID and
 		 * component ID are 255 and 1. */
 		const uint8_t system_id = 255;

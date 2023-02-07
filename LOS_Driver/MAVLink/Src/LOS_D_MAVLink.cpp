@@ -7,12 +7,6 @@
 
 #include "LOS_D_MAVLink.hpp"
 
-MAVLink& MAVLink::getInstance(void)
-{
-	static MAVLink singleton;
-	return singleton;
-}
-
 MAVLink::MAVLink(UART_HandleTypeDef* uart_handle)
     :
     uart_handle(uart_handle)
