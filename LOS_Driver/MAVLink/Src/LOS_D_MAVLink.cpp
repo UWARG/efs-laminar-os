@@ -1,24 +1,26 @@
 /*
- * LOS_Mav.cpp
+ * LOS_D_MAVLink.cpp
  *
  *  Created on: Feb 2, 2023
  *      Author: Stanley Tang
  */
 
-#include "LOS_Mav.hpp"
+#include "LOS_D_MAVLink.hpp"
 
-Los_Mav& Los_Mav::getInstance(void)
+MAVLink& MAVLink::getInstance(void)
 {
-	static Los_Mav singleton;
+	static MAVLink singleton;
 	return singleton;
 }
 
-Los_Mav::Los_Mav()
+MAVLink::MAVLink(UART_HandleTypeDef* uart_handle)
+    :
+    uart_handle(uart_handle)
 {
 	memset(&last_status, 0, sizeof(mavlink_status_t));
 }
 
-uint8_t Los_Mav::readMessage(mavlink_message_t &message)
+uint8_t MAVLink::readMessage(mavlink_message_t &message)
 {
 	uint8_t byte = 0;
 	uint8_t end_of_msg = 0;
@@ -27,7 +29,7 @@ uint8_t Los_Mav::readMessage(mavlink_message_t &message)
 
 	/* Parse incoming packet one byte at a time. */
 	for (uint16_t i = 0; i < MAVLINK_MAX_PACKET_LEN; ++i) {
-		HAL_UART_Receive(LOS_MAV_HUART_HANDLE, &byte, 1, 100);
+		HAL_UART_Receive(MAVLink_HUART_HANDLE, &byte, 1, 100);
 
 		end_of_msg = mavlink_parse_char(MAVLINK_COMM_1, byte, &message, &status);
 
@@ -46,15 +48,15 @@ uint8_t Los_Mav::readMessage(mavlink_message_t &message)
 	return success;
 }
 
-void Los_Mav::writeMessage(const mavlink_message_t &msg)
+void MAVLink::writeMessage(const mavlink_message_t &msg)
 {
 	uint8_t buf[MAVLINK_MAX_PACKET_LEN];
 	uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
 
-	HAL_UART_Transmit(LOS_MAV_HUART_HANDLE, buf, len, 1000);
+	HAL_UART_Transmit(MAVLink_HUART_HANDLE, buf, len, 1000);
 }
 
-void Los_Mav::sendHeartbeat()
+void MAVLink::sendHeartbeat()
 {
 	mavlink_heartbeat_t heartbeat = {};
 	heartbeat.type = MAV_TYPE_GCS; /* We are representing ground (control) station. */
@@ -66,7 +68,7 @@ void Los_Mav::sendHeartbeat()
 	writeMessage(message);
 }
 
-void Los_Mav::sendNavCommand(float x, float y, float z, float radius)
+void MAVLink::sendNavCommand(float x, float y, float z, float radius)
 {
 	mavlink_command_long_t command_long = {};
 	command_long.target_system = plane_system_id;
@@ -84,7 +86,7 @@ void Los_Mav::sendNavCommand(float x, float y, float z, float radius)
 	writeMessage(message);
 }
 
-uint8_t Los_Mav::receiveMessage(MAVLink_Message_t& mavlink_message)
+uint8_t MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
 {
 	mavlink_message_t message = {};
 	uint8_t success = 0;
