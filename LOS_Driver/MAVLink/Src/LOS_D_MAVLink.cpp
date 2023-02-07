@@ -23,7 +23,7 @@ uint8_t MAVLink::readMessage(mavlink_message_t &message)
 
 	/* Parse incoming packet one byte at a time. */
 	for (uint16_t i = 0; i < MAVLINK_MAX_PACKET_LEN; ++i) {
-		HAL_UART_Receive(MAVLink_HUART_HANDLE, &byte, 1, 100);
+		HAL_UART_Receive(uart_handle, &byte, 1, 100);
 
 		end_of_msg = mavlink_parse_char(MAVLINK_COMM_1, byte, &message, &status);
 
@@ -47,7 +47,7 @@ void MAVLink::writeMessage(const mavlink_message_t &msg)
 	uint8_t buf[MAVLINK_MAX_PACKET_LEN];
 	uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
 
-	HAL_UART_Transmit(MAVLink_HUART_HANDLE, buf, len, 1000);
+	HAL_UART_Transmit(uart_handle, buf, len, 1000);
 }
 
 void MAVLink::sendHeartbeat()
