@@ -2,6 +2,7 @@
 #define LOS_TELEM_HPP_
 
 #include <cstdint>
+#include "config.hpp"
 
 class Los_Telem{
 
@@ -9,9 +10,12 @@ class Los_Telem{
         Los_Telem(const Los_Telem*) = delete;
 
         static Los_Telem& getInstance(void);
+        void init();
 
         void transmit(uint8_t* buf, int size);
         void receive(uint8_t* buf, int max_size, int* writePtr, int readPtr);
+
+        volatile uint8_t telem_buffer[TELEM_BUFFER_SIZE] = { 0 };
 
     private:
         Los_Telem();

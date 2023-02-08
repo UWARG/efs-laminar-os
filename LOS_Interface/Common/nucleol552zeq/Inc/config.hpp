@@ -19,20 +19,23 @@ extern RcReceiver* rc_receivers_[];
 
 #include "LOS_D_GenericCommsDevice.hpp"
 
-const int TELEM_QUEUE_SIZE = 10;
+
 const int TELEM_BUFFER_SIZE = 100;
+const int TELEM_QUEUE_SIZE = 500;
 
 extern QueueHandle_t telem_queue; 
 extern UART_HandleTypeDef* telem_uart;
 extern GenericCommsDevice telem_driver;
+//extern volatile uint8_t telem_buffer[TELEM_BUFFER_SIZE];
 
 /* Los Comms */
-const int COMMS_BUFFER_SIZE = 10;
+const int COMMS_BUFFER_SIZE = 50;
 const int COMMS_QUEUE_SIZE = 200;
 
 extern QueueHandle_t comms_queue;
 extern UART_HandleTypeDef* comms_uart;
 extern GenericCommsDevice comms_driver;
+//extern volatile uint8_t comms_buffer[COMMS_BUFFER_SIZE];
 
 /* Los Actuators */
 #include "LOS_D_MotorChannel.hpp"

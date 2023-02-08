@@ -13,10 +13,12 @@ class GenericCommsDevice {
         GenericCommsDevice(UART_HandleTypeDef* pUart, QueueHandle_t pQueue) : uart{ pUart }, queue{ pQueue } {}
         void Callback(volatile uint8_t* buf, uint16_t size);
         bool matchUART(UART_HandleTypeDef* huart);
+        void startInterrupt(UART_HandleTypeDef* huart, uint8_t* buf, int size);
 
     private:
         QueueHandle_t queue; 
         UART_HandleTypeDef* uart;
+        bool bufferUsed = false;
 
 
 };

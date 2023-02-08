@@ -1,5 +1,10 @@
 #include "LOS_D_GenericCommsDevice.hpp"
+#include "main.h"
 
+void GenericCommsDevice::startInterrupt(UART_HandleTypeDef* huart, uint8_t* buf, int size) {
+    HAL_UARTEx_ReceiveToIdle_DMA(huart, buf, size);
+	__HAL_DMA_DISABLE_IT(huart->hdmarx, DMA_IT_HT);
+}
 
 void GenericCommsDevice::transmit(uint8_t* buf, int size) {
     HAL_UART_Transmit_DMA(this->uart,buf, size);
@@ -30,7 +35,7 @@ void GenericCommsDevice::receive(uint8_t* buf, int max_size, int* writePtr, int 
     }
 
     uint8_t currByte = 0;
-    while(*writePtr != readPtr) { // make sure theres space in the buffer
+    while((*writePtr != readPtr) || !bufferUsed) { // make sure theres space in the buffer
         if( xQueueReceive( this->queue, &currByte,( TickType_t ) 10 ) != pdPASS ) {
             // queue is probably empty
             return; 
@@ -43,6 +48,7 @@ void GenericCommsDevice::receive(uint8_t* buf, int max_size, int* writePtr, int 
         
         buf[*writePtr] = currByte;
         *writePtr++;
+        bufferUsed = true;
     }
 }
 
