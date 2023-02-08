@@ -50,6 +50,17 @@ void MAVLink::writeMessage(const mavlink_message_t &msg)
 	HAL_UART_Transmit(uart_handle, buf, len, 1000);
 }
 
+void MAVLink::sendCommandLong(mavlink_command_long_t command_long)
+{
+    command_long.target_system = plane_system_id;
+	command_long.target_component = plane_component_id;
+
+    mavlink_message_t message = {};
+	mavlink_msg_command_long_encode(system_id, component_id, &message, &command_long);
+
+	writeMessage(message);
+}
+
 void MAVLink::sendHeartbeat()
 {
 	mavlink_heartbeat_t heartbeat = {};
@@ -62,22 +73,73 @@ void MAVLink::sendHeartbeat()
 	writeMessage(message);
 }
 
-void MAVLink::sendNavCommand(float x, float y, float z, float radius)
+void sendInitialConfigs()
+{
+    /* Tell the plane to VTOL hover over a waypoint when it's reached in guided mode. */
+    mavlink_param_set_t vtol_hover_param = {};
+    vtol_hover_param.target_system = plane_system_id;
+    vtol_hover_param.target_system = plane_component_id;
+    vtol_hover_param.param_id = "Q_GUIDED_MODE";
+    vtol_hover_param.param_value = 1;
+    vtol_hover_param.param_type = MAV_PARAM_TYPE_UINT8;
+
+    mavlink_message_t message = {};
+    mavlink_msg_param_set_encode(system_id, component_id, &message, &vtol_hover);
+
+    writeMessage(message);
+}
+
+void MAVLink::sendArmDisarm(const bool arm)
+{
+    mavlink_command_long_t command_long = {};
+    command_long.command = MAV_CMD_COMPONENT_ARM_DISARM;
+    command_long.param1 = (float)arm;
+
+    sendCommandLong(command_long);
+}
+
+void MAVLink::sendFlightModeChange(const PLANE_MODE flight_mode)
+{
+    mavlink_command_long_t command_long = {};
+    command_long.command = MAV_CMD_DO_SET_MODE;
+    command_long.param2 = (float)flight_mode;
+
+    sendCommandLong(command_long);
+}
+
+void MAVLink::sendVTOLTakeOff(const float altitude)
+{
+    mavlink_command_long_t command_long = {};
+    command_long.command = MAV_CMD_NAV_VTOL_TAKEOFF;
+    command_long.param7 = altitude;
+
+    sendCommandLong(command_long);
+}
+
+void MAVLink::sendWaypointNav(const float x, const float y, const float z, const float acceptable_range)
 {
 	mavlink_command_long_t command_long = {};
-	command_long.target_system = plane_system_id;
-	command_long.target_component = plane_component_id;
 	command_long.command = MAV_CMD_NAV_WAYPOINT;
 	command_long.confirmation = 1;
-	command_long.param2 = radius;
+	command_long.param2 = acceptable_range;
 	command_long.param5 = x;
 	command_long.param6 = y;
 	command_long.param7 = z;
 
-	mavlink_message_t message = {};
-	mavlink_msg_command_long_encode(system_id, component_id, &message, &command_long);
+	sendCommandLong(command_long);
+}
 
-	writeMessage(message);
+void MAVLink::sendClearMissions()
+{
+    mavlink_mission_clear_all_t clear_all = {};
+    clear_all.target_system = plane_system_id;
+    clear_all.target_component = plane_component_id;
+    clear_all.mission_type = MAV_MISSION_TYPE_ALL;
+
+    mavlink_message_t message = {};
+    mavlink_msg_mission_clear_all_encode(system_id, component_id, &message, &clear_all);
+
+    writeMessage(message);
 }
 
 uint8_t MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
