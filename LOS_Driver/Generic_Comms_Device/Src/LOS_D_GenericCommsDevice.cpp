@@ -5,18 +5,44 @@ void GenericCommsDevice::transmit(uint8_t* buf, int size) {
     HAL_UART_Transmit_DMA(this->uart,buf, size);
 
 }
-void GenericCommsDevice::receive(uint8_t* buf, int max_size) {
-    uint8_t bytePtr = 0;
-    // read from freertos queue and put in the buffer
-    for (int x = 0; x < max_size; x++) {
-        if(this->queue != NULL) {
-           if( xQueueReceive( this->queue, &bytePtr,( TickType_t ) 10 ) != pdPASS ) {
-               return;
-           }
+// uint16_t GenericCommsDevice::receive(uint8_t* buf, int max_size) {
+//     uint16_t bytesRead = 0;
+//     uint8_t bytePtr = 0;
+//     // read from freertos queue and put in the buffer
+//     for (int x = 0; x < max_size; x++) {
+//         if(this->queue != NULL) {
+//             if( xQueueReceive( this->queue, &bytePtr,( TickType_t ) 10 ) != pdPASS ) {
+//                 return bytesRead;
+//             }
+//             bytesRead++;
+         
+//             buf[x] = bytePtr;
 
-           buf[x] = bytePtr;
+//         }
+//     }
 
+//     return bytesRead;
+// }
+
+void GenericCommsDevice::receive(uint8_t* buf, int max_size, int* writePtr, int readPtr) {
+    if(this->queue == NULL) {
+        return;
+    }
+
+    uint8_t currByte = 0;
+    while(*writePtr != readPtr) { // make sure theres space in the buffer
+        if( xQueueReceive( this->queue, &currByte,( TickType_t ) 10 ) != pdPASS ) {
+            // queue is probably empty
+            return; 
         }
+
+        if(*writePtr == max_size) {
+            // wrap around
+            *writePtr = 0;
+        }
+        
+        buf[*writePtr] = currByte;
+        *writePtr++;
     }
 }
 

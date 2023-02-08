@@ -14,6 +14,6 @@ void Los_Telem::transmit(uint8_t* buf, int size) {
     telem_driver.transmit(buf, size);
 }
 
-void Los_Telem::recieve(uint8_t* buf, int max_size) {
-    telem_driver.receive(buf,max_size);
+void Los_Telem::receive(uint8_t* buf, int max_size, int* writePtr, int readPtr) {
+    return telem_driver.receive(buf,max_size, writePtr, readPtr);
 }

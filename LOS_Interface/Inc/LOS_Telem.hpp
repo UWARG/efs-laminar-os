@@ -11,7 +11,7 @@ class Los_Telem{
         static Los_Telem& getInstance(void);
 
         void transmit(uint8_t* buf, int size);
-        void recieve(uint8_t* buf, int max_size);
+        void receive(uint8_t* buf, int max_size, int* writePtr, int readPtr);
 
     private:
         Los_Telem();

@@ -19,7 +19,7 @@ extern RcReceiver* rc_receivers_[];
 
 #include "LOS_D_GenericCommsDevice.hpp"
 
-const int TELEM_QUEUE_SIZE = 1000;
+const int TELEM_QUEUE_SIZE = 10;
 const int TELEM_BUFFER_SIZE = 100;
 
 extern QueueHandle_t telem_queue; 

@@ -9,7 +9,7 @@
 class GenericCommsDevice {
     public: 
         void transmit(uint8_t* buf, int size);
-        void receive(uint8_t* buf, int max_size);
+        void receive(uint8_t* buf, int max_size, int* writePtr, int readPtr);
         GenericCommsDevice(UART_HandleTypeDef* pUart, QueueHandle_t pQueue) : uart{ pUart }, queue{ pQueue } {}
         void Callback(volatile uint8_t* buf, uint16_t size);
         bool matchUART(UART_HandleTypeDef* huart);
@@ -19,6 +19,13 @@ class GenericCommsDevice {
         UART_HandleTypeDef* uart;
 
 
+};
+
+const int DATA_BUFFER_SIZE = 50;
+
+struct CommsData {
+    uint8_t buf[DATA_BUFFER_SIZE];
+    int size;
 };
 
 #endif
