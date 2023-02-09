@@ -85,22 +85,22 @@ void MAVLink::sendHeartbeat()
 	writeMessage(message);
 }
 
-MAVLinkACK_t sendInitialConfigs()
+MAVLinkACK_t MAVLink::sendInitialConfigs()
 {
     /* Tell the plane to VTOL hover over a waypoint when it's reached in guided mode. */
     mavlink_param_set_t vtol_hover_param = {};
     vtol_hover_param.target_system = plane_system_id;
     vtol_hover_param.target_system = plane_component_id;
-    vtol_hover_param.param_id = "Q_GUIDED_MODE";
+    strcpy(vtol_hover_param.param_id, "Q_GUIDED_MODE");
     vtol_hover_param.param_value = 1;
     vtol_hover_param.param_type = MAV_PARAM_TYPE_UINT8;
 
     mavlink_message_t message = {};
-    mavlink_msg_param_set_encode(system_id, component_id, &message, &vtol_hover);
+    mavlink_msg_param_set_encode(system_id, component_id, &message, &vtol_hover_param);
 
     MAVLinkACK_t expected_ack = {};
     expected_ack.type = MAVLinkACKType::PARAM;
-    expected_ack.param.param_id = "Q_GUIDED_MODE";
+    strcpy(expected_ack.param.param_id, "Q_GUIDED_MODE");
     expected_ack.param.param_value = 1;
     expected_ack.param.param_type = MAV_PARAM_TYPE_UINT8;
 
@@ -192,7 +192,7 @@ MAVLinkACK_t MAVLink::sendClearMissions()
     return expected_ack;
 }
 
-bool MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
+bool MAVLink::receiveMessage(MAVLinkMessage_t& mavlink_message)
 {
 	mavlink_message_t message = {};
 	bool success = false;
@@ -214,7 +214,7 @@ bool MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
             {
                 mavlink_message.type = MAVLinkMessageType::ACK;
 
-                mvalink_param_value_t param = {};
+                mavlink_param_value_t param = {};
                 mavlink_msg_param_value_decode(&message, &param);
                 mavlink_message.ack.type = MAVLinkACKType::PARAM;
                 memcpy(mavlink_message.ack.param.param_id, param.param_id, 16);
@@ -231,7 +231,7 @@ bool MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
 				mavlink_msg_command_ack_decode(&message, &command_ack);
                 mavlink_message.ack.type = MAVLinkACKType::COMMAND;
                 mavlink_message.ack.command = command_ack.command;
-                mavlink_message.ack.ack_result = result;
+                mavlink_message.ack.ack_result = command_ack.result;
 
                 break;
             }
@@ -257,7 +257,7 @@ bool MAVLink::receiveMessage(MAVLink_Message_t& mavlink_message)
 	return success;
 }
 
-bool checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVLinkACK_t expected_ack)
+bool MAVLink::checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVLinkACK_t expected_ack)
 {
     if (mavlink_message.type != MAVLinkMessageType::ACK) {
         /* Not an ACK message! */
@@ -269,7 +269,7 @@ bool checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVLinkACK_t 
 
     switch (ack.type) {
         case MAVLinkACKType::PARAM:
-            valid = compareParamId(ack.param.param_type, expected_ack.param.param_type) &&
+            valid = compareParamId(ack.param.param_id, expected_ack.param.param_id) &&
                     (ack.param.param_type == expected_ack.param.param_type) &&
                     (ack.param.param_value - expected_ack.param.param_value < 0.01f);
             break;
