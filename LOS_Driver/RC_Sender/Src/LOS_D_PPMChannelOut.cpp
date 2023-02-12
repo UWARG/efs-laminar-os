@@ -62,6 +62,7 @@ uint32_t PPMChannelOut::getNextPPM()
             ppm_output_[i] = percentageToCount(channel_vals_[i]);
         }
         ppm_output_[num_channels_] = calculatePulseReset();
+        output_index_ = 0;
     }
 
     return ppm_output_[output_index_++];

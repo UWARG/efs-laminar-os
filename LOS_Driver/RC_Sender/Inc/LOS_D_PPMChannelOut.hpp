@@ -20,7 +20,7 @@ private:
 
     // not really a pulse, this is slightly smaller than the difference in time between sequential
     // PPM packets
-    static constexpr float MIN_RESET_PULSE             = 3000.0f; 
+    static constexpr float MIN_RESET_PULSE             = 3000.0f;
     static constexpr float MIN_PULSE_WIDTH             = 700.0f;
     static constexpr float MAX_PULSE_WIDTH             = 1670.0f;
     static constexpr float DOWN_INTERVAL               = MAX_PULSE_WIDTH - MIN_PULSE_WIDTH;
@@ -31,8 +31,10 @@ private:
     uint16_t timer_channel_;
 
     uint8_t num_channels_;
+    /* Channel values in percentages (0.0f-1.0f)*/
     float channel_vals_[MAX_PPM_CHANNELS];
-    uint32_t ppm_output_[MAX_PPM_CHANNELS+1]; // One more element for reset pulse
+    /* PPM output in coutner ticks. +1 element for storing the reset pulse. */
+    uint32_t ppm_output_[MAX_PPM_CHANNELS+1];
 
     float counts_per_microsecond_;
     uint32_t ccr_;
