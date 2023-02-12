@@ -71,7 +71,7 @@ uint32_t PPMChannelOut::getNextPPM()
 uint32_t PPMChannelOut::percentageToCount(float percentage)
 {
     float pulse = MIN_PULSE_WIDTH + percentage * DOWN_INTERVAL;
-    return pulse * counts_per_microsecond_;
+    return static_cast<uint32_t>(pulse * counts_per_microsecond_);
 }
 
 uint32_t PPMChannelOut::calculatePulseReset()
@@ -85,5 +85,6 @@ uint32_t PPMChannelOut::calculatePulseReset()
 
 	remaining_out -= summation;
 
-    return percentageToCount(remaining_out);
+    float pulse = PULSE_WIDTH + remaining_out * DOWN_INTERVAL;
+    return static_cast<uint32_t>(pulse * counts_per_microsecond_);
 }
