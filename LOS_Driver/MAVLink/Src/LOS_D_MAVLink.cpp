@@ -9,56 +9,57 @@
 
 MAVLink::MAVLink(UART_HandleTypeDef* uart_handle)
     :
-    uart_handle(uart_handle)
+    uart_handle(uart_handle),
+    num_nav_cmd_sent(0)
 {
-	memset(&last_status, 0, sizeof(mavlink_status_t));
+    memset(&last_status, 0, sizeof(mavlink_status_t));
 }
 
 bool MAVLink::readMessage(mavlink_message_t &message)
 {
-	uint8_t byte = 0;
-	uint8_t end_of_msg = 0;
-	mavlink_status_t status = {};
-	bool success = true;
+    uint8_t byte = 0;
+    uint8_t end_of_msg = 0;
+    mavlink_status_t status = {};
+    bool success = true;
 
-	/* Parse incoming packet one byte at a time. */
-	for (uint16_t i = 0; i < MAVLINK_MAX_PACKET_LEN; ++i) {
-		HAL_UART_Receive(uart_handle, &byte, 1, 100);
+    /* Parse incoming packet one byte at a time. */
+    for (uint16_t i = 0; i < MAVLINK_MAX_PACKET_LEN; ++i) {
+        HAL_UART_Receive(uart_handle, &byte, 1, 100);
 
-		end_of_msg = mavlink_parse_char(MAVLINK_COMM_1, byte, &message, &status);
+        end_of_msg = mavlink_parse_char(MAVLINK_COMM_1, byte, &message, &status);
 
-		if (last_status.packet_rx_drop_count != status.packet_rx_drop_count) {
-			/* Packet dropped! */
-			success = false;
-		}
+        if (last_status.packet_rx_drop_count != status.packet_rx_drop_count) {
+            /* Packet dropped! */
+            success = false;
+        }
 
-		last_status = status;
+        last_status = status;
 
-		if (end_of_msg) {
-			break;
-		}
-	}
+        if (end_of_msg) {
+            break;
+        }
+    }
 
-	return success;
+    return success;
 }
 
 void MAVLink::writeMessage(const mavlink_message_t &msg)
 {
-	uint8_t buf[MAVLINK_MAX_PACKET_LEN];
-	uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
+    uint8_t buf[MAVLINK_MAX_PACKET_LEN];
+    uint16_t len = mavlink_msg_to_send_buffer(buf, &msg);
 
-	HAL_UART_Transmit(uart_handle, buf, len, 1000);
+    HAL_UART_Transmit(uart_handle, buf, len, 1000);
 }
 
 void MAVLink::sendCommandLong(mavlink_command_long_t command_long)
 {
     command_long.target_system = plane_system_id;
-	command_long.target_component = plane_component_id;
+    command_long.target_component = plane_component_id;
 
     mavlink_message_t message = {};
-	mavlink_msg_command_long_encode(system_id, component_id, &message, &command_long);
+    mavlink_msg_command_long_encode(system_id, component_id, &message, &command_long);
 
-	writeMessage(message);
+    writeMessage(message);
 }
 
 bool MAVLink::compareParamId(const char id1[16], const char id2[16])
@@ -75,14 +76,14 @@ bool MAVLink::compareParamId(const char id1[16], const char id2[16])
 
 void MAVLink::sendHeartbeat()
 {
-	mavlink_heartbeat_t heartbeat = {};
-	heartbeat.type = MAV_TYPE_GCS; /* We are representing ground (control) station. */
-	heartbeat.autopilot = MAV_AUTOPILOT_INVALID;
+    mavlink_heartbeat_t heartbeat = {};
+    heartbeat.type = MAV_TYPE_GCS; /* We are representing ground (control) station. */
+    heartbeat.autopilot = MAV_AUTOPILOT_INVALID;
 
-	mavlink_message_t message = {};
-	mavlink_msg_heartbeat_encode(system_id, component_id, &message, &heartbeat);
+    mavlink_message_t message = {};
+    mavlink_msg_heartbeat_encode(system_id, component_id, &message, &heartbeat);
 
-	writeMessage(message);
+    writeMessage(message);
 }
 
 MAVLinkACK_t MAVLink::sendInitialConfigs()
@@ -151,24 +152,28 @@ MAVLinkACK_t MAVLink::sendVTOLTakeOff(const float altitude)
 
     sendCommandLong(command_long);
 
+    ++num_nav_cmd_sent;
+
     return expected_ack;
 }
 
 MAVLinkACK_t MAVLink::sendWaypointNav(const float x, const float y, const float z, const float acceptable_range)
 {
-	mavlink_command_long_t command_long = {};
-	command_long.command = MAV_CMD_NAV_WAYPOINT;
-	command_long.confirmation = 1;
-	command_long.param2 = acceptable_range;
-	command_long.param5 = x;
-	command_long.param6 = y;
-	command_long.param7 = z;
+    mavlink_command_long_t command_long = {};
+    command_long.command = MAV_CMD_NAV_WAYPOINT;
+    command_long.confirmation = 1;
+    command_long.param2 = acceptable_range;
+    command_long.param5 = x;
+    command_long.param6 = y;
+    command_long.param7 = z;
 
     MAVLinkACK_t expected_ack = {};
     expected_ack.type = MAVLinkACKType::COMMAND;
     expected_ack.command = MAV_CMD_NAV_WAYPOINT;
 
-	sendCommandLong(command_long);
+    sendCommandLong(command_long);
+
+    ++num_nav_cmd_sent;
 
     return expected_ack;
 }
@@ -194,16 +199,16 @@ MAVLinkACK_t MAVLink::sendClearMissions()
 
 bool MAVLink::receiveMessage(MAVLinkMessage_t& mavlink_message)
 {
-	mavlink_message_t message = {};
-	bool success = false;
+    mavlink_message_t message = {};
+    bool success = false;
 
-	if (readMessage(message) &&
+    if (readMessage(message) &&
         message.sysid == plane_system_id &&
         message.compid == plane_component_id) {
-		success = true;
+        success = true;
 
-		switch (message.msgid) {
-			case MAVLINK_MSG_ID_HEARTBEAT:
+        switch (message.msgid) {
+            case MAVLINK_MSG_ID_HEARTBEAT:
             {
                 mavlink_message.type = MAVLinkMessageType::HEARTBEAT;
                 mavlink_msg_heartbeat_decode(&message, &(mavlink_message.heartbeat));
@@ -223,12 +228,12 @@ bool MAVLink::receiveMessage(MAVLinkMessage_t& mavlink_message)
 
                 break;
             }
-			case MAVLINK_MSG_ID_COMMAND_ACK:
+            case MAVLINK_MSG_ID_COMMAND_ACK:
             {
                 mavlink_message.type = MAVLinkMessageType::ACK;
 
                 mavlink_command_ack_t command_ack = {};
-				mavlink_msg_command_ack_decode(&message, &command_ack);
+                mavlink_msg_command_ack_decode(&message, &command_ack);
                 mavlink_message.ack.type = MAVLinkACKType::COMMAND;
                 mavlink_message.ack.command = command_ack.command;
                 mavlink_message.ack.ack_result = command_ack.result;
@@ -248,13 +253,23 @@ bool MAVLink::receiveMessage(MAVLinkMessage_t& mavlink_message)
 
                 break;
             }
-			default:
-				success = false;
-                break;
-		}
-	}
+            case MAVLINK_MSG_ID_MISSION_ITEM_REACHED:
+            {
+                mavlink_message.type = MAVLinkMessageType::NAV_CMD_EXECUTED;
 
-	return success;
+                mavlink_mission_item_reached_t mission_item_reached = {};
+                mavlink_msg_mission_item_reached_decode(&message, &mission_item_reached);
+                mavlink_message.executed_nav_cmd_idx = mission_item_reached.seq;
+
+                break;
+            }
+            default:
+                success = false;
+                break;
+        }
+    }
+
+    return success;
 }
 
 bool MAVLink::checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVLinkACK_t expected_ack)
@@ -284,4 +299,18 @@ bool MAVLink::checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVL
     }
 
     return valid;
+}
+
+bool MAVLink::checkLastNavCmdExecuted(const MAVLinkMessage_t mavlink_message)
+{
+    if (mavlink_message.type != MAVLinkMessageType::NAV_CMD_EXECUTED) {
+        return false;
+    }
+
+    return mavlink_message.executed_nav_cmd_idx == getLastNavCmdIdx();
+}
+
+inline uint16_t MAVLink::getLastNavCmdIdx()
+{
+    return num_nav_cmd_sent - 1;
 }

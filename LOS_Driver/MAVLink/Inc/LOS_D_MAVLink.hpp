@@ -20,7 +20,8 @@ enum class MAVLinkACKType {
 
 enum class MAVLinkMessageType {
     ACK,
-    HEARTBEAT
+    HEARTBEAT,
+    NAV_CMD_EXECUTED
 };
 
 typedef struct MAVLinkACK {
@@ -32,17 +33,18 @@ typedef struct MAVLinkACK {
 } MAVLinkACK_t;
 
 typedef struct MAVLinkMessage {
-	MAVLinkMessageType type;
-	mavlink_heartbeat_t heartbeat;
-	MAVLinkACK_t ack;
+    MAVLinkMessageType type;
+    mavlink_heartbeat_t heartbeat;
+    MAVLinkACK_t ack;
+    uint16_t executed_nav_cmd_idx; /* Index of the executed navigation-type command */
 } MAVLinkMessage_t;
 
 class MAVLink {
-	public:
+    public:
         /* Send a heartbeat message to sync with ArduPilot. This needs to be done
          * at ideally 1Hz and no less than 0.2Hz.
          */
-		void sendHeartbeat();
+        void sendHeartbeat();
 
         /* Set initial config parameters. This needs to be done before flight. */
         MAVLinkACK_t sendInitialConfigs();
@@ -66,34 +68,41 @@ class MAVLink {
 
         /* Add a waypoint to navigate. The plane will consider the waypoint reached when it's
          * within acceptable_range of the waypoint. The plane must be in GUIDED mode. */
-		MAVLinkACK_t sendWaypointNav(const float x, const float y, const float z, const float acceptable_range);
+        MAVLinkACK_t sendWaypointNav(const float x, const float y, const float z, const float acceptable_range);
 
         /* Clear all missions, including VTOL take-off and waypoint navigation. */
         MAVLinkACK_t sendClearMissions();
 
         /* Receive a message from ArduPilot. */
-		bool receiveMessage(MAVLinkMessage_t& mavlink_message);
+        bool receiveMessage(MAVLinkMessage_t& mavlink_message);
 
         /* Check an ACK message against an expected ACK results. */
         bool checkMessageACK(const MAVLinkMessage_t mavlink_message, const MAVLinkACK_t expected_ack);
 
+        /* Check if the last navigation-type command is executed */
+        bool checkLastNavCmdExecuted(const MAVLinkMessage_t mavlink_message);
+
+        /* Returns the index of the last navigation-type command (UINT16_MAX if none sent) */
+        uint16_t getLastNavCmdIdx();
+
         /* Constructor */
-		MAVLink(UART_HandleTypeDef* uart_handle);
+        MAVLink(UART_HandleTypeDef* uart_handle);
 
-	private:
+    private:
         UART_HandleTypeDef* uart_handle;
-		/* We are representing ground station, so our system ID and
-		 * component ID are 255 and 1. */
-		const uint8_t system_id = 255;
-		const uint8_t component_id = 1;
-		/* Plane system ID and component ID */
-		const uint8_t plane_system_id = 1;
-		const uint8_t plane_component_id = 1;
+        /* We are representing ground station, so our system ID and
+         * component ID are 255 and 1. */
+        const uint8_t system_id = 255;
+        const uint8_t component_id = 1;
+        /* Plane system ID and component ID */
+        const uint8_t plane_system_id = 1;
+        const uint8_t plane_component_id = 1;
 
-		mavlink_status_t last_status;
+        mavlink_status_t last_status;
+        uint16_t num_nav_cmd_sent;
 
-		bool readMessage(mavlink_message_t &msg);
-		void writeMessage(const mavlink_message_t &msg);
+        bool readMessage(mavlink_message_t &msg);
+        void writeMessage(const mavlink_message_t &msg);
         void sendCommandLong(mavlink_command_long_t command_long);
         bool compareParamId(const char id1[16], const char id2[16]);
 };
