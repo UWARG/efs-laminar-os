@@ -19,4 +19,9 @@ const uint8_t NUM_ACTUATOR_CHANNELS = 1;
 
 extern MotorChannel* motor_channels_[];
 
+/* MAVLink */
+#include "LOS_D_MAVLink.hpp"
+
+extern MAVLink* mavlink;
+
 #endif // CONFIG_HPP_

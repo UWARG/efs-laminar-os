@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include "main.h"
 #include "tim.h"
+#include "usart.h"
 
 /* Los_Link */
 #include "LOS_D_PPMChannel.hpp"
@@ -16,3 +17,8 @@ PWMChannel pwmChannel = PWMChannel(0, nullptr,
                     &htim2, TIM_CHANNEL_1);
 
 MotorChannel *motor_channels_[NUM_ACTUATOR_CHANNELS] = {&pwmChannel};
+
+/* MAVLink */
+#include "LOS_D_MAVLink.hpp"
+MAVLink mavlink_instance(&huart1);
+MAVLink* mavlink = &mavlink_instance;
