@@ -17,7 +17,7 @@ class GenericCommsDevice {
 
     private:
         QueueHandle_t queue; 
-        UART_HandleTypeDef* uart;
+        UART_HandleTypeDef* uart = NULL;
         bool bufferUsed = false;
 
 

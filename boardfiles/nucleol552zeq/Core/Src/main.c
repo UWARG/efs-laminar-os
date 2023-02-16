@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -21,11 +21,8 @@
 #include "cmsis_os.h"
 #include "adc.h"
 #include "dma.h"
-#include "i2c.h"
 #include "usart.h"
 #include "rtc.h"
-#include "spi.h"
-#include "tim.h"
 #include "ucpd.h"
 #include "gpio.h"
 
@@ -58,46 +55,42 @@
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
+volatile uint8_t buffer[10];
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void losInit(void) {
   HAL_Init();
-
-  /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_LPUART1_UART_Init();
   MX_RTC_Init();
   MX_UCPD1_Init();
   MX_USB_PCD_Init();
-  MX_I2C1_Init();
-  MX_I2C2_Init();
-  MX_UART5_Init();
-  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
-  MX_TIM1_Init();
-  MX_TIM2_Init();
-  MX_TIM4_Init();
-  MX_TIM5_Init();
-  MX_DMA_Init();
+  /* USER CODE BEGIN 2 */
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart3, (uint8_t*) buffer, 10);
+	__HAL_DMA_DISABLE_IT(huart3.hdmarx, DMA_IT_HT);
+
+  /* USER CODE END 2 */
 
   /* Init scheduler */
-  osKernelInitialize();
+  osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
-  
+
 }
 
 void losKernelStart(void) {
-  /* Start scheduler */
   osKernelStart();
 }
 /* USER CODE END 0 */

@@ -63,7 +63,7 @@ void GenericCommsDevice::Callback(volatile uint8_t* buf, uint16_t size) {
 }
 
 bool GenericCommsDevice::matchUART(UART_HandleTypeDef* huart) {
-    if(huart != NULL) {
+    if(huart != NULL && this->uart != NULL) {
         return huart->Instance == this->uart->Instance;
     }
     return false;

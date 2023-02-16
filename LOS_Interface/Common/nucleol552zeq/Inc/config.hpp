@@ -3,13 +3,13 @@
 
 #include <cstdint>
 
-/* LOS_Link */
-#include "LOS_D_RcReceiver.hpp"
+// /* LOS_Link */
+// #include "LOS_D_RcReceiver.hpp"
 
-constexpr uint8_t NUM_RC_RECEIVER_INSTANCES = 1;
-constexpr uint8_t NUM_RX_CHANNELS = 5;
+// constexpr uint8_t NUM_RC_RECEIVER_INSTANCES = 1;
+// constexpr uint8_t NUM_RX_CHANNELS = 5;
 
-extern RcReceiver* rc_receivers_[];
+// extern RcReceiver* rc_receivers_[];
 
 /* Los Telem */
 #include "FreeRTOS.h"
@@ -37,11 +37,11 @@ extern UART_HandleTypeDef* comms_uart;
 extern GenericCommsDevice comms_driver;
 //extern volatile uint8_t comms_buffer[COMMS_BUFFER_SIZE];
 
-/* Los Actuators */
-#include "LOS_D_MotorChannel.hpp"
+// /* Los Actuators */
+// #include "LOS_D_MotorChannel.hpp"
 
-const uint8_t NUM_ACTUATOR_CHANNELS = 1;
+// const uint8_t NUM_ACTUATOR_CHANNELS = 1;
 
-extern MotorChannel* motor_channels_[];
+// extern MotorChannel* motor_channels_[];
 
 #endif // CONFIG_HPP_
