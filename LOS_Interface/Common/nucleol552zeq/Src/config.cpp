@@ -4,9 +4,13 @@
 
 /* Los_Link */
 #include "LOS_D_PPMChannel.hpp"
+#include "LOS_D_PPMChannelOut.hpp"
+
 PPMChannel ppm_channel(&htim4, TIM_CHANNEL_1, NUM_RX_CHANNELS);
+PPMChannelOut ppm_channel_out(&htim3, TIM_CHANNEL_1, NUM_TX_CHANNELS);
 
 RcReceiver* rc_receivers_[NUM_RC_RECEIVER_INSTANCES] = {&ppm_channel};
+RcSender* rc_senders_[NUM_RC_SENDER_INSTANCES] = {&ppm_channel_out};
 
 /* Los_Actuators */
 #include "LOS_D_PWMChannel.hpp"

@@ -10,6 +10,10 @@ typedef struct LosLinkRx_t{
   uint8_t rx_channels[NUM_RX_CHANNELS];
 };
 
+typedef struct LosLinkTx_t {
+    uint8_t tx_channels[NUM_TX_CHANNELS];
+};
+
 /* LOS_Position*/
 typedef struct {
     // Longitude and Latitude
