@@ -6,8 +6,13 @@
 
 class RcSender {
     public:
+        /* Set the value of a specific channel (0.0-1.0). Returns 1 if success, 0 if failed. */
         virtual uint8_t setChannelValue(uint8_t channel, float value) = 0;
+
+        /* Initialize the RC output. */
         virtual void init() = 0;
+
+        /* A callback that gets called after each RC value is sent. */
         virtual void interrupt_callback(TIM_HandleTypeDef* timer) = 0;
 };
 

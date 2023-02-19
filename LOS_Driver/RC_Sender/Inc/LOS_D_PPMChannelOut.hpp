@@ -7,10 +7,21 @@
 class PPMChannelOut : public RcSender {
 
 public:
+    /* Constructor */
     PPMChannelOut(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels);
+
+    /* Implementation of the RcSender Interface. See LOS_D_RcSender.hpp */
     uint8_t setChannelValue(uint8_t channel, float value);
+
+    /* Implementation of the RcSender Interface. See LOS_D_RcSender.hpp
+     * After initialization, we will be constantly sending PPM signals.
+     */
     void init();
+
+    /* Implementation of the RcSender Interface. See LOS_D_RcSender.hpp */
     void interrupt_callback(TIM_HandleTypeDef* timer);
+
+    /* Set the number of channels. Returns 1 if success, 0 if failed. */
     uint8_t setNumChannels(uint8_t num_channels);
 
 private:
