@@ -19,12 +19,23 @@
 
 NEO_GPS::NEO_GPS()
 {
+	UART = &huart1;
+	outputData.ggaDataIsNew = false;
+	outputData.timeIsNew = false;
+	outputData.vtgDataIsNew = false;
+	outputData.fixStatus = 0;
+	outputData.sensorStatus =  SENSOR_FAIL;
 }
 
-// TODO: figure out how to use GPS_UART_INTERFACE 1 to get expected uart obj
+
 NEO_GPS::NEO_GPS(UART_HandleTypeDef* dev)
 {
 	UART = dev;
+	outputData.ggaDataIsNew = false;
+	outputData.timeIsNew = false;
+	outputData.vtgDataIsNew = false;
+	outputData.fixStatus = 0;
+	outputData.sensorStatus =  SENSOR_FAIL;
 }
 
 NEO_GPS::~NEO_GPS()
@@ -126,11 +137,9 @@ void NEO_GPS::parseRawDate()
 
 }
 
-///////////////////// Public Function Portion /////////////////////
-
 void NEO_GPS::refreshGPS()
 {
-	if (HAL_UART_Receive_DMA(UART, rx_raw, GPS_UART_BUFFER_SIZE)!= HAL_OK)
+	if (HAL_UART_Receive(UART, rx_raw, GPS_UART_BUFFER_SIZE, 500)!= HAL_OK)
 	{
 		outputData.sensorStatus = SENSOR_FAIL;
 		return;
@@ -161,11 +170,7 @@ void NEO_GPS::refreshGPS()
 }
 
 
-Gps& NEO_GPS::getInstance()
-{
-	static NEO_GPS singleton;
-	return singleton;
-}
+///////////////////// Public Function Portion /////////////////////
 
 void NEO_GPS::GetResult(GpsData_t& Data)
 {
