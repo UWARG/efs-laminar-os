@@ -15,6 +15,8 @@
 
 #define MESSAGE_SIZE 100
 
+extern UART_HandleTypeDef huart1;
+
 class NEO_GPS: public Gps
 {
 	private:
@@ -39,6 +41,13 @@ class NEO_GPS: public Gps
 	 */
 	void parseRawDate();
 
+	/*
+	 * should fetch raw data from gps sensor
+	 * call parseRawData function
+	 * parse from gpsData to outputDate, which is parse form GPSSTRUCT to GPSData_t
+	 */
+
+	void refreshGPS();
 
 	public:
 
@@ -46,14 +55,7 @@ class NEO_GPS: public Gps
     NEO_GPS(UART_HandleTypeDef* dev);
     ~NEO_GPS();
 
-	/*
-	 * should fetch raw data from gps sensor
-	 * call parseRawData function
-	 * parse from gpsData to outputDate, which is parse form GPSSTRUCT to GPSData_t
-	 */
-	void refreshGPS();
 
-	static Gps& getInstance();
 
 	void GetResult(GpsData_t& Data);
 
