@@ -114,7 +114,7 @@ void NEO_GPS::parseRawDate()
 //RMC section
 //I used RMC to get ground speed and course in stead of vtg
 //But I am kinda lazy to change the name, let it be a misconception one day
-	if(!get_sentense(RMCs, RMC, 3))
+	if(get_sentense(RMCs, RMC, 3))
 	{
 		if(decodeRMC(RMC, &gpsData.rmcstruct) != 0)
 			outputData.vtgDataIsNew = false;
