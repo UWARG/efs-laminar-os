@@ -7,7 +7,7 @@ PPMChannelOut::PPMChannelOut(TIM_HandleTypeDef* timer, uint16_t timer_channel, u
 {
     for (uint8_t i = 0; i < MAX_PPM_CHANNELS; ++i) {
         ppm_output_[i] = 0;
-        channel_vals_[i] = 0;
+        channel_vals_[i] = 0.25;
     }
 }
 
@@ -22,6 +22,7 @@ uint8_t PPMChannelOut::setChannelValue(uint8_t channel, float value)
 
 void PPMChannelOut::init()
 {
+	HAL_StatusTypeDef status;
     // Get the base frequency and prescaler our timer is running at
     float base_frequency_ = HAL_RCC_GetPCLK1Freq();
     float prescaler = timer_->Init.Prescaler;
@@ -34,7 +35,13 @@ void PPMChannelOut::init()
     __HAL_TIM_SET_AUTORELOAD(timer_, getNextPPM());
 
     // Start PWM output in interrupt mode
-    HAL_TIM_PWM_Start_IT(timer_, timer_channel_);
+    //HAL_TIM_PWM_Start_IT(timer_, timer_channel_)
+
+    __HAL_TIM_ENABLE_IT(timer_, TIM_IT_UPDATE);
+    //HAL_TIM_Base_Start_IT(timer_);
+    //HAL_TIM_PWM_Start(timer_, timer_channel_);
+    status = HAL_TIM_Base_Start_IT(timer_);
+    status = HAL_TIM_PWM_Start(timer_, timer_channel_);
 }
 
 void PPMChannelOut::interrupt_callback(TIM_HandleTypeDef* timer)
@@ -50,17 +57,22 @@ uint8_t PPMChannelOut::setNumChannels(uint8_t num)
     if (num <= 0 || num > MAX_PPM_CHANNELS) {
         return 0;
     }
+
     num_channels_ = num;
     return 1;
 }
 
-uint32_t PPMChannelOut::getNextPPM() 
+uint32_t PPMChannelOut::getNextPPM()
 {
+
+	num_channels_ = 4;
+
     if (ppm_output_[0] == 0 || output_index_ == num_channels_ + 1) {
         // Re-calculate the array of output PPM values
         for (uint8_t i = 0; i < num_channels_; ++i) {
             ppm_output_[i] = percentageToCount(channel_vals_[i]);
         }
+
         ppm_output_[num_channels_] = calculatePulseReset();
         output_index_ = 0;
     }

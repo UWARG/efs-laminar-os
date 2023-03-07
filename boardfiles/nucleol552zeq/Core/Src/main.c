@@ -86,10 +86,13 @@ void losInit(void) {
   MX_USART3_UART_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
-  MX_TIM1_Init();
-  MX_TIM2_Init();
+  //MX_TIM1_Init();
+  //MX_TIM2_Init();
+  //MX_TIM3_Init();
   MX_TIM4_Init();
-  MX_TIM5_Init();
+  //MX_TIM5_Init();
+  //When you add a new timer, manually add the initialization of the timer here.
+  //MX_TIM17_Init();
   MX_DMA_Init();
 
   /* Init scheduler */
@@ -165,6 +168,16 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM16 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+
 
 /**
   * @brief  This function is executed in case of error occurrence.
