@@ -72,7 +72,7 @@ void Airspeed::init()
 
 void Airspeed::calculate_pressure()
 {
-	const float P_max = 150;
+	const float P_max = 1.73;
 	const float P_min = -P_max;
 	// pound-force per square inch to pascal(newton per square meter)
 	const float PSI_to_Pa = 6894.757f;
