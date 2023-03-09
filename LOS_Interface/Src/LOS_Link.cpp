@@ -33,8 +33,9 @@ uint8_t Los_Link::sendTx(uint8_t instance, LosLinkTx_t &tx_data)
 {
     uint8_t success = 1;
 
-    for (uint8_t channel = 0; channel < NUM_TX_CHANNELS; ++channel) {
-        success &= rc_senders_[instance]->setChannelValue(channel, tx_data.tx_channels[channel]);
+    // setChannelValue channel index starts at 1
+    for (uint8_t channel = 1; channel <= NUM_TX_CHANNELS; ++channel) {
+        success &= rc_senders_[instance]->setChannelValue(channel, tx_data.tx_channels[channel - 1]);
     }
 
     return success;
