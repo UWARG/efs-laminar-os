@@ -102,10 +102,10 @@ void losKernelStart(void);
 #define NEOM8_MOSI_GPIO_Port GPIOE
 #define JETSON_TX_Pin GPIO_PIN_10
 #define JETSON_TX_GPIO_Port GPIOB
+#define JETSON_RX_Pin GPIO_PIN_11
+#define JETSON_RX_GPIO_Port GPIOB
 #define UCPD_FLT_Pin GPIO_PIN_14
 #define UCPD_FLT_GPIO_Port GPIOB
-#define JETSON_RX_Pin GPIO_PIN_9
-#define JETSON_RX_GPIO_Port GPIOD
 #define PPM_IN1_Pin GPIO_PIN_12
 #define PPM_IN1_GPIO_Port GPIOD
 #define PPM_IN2_Pin GPIO_PIN_13

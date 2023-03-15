@@ -16,3 +16,14 @@ PWMChannel pwmChannel = PWMChannel(0, nullptr,
                     &htim2, TIM_CHANNEL_1);
 
 MotorChannel *motor_channels_[NUM_ACTUATOR_CHANNELS] = {&pwmChannel};
+
+
+/* Los Telem */
+UART_HandleTypeDef* telem_uart = &huart1;
+GenericCommsDevice telem_driver;
+QueueHandle_t telem_queue;
+
+/* Los Comms */
+UART_HandleTypeDef* comms_uart = &huart3;
+GenericCommsDevice comms_driver;
+QueueHandle_t comms_queue;
