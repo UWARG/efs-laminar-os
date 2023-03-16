@@ -14,8 +14,8 @@ void Los_Comms::transmit(uint8_t* buf, int size) {
     comms_driver.transmit(buf, size, comms_uart);
 }
 
-void Los_Comms::receive(uint8_t* buf, int max_size, int& writePtr, int readPtr) {
-    return comms_driver.receive(buf,max_size, writePtr, readPtr, comms_queue);
+void Los_Comms::receive(CircularBuffer& buf) {
+    return comms_driver.receive(buf, comms_queue);
 }
 
 void Los_Comms::init() {

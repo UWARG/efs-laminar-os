@@ -10,7 +10,7 @@
 class GenericCommsDevice {
     public: 
         void transmit(uint8_t* buf, int size, UART_HandleTypeDef* huart);
-        void receive(CircularBuffer buf, QueueHandle_t queue);
+        void receive(CircularBuffer& buf, QueueHandle_t queue);
         GenericCommsDevice(); 
         void Callback(volatile uint8_t* buf, uint16_t size, QueueHandle_t queue);
         bool matchUART(UART_HandleTypeDef* huartA,UART_HandleTypeDef* huartB);

@@ -12,7 +12,7 @@ void GenericCommsDevice::transmit(uint8_t* buf, int size, UART_HandleTypeDef* hu
 
 GenericCommsDevice::GenericCommsDevice() {}
 
-void GenericCommsDevice::receive(CircularBuffer buf, QueueHandle_t queue) {
+void GenericCommsDevice::receive(CircularBuffer& buf, QueueHandle_t queue) {
     uint8_t currByte = 0;
 
     while(buf.hasSpace()) { // make sure theres space in the buffer

@@ -14,6 +14,7 @@ class CircularBuffer {
     bool hasSpace();
 
     CircularBuffer(uint8_t* buf, int size);
+    CircularBuffer();
 
     private:
 

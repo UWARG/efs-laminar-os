@@ -13,7 +13,7 @@ class Los_Comms{
         void init();
 
         void transmit(uint8_t* buf, int size);
-        void receive(uint8_t* buf, int max_size, int& writePtr, int readPtr);
+        void receive(CircularBuffer& buf);
 
         volatile uint8_t comms_buffer[COMMS_BUFFER_SIZE] = { 0 };
 
