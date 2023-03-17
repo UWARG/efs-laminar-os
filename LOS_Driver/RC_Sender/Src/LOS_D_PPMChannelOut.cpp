@@ -34,14 +34,11 @@ void PPMChannelOut::init()
     __HAL_TIM_SET_COMPARE(timer_, timer_channel_, ccr_);
     __HAL_TIM_SET_AUTORELOAD(timer_, getNextPPM());
 
-    // Start PWM output in interrupt mode
-    //HAL_TIM_PWM_Start_IT(timer_, timer_channel_)
-
-    __HAL_TIM_ENABLE_IT(timer_, TIM_IT_UPDATE);
-    //HAL_TIM_Base_Start_IT(timer_);
-    //HAL_TIM_PWM_Start(timer_, timer_channel_);
-    status = HAL_TIM_Base_Start_IT(timer_);
-    status = HAL_TIM_PWM_Start(timer_, timer_channel_);
+    // Start PWM output
+    __HAL_TIM_ENABLE_IT(timer_, TIM_IT_UPDATE); // Remove this?
+    HAL_TIM_PWM_Start_IT(timer_, timer_channel_);
+    // HAL_TIM_Base_Start_IT(timer_);
+    // HAL_TIM_PWM_Start(timer_, timer_channel_);
 }
 
 void PPMChannelOut::interrupt_callback(TIM_HandleTypeDef* timer)
