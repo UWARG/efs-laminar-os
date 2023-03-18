@@ -29,8 +29,9 @@ set(CMAKE_SIZE arm-none-eabi-size CACHE INTERNAL "")
 
 # ARM compiler options
 set(MCU_CPU cortex-m33)
-set(MCU_FLOAT_ABI soft) # since we don't have a floating point unit on this chip. Otherwise should be hard
-set(MCU_FLAGS "-mcpu=${MCU_CPU} -mthumb -mfloat-abi=${MCU_FLOAT_ABI}")
+set(MCU_FLOAT_ABI hard) # since we don't have a floating point unit on this chip. Otherwise should be hard
+set(MCU_FPU fpv5-sp-d16)
+set(MCU_FLAGS "-mcpu=${MCU_CPU} -mthumb -mfpu=${MCU_FPU} -mfloat-abi=${MCU_FLOAT_ABI}")
 
 set(COMMON_FLAGS "${MCU_FLAGS} -g -Wall -Wextra -Wno-unused-parameter -ffunction-sections -fdata-sections")
 
