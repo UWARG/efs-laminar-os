@@ -53,18 +53,18 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIO_1_GPIO_Port, GPIO_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, GPIO_2_Pin|GPIO_4_Pin|GPIO_5_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, GPIO_2_Pin|GPIO_3_Pin|GPIO_4_Pin|GPIO_5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, GPIO_LED_1_YELLOW_Pin|GPIO_LED_1_GREEN_Pin|GPIO_LED_1_RED_Pin|GPIO_LED_2_YELLOW_Pin
-                          |GPIO_LED_2_GREEN_Pin|GPIO_LED_2_RED_Pin, GPIO_PIN_RESET);
+                          |GPIO_LED_2_GREEN_Pin|GPIO_LED_2_RED_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_6_Pin|GPIO_7_Pin|GPIO_8_Pin|GPIO_9_Pin
                           |GPIO_10_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PFPin PFPin PFPin PFPin */
-  GPIO_InitStruct.Pin = GPIO_Interlock_D_Pin|GPIO_Interlock_C_Pin|GPIO_uSD_Detect_Pin|GPIO_3_Pin;
+  /*Configure GPIO pins : PFPin PFPin PFPin */
+  GPIO_InitStruct.Pin = GPIO_Interlock_D_Pin|GPIO_Interlock_C_Pin|GPIO_uSD_Detect_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
@@ -76,8 +76,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIO_1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PFPin PFPin PFPin */
-  GPIO_InitStruct.Pin = GPIO_2_Pin|GPIO_4_Pin|GPIO_5_Pin;
+  /*Configure GPIO pins : PFPin PFPin PFPin PFPin */
+  GPIO_InitStruct.Pin = GPIO_2_Pin|GPIO_3_Pin|GPIO_4_Pin|GPIO_5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

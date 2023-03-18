@@ -46,22 +46,6 @@ extern TIM_HandleTypeDef htim17;
 
 /* USER CODE BEGIN Private defines */
 
-extern DMA_HandleTypeDef hdma_tim1_ch1;
-
-extern DMA_HandleTypeDef hdma_tim1_ch2;
-
-extern DMA_HandleTypeDef hdma_tim5_ch1;
-
-extern DMA_HandleTypeDef hdma_tim5_ch2;
-
-extern DMA_HandleTypeDef hdma_tim5_ch3;
-
-extern DMA_HandleTypeDef hdma_tim5_ch4;
-
-extern DMA_HandleTypeDef hdma_tim16_ch1;
-
-extern DMA_HandleTypeDef hdma_tim17_ch1;
-
 /* USER CODE END Private defines */
 
 void MX_TIM1_Init(void);

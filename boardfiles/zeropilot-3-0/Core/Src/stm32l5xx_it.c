@@ -20,8 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32l5xx_it.h"
-#include "FreeRTOS.h"
-#include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -65,6 +63,8 @@ extern DMA_HandleTypeDef hdma_tim5_ch3;
 extern DMA_HandleTypeDef hdma_tim5_ch4;
 extern DMA_HandleTypeDef hdma_tim16_ch1;
 extern DMA_HandleTypeDef hdma_tim17_ch1;
+extern TIM_HandleTypeDef htim6;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -277,6 +277,20 @@ void DMA1_Channel8_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel8_IRQn 1 */
 
   /* USER CODE END DMA1_Channel8_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt.
+  */
+void TIM6_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_IRQn 0 */
+
+  /* USER CODE END TIM6_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_IRQn 1 */
+
+  /* USER CODE END TIM6_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
