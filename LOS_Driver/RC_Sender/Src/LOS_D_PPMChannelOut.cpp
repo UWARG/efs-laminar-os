@@ -11,7 +11,7 @@ PPMChannelOut::PPMChannelOut(TIM_HandleTypeDef* timer, uint16_t timer_channel, u
     }
 }
 
-uint8_t PPMChannelOut::setChannelValue(uint8_t channel, float value)
+uint8_t PPMChannelOut::setChannelValue(uint8_t channel, uint8_t value)
 {
     if (channel > num_channels_) {
         return 0;

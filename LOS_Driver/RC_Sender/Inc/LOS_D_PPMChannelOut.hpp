@@ -11,7 +11,7 @@ public:
     PPMChannelOut(TIM_HandleTypeDef* timer, uint16_t timer_channel, uint8_t num_channels);
 
     /* Implementation of the RcSender Interface. See LOS_D_RcSender.hpp */
-    uint8_t setChannelValue(uint8_t channel, float value);
+    uint8_t setChannelValue(uint8_t channel, uint8_t value);
 
     /* Implementation of the RcSender Interface. See LOS_D_RcSender.hpp
      * After initialization, we will be constantly sending PPM signals.
