@@ -36,8 +36,8 @@ void PPMChannelOut::init()
     // Start PWM output
     HAL_TIM_PWM_Start(timer_, timer_channel_);
     // Start interrupt
-    __HAL_TIM_ENABLE_IT(timer_, TIM_IT_UPDATE);
-    HAL_TIM_Base_Start_IT(timer_);
+    // __HAL_TIM_ENABLE_IT(timer_, TIM_IT_UPDATE);
+    // HAL_TIM_Base_Start_IT(timer_);
 }
 
 void PPMChannelOut::interrupt_callback(TIM_HandleTypeDef* timer)
