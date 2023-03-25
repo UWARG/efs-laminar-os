@@ -16,7 +16,7 @@ uint8_t PPMChannelOut::setChannelValue(uint8_t channel, uint8_t value)
     if (channel > num_channels_) {
         return 0;
     }
-    channel_vals_[channel - 1] = value;
+    channel_vals_[channel - 1] = static_cast<float>(value) / 100.0f;
     return 1;
 }
 
