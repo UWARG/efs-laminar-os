@@ -26,6 +26,8 @@ public:
 private:
         void sensorFusion();
 
+        void readUnifiedSensor();
+
         IMUData_t imu_data;
         GpsData_t gps_data;
         AltimeterData_t altimeter_data;
@@ -34,12 +36,22 @@ private:
         PositionData_t position;
         RawPositionData_t raw_position;
 
+#ifdef SENSOR_FUSION
         SFOutput_t sensor_fusion_out;
+        SFError_t SF_error_status;
+#endif
 
         IMU* imu_obj;
         Gps* gps_obj;
 
-        SFError_t SF_error_status;
+#ifdef VN300_CONNECTED
+        requestData_t requestData = {true, true};
+        USIMUData_t usimu_data;
+        USGPSData_t usgps_data;
+        USData_t us_data;
+        UnifiedSensor* us_obj;
+#endif
+
 };
 
 #endif 

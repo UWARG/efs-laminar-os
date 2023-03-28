@@ -37,6 +37,12 @@ LOS_Position::LOS_Position() {
 
     #endif
 
+    #ifdef VN300_CONNECTED
+        us_obj =  &VN300::getInstance();
+        us_data.req_data = requestData;
+        us_data.gps_data = usgps_data;
+        us_data.imu_data = usimu_data;
+    #endif
 }
 
 /**
@@ -122,29 +128,23 @@ void LOS_Position::sensorFusion()
     position.yawRate = sensor_fusion_out.yawRate;
 }
 
-
 /**
- * @brief updates the position struct calling
- *        either sensor fusion or imu directly 
- *        (if its VN-300)
+ * @brief Reads data from a single sensor that
+ *        does not need fusion e.g. VN300
  */
 
-void LOS_Position::updatePosition() {
+void LOS_Position::readUnifiedSensor()
+{
+    us_obj->GetResult(us_data);
 
-#ifdef SENSOR_FUSION
-    (*this).sensorFusion();
-#else
     /* Vector Nav */
     
     // lat and long
-    // position_.latitude = 
-    // position_.longitude = 
-
-    // position_.latitude_speed = 
-    // position_.longitude_speed =
+    position.latitude = us_data.gps_data.latitude;
+    position.longitude = us_data.gps_data.longitude;
 
     // rate of climb
-    // position_.climb_rate =
+    position.rateOfClimb = -us_data.gps_data.velDown;
 
     // track and heading
     // position_.track =
@@ -157,13 +157,27 @@ void LOS_Position::updatePosition() {
     // position_.ground_speed =
 
     // orientation
-    // position_.roll = 
-    // position_.pitch = 
-    // position_.yaw = 
+    position.roll = us_data.imu_data.roll;
+    position.pitch = us_data.imu_data.pitch;
+    position.yaw = us_data.imu_data.yaw;
     
     // position_.roll_rate = 
     // position_.pitch_rate = 
     // position_.yaw_rate = 
+}
+
+/**
+ * @brief updates the position struct calling
+ *        either sensor fusion or imu directly 
+ *        (if its VN-300)
+ */
+
+void LOS_Position::updatePosition() {
+
+#ifdef SENSOR_FUSION
+    (*this).sensorFusion();
+#else
+    (*this).readUnifiedSensor();
 #endif
 }
 

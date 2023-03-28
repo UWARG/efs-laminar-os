@@ -18,6 +18,8 @@ set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Airspeed/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/Altimeter/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/SensorFusion/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/CControl/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Driver/UnifiedSensor/Inc
 
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
