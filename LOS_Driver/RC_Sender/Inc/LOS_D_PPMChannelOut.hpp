@@ -31,9 +31,9 @@ private:
 
     // not really a pulse, this is slightly smaller than the difference in time between sequential
     // PPM packets
-    static constexpr float MIN_RESET_PULSE             = 3000.0f;
-    static constexpr float MIN_PULSE_WIDTH             = 700.0f;
-    static constexpr float MAX_PULSE_WIDTH             = 1670.0f;
+    static constexpr float MIN_RESET_PULSE             = 6200.0f;
+    static constexpr float MIN_PULSE_WIDTH             = 1000.0f;
+    static constexpr float MAX_PULSE_WIDTH             = 1970.0f;
     static constexpr float DOWN_INTERVAL               = MAX_PULSE_WIDTH - MIN_PULSE_WIDTH;
     static constexpr uint8_t MAX_PPM_CHANNELS          = 12;
 

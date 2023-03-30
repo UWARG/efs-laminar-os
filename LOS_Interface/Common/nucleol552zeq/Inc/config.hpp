@@ -8,9 +8,9 @@
 #include "LOS_D_RcSender.hpp"
 
 constexpr uint8_t NUM_RC_RECEIVER_INSTANCES = 1;
-constexpr uint8_t NUM_RX_CHANNELS = 5;
+constexpr uint8_t NUM_RX_CHANNELS = 8;
 constexpr uint8_t NUM_RC_SENDER_INSTANCES = 1;
-constexpr uint8_t NUM_TX_CHANNELS = 4;
+constexpr uint8_t NUM_TX_CHANNELS = 8;
 
 extern RcReceiver* rc_receivers_[];
 extern RcSender* rc_senders_[];

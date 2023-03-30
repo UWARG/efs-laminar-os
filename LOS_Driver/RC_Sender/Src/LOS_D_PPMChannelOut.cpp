@@ -88,6 +88,6 @@ uint32_t PPMChannelOut::calculatePulseReset()
 
 	remaining_out -= summation;
 
-    float pulse = PULSE_WIDTH + remaining_out * DOWN_INTERVAL;
+    float pulse = PULSE_WIDTH + MIN_RESET_PULSE + remaining_out * DOWN_INTERVAL;
     return static_cast<uint32_t>(pulse * counts_per_microsecond_);
 }
