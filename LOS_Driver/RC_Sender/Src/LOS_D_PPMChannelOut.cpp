@@ -68,7 +68,9 @@ uint32_t PPMChannelOut::getNextPPM()
         output_index_ = 0;
     }
 
-    uint32_t output = ppm_output_[output_index_++];
+    uint32_t output = ppm_output_[output_index_];
+    output_index_++;
+
     return output;
 }
 
