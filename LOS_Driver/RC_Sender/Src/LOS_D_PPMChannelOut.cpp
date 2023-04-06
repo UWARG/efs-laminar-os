@@ -68,7 +68,8 @@ uint32_t PPMChannelOut::getNextPPM()
         output_index_ = 0;
     }
 
-    return ppm_output_[output_index_++];
+    uint8_t output = ppm_output_[output_index_++];
+    return output;
 }
 
 uint32_t PPMChannelOut::percentageToCount(float percentage)
