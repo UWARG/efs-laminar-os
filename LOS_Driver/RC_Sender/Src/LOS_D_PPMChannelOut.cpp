@@ -62,7 +62,7 @@ uint32_t PPMChannelOut::getNextPPM()
     if (ppm_output_[0] == 0 || output_index_ == num_channels_ + 1) {
         // Re-calculate the array of output PPM values
         for (uint8_t i = 1; i <= num_channels_; ++i) {
-            ppm_output_[i] = percentageToCount(channel_vals_[i]);
+            ppm_output_[i] = percentageToCount(channel_vals_[i - 1]);
         }
         ppm_output_[0] = calculatePulseReset(); // Start pulse at the beginning
         output_index_ = 0;
