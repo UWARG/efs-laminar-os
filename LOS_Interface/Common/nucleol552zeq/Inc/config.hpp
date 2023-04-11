@@ -28,7 +28,8 @@ extern MotorChannel* motor_channels_[];
 // defining the connected sensors to select which sensors are used
 #define BMX160_CONNECTED
 //#define NEOM8_CONNECTED
-#define SENSOR_FUSION
+#define VN300_CONNECTED
+//#define SENSOR_FUSION
 
 #ifdef SENSOR_FUSION
 #include "LOS_D_SensorFusion.hpp"
@@ -39,7 +40,11 @@ extern MotorChannel* motor_channels_[];
 #endif
 
 #ifdef NEOM8_CONNECTED
-//#include 
+/* TODO: Inlcude NEOM8 header */
+#endif
+
+#ifdef VN300_CONNECTED
+#include "LOS_D_VN300.hpp"
 #endif
 
 #endif // CONFIG_HPP_

@@ -6,8 +6,8 @@
  * 
  */
 
-#ifndef INC_LOS_POSITION_HPP_
-#define INC_LOS_POSITION_HPP_
+#ifndef LOS_POSITION_HPP_
+#define LOS_POSITION_HPP_
 
 #include "interface_datatypes.hpp"
 #include "config.hpp"
@@ -24,22 +24,30 @@ public:
         RawPositionData_t* getRawPosition();
 
 private:
-        void sensorFusion();
-
         IMUData_t imu_data;
         GpsData_t gps_data;
         AltimeterData_t altimeter_data;
         airspeedData_t airspeed_data;
-
+        
         PositionData_t position;
         RawPositionData_t raw_position;
-
-        SFOutput_t sensor_fusion_out;
 
         IMU* imu_obj;
         Gps* gps_obj;
 
+#ifdef SENSOR_FUSION
+        void sensorFusion();
+
+        SFOutput_t sensor_fusion_out;
         SFError_t SF_error_status;
+#else
+        void readUnifiedSensor();
+
+        USData_t us_data;
+
+        UnifiedSensor* us_obj;
+#endif
+
 };
 
-#endif 
+#endif /* LOS_POSITION_HPP_ */
