@@ -5,7 +5,7 @@
  *      Author: Christopher Chung
  */
 
-#include <vectorNav.hpp>
+#include <LOS_D_VN300.hpp>
 
 const uint8_t BITS_PER_BYTE = 8;
 

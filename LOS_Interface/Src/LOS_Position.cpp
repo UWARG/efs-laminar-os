@@ -9,10 +9,7 @@
 
 /**
  * @brief Gets LOS_Position singleton
- * 
- * @return LOS_Position& 
  */
-
 LOS_Position& LOS_Position::getInstance() {
     static LOS_Position instance;
     return instance;
@@ -20,37 +17,62 @@ LOS_Position& LOS_Position::getInstance() {
 
 /**
  * @brief constructor for LOS_Position
- * 
  */
-
 LOS_Position::LOS_Position() {
+#ifdef SENSOR_FUSION
+    SF_Init();
+#else
+    us_data.req_data = {true, true};
+#endif
 
-    #ifdef SENSOR_FUSION
-        SF_Init();
-    #endif
+#ifdef BMX160_CONNECTED
+    imu_obj = &BMX160::getInstance();
+#endif
 
-    #ifdef BMX160_CONNECTED
-        imu_obj = &BMX160::getInstance();
-    #endif
+#ifdef NEOM8_CONNECTED
+    /* TODO: Initialize NEOM8 */
+#endif
 
-    #ifdef NEOM8_CONNECTED
-
-    #endif
-
-    #ifdef VN300_CONNECTED
-        us_obj =  &VN300::getInstance();
-        us_data.req_data = requestData;
-        us_data.gps_data = usgps_data;
-        us_data.imu_data = usimu_data;
-    #endif
+#ifdef VN300_CONNECTED
+    us_obj =  &VN300::getInstance();
+#endif
 }
 
 /**
+ * @brief updates the position struct calling
+ *        either sensor fusion or imu directly 
+ *        (if its VN-300)
+ */
+void LOS_Position::updatePosition() {
+#ifdef SENSOR_FUSION
+    (*this).sensorFusion();
+#else
+    (*this).readUnifiedSensor();
+#endif
+}
+
+/**
+ * @brief Retrieves pointer to position data
+ */
+PositionData_t* LOS_Position::getPosition() {
+    // returns pointer to the position struct
+    return &position;
+}
+
+/**
+ * @brief Retrieves pointer to raw position data
+ */
+RawPositionData_t* LOS_Position::getRawPosition() {
+    // returns pointer to the position struct
+    return &raw_position;
+}
+
+
+#ifdef SENSOR_FUSION
+/**
  * @brief Calls sensor fusion after updating raw
  *        position from data from sensors
- * 
  */
-
 void LOS_Position::sensorFusion()
 {
     imu_obj->GetResult(imu_data);
@@ -127,12 +149,12 @@ void LOS_Position::sensorFusion()
     position.pitchRate = sensor_fusion_out.pitchRate;
     position.yawRate = sensor_fusion_out.yawRate;
 }
+#else /* SENSOR_FUSION */
 
 /**
  * @brief Reads data from a single sensor that
  *        does not need fusion e.g. VN300
  */
-
 void LOS_Position::readUnifiedSensor()
 {
     us_obj->GetResult(us_data);
@@ -165,34 +187,4 @@ void LOS_Position::readUnifiedSensor()
     // position_.pitch_rate = 
     // position_.yaw_rate = 
 }
-
-/**
- * @brief updates the position struct calling
- *        either sensor fusion or imu directly 
- *        (if its VN-300)
- */
-
-void LOS_Position::updatePosition() {
-
-#ifdef SENSOR_FUSION
-    (*this).sensorFusion();
-#else
-    (*this).readUnifiedSensor();
-#endif
-}
-
-/**
- * @brief Retrieves pointer to position data
- * 
- * @return LOS_Position& 
- */
-
-PositionData_t* LOS_Position::getPosition() {
-    // returns pointer to the position struct
-    return &position;
-}
-
-RawPositionData_t* LOS_Position::getRawPosition() {
-    // returns pointer to the position struct
-    return &raw_position;
-}
+#endif /* SENSOR_FUSION */
