@@ -50,12 +50,26 @@ private:
     uint32_t ppm_output_[MAX_PPM_CHANNELS+1];
 
     float counts_per_microsecond_;
-    #define CCR_ 					(output_index_ != 0)? PULSE_WIDTH_N: PULSE_WIDTH_START
     uint8_t output_index_;
 
     /* Helper Functions */
-    uint32_t getNextPPM();
-    uint32_t percentageToCount(float percentage);
+    void setNextPPM();
     uint32_t calculatePulseReset();
 
+    inline uint32_t microsecondToCount(float time)
+    {
+        return static_cast<uint32_t>(time * counts_per_microsecond_);
+    }
+
+    inline uint32_t getCCR()
+    {
+        return microsecondToCount((output_index_ != 0) ? PULSE_WIDTH_N : PULSE_WIDTH_START);
+    }
+
+    inline uint32_t percentageToCount(float percentage)
+    {
+        return microsecondToCount(MIN_PULSE_WIDTH + percentage * DOWN_INTERVAL);
+    }
+
+}
 #endif
