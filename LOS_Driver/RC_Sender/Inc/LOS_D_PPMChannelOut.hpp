@@ -68,8 +68,8 @@ private:
 
     inline uint32_t percentageToCount(float percentage)
     {
-        return microsecondToCount(MIN_PULSE_WIDTH + percentage * DOWN_INTERVAL);
+        return microsecondToCount(MIN_PULSE_WIDTH + percentage * UP_INTERVAL);
     }
 
-}
+};
 #endif

@@ -55,7 +55,7 @@ uint8_t PPMChannelOut::setNumChannels(uint8_t num)
     return 1;
 }
 
-uint32_t PPMChannelOut::setNextPPM()
+void PPMChannelOut::setNextPPM()
 {
     if (ppm_output_[0] == 0 || output_index_ == num_channels_ + 1) {
         // Re-calculate the array of output PPM values
@@ -71,8 +71,6 @@ uint32_t PPMChannelOut::setNextPPM()
     __HAL_TIM_SET_AUTORELOAD(timer_, output + getCCR());
 
     output_index_++;
-
-    return output;
 }
 
 uint32_t PPMChannelOut::calculatePulseReset()
@@ -86,6 +84,6 @@ uint32_t PPMChannelOut::calculatePulseReset()
 
 	remaining_out -= summation;
 
-    float pulse = MIN_RESET_PULSE + remaining_out * DOWN_INTERVAL;
+    float pulse = MIN_RESET_PULSE + remaining_out * UP_INTERVAL;
     return static_cast<uint32_t>(pulse * counts_per_microsecond_);
 }
