@@ -14,7 +14,7 @@ extern RcReceiver* rc_receivers_[];
 /* Los Actuators */
 #include "LOS_D_MotorChannel.hpp"
 
-const uint8_t NUM_ACTUATOR_CHANNELS = 1;
+const uint8_t NUM_ACTUATOR_CHANNELS = 16;
 
 extern MotorChannel* motor_channels_[];
 
