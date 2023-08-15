@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    sdmmc.h
-  * @brief   This file contains all the function prototypes for
-  *          the sdmmc.c file
+  * @file    sd_diskio.h (for L5)
+  * @brief   Header for sd_diskio.c module
+  * @note    To be completed by the user according to the project board in use.
   ******************************************************************************
   * @attention
   *
@@ -17,36 +17,23 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SDMMC_H__
-#define __SDMMC_H__
+#ifndef __SD_DISKIO_H
+#define __SD_DISKIO_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+/* USER CODE BEGIN UserDefinitions */
+/* Place for user definitions */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 
-/* USER CODE BEGIN Includes */
+/* Exported types ------------------------------------------------------------*/
 
-/* USER CODE END Includes */
+/* Exported constants --------------------------------------------------------*/
 
-extern SD_HandleTypeDef hsd1;
+/* Exported functions ------------------------------------------------------- */
 
-/* USER CODE BEGIN Private defines */
+/* USER CODE END UserDefinitions */
 
-/* USER CODE END Private defines */
+extern const Diskio_drvTypeDef  SD_Driver;
 
-void MX_SDMMC1_SD_Init(void);
-
-/* USER CODE BEGIN Prototypes */
-
-/* USER CODE END Prototypes */
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __SDMMC_H__ */
-
+#endif /* __SD_DISKIO_H */

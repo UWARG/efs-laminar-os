@@ -20,6 +20,7 @@
 #include "main.h"
 
 #include "adc.h"
+#include "app_fatfs.h"
 #include "cmsis_os.h"
 #include "dma.h"
 #include "gpio.h"
@@ -93,12 +94,14 @@ void losInit(void) {
     MX_TIM17_Init();
     MX_ADC1_Init();
     MX_ADC2_Init();
-    // This currently doesn't work. Likely because sd card is not connected
-    // MX_SDMMC1_MMC_Init();
+    MX_SDMMC1_SD_Init();
     MX_TIM1_Init();
     // There is a question of if the ICACHE should be enabled. It improves performance but there is
     // suggestion that it could make the system non-deterministic
     MX_ICACHE_Init();
+    if (MX_FATFS_Init() != APP_OK) {
+        Error_Handler();
+    }
 
     /* Init scheduler */
     osKernelInitialize(); /* Call init function for freertos objects (in freertos.c) */
@@ -141,8 +144,8 @@ void SystemClock_Config(void) {
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
     RCC_OscInitStruct.PLL.PLLM = 1;
-    RCC_OscInitStruct.PLL.PLLN = 16;
-    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+    RCC_OscInitStruct.PLL.PLLN = 17;
+    RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV17;
     RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
     RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
     if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {

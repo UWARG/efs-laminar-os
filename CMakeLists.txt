@@ -16,8 +16,11 @@ set(INCLUDE_PATHS   ${CMAKE_CURRENT_SOURCE_DIR}/LOS_Interface/Inc
 
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/${FAMILY_NAME}_HAL_Driver/Inc
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core/Inc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/FATFS/App
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/FATFS/Target
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Device/ST/${FAMILY_NAME}/Include
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Drivers/CMSIS/Include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FatFs/src
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
                     ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_${PORTABLE_NAME}
@@ -36,6 +39,11 @@ set(FREE_RTOS_C_SOURCES "${FREE_RTOS_DIR}/*.c"
                         "${FREE_RTOS_DIR}/CMSIS_RTOS_V2/*.c"
                         "${FREE_RTOS_DIR}/portable/GCC/ARM_${PORTABLE_NAME}/*.c"
                         "${FREE_RTOS_DIR}/portable/MemMang/*.c")
+
+set(FATFS_C_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/FATFS/App/*.c"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/FATFS/Target/*.c"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FatFs/src/*.c"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Middlewares/Third_Party/FatFs/src/option/*.c")
 
 set(HAL_CORE ${CMAKE_CURRENT_SOURCE_DIR}/boardfiles/${FOLDER_NAME}/Core)
 set(HAL_CORE_C_SOURCES "${HAL_CORE}/Src/*.c")
@@ -58,9 +66,10 @@ file(GLOB_RECURSE C_SOURCES ${HAL_DRIVERS_C_SOURCES}
                             ${INTERFACE_CXX_SOURCES}
                             ${DRIVERS_CXX_SOURCES}
                             ${CORE_C_SOURCES}
-                            ${FREE_RTOS_C_SOURCES})                            
-message("MESSAGE: ${C_SOURCES}")                         
-file(GLOB_RECURSE CXX_SOURCES ${HAL_CORE_CXX_SOURCES} 
+                            ${FREE_RTOS_C_SOURCES}
+                            ${FATFS_C_SOURCES})
+message("MESSAGE: ${C_SOURCES}")
+file(GLOB_RECURSE CXX_SOURCES ${HAL_CORE_CXX_SOURCES}
                               ${INTERFACE_CXX_SOURCES}
                               ${DRIVERS_CXX_SOURCES}
                               ${CORE_CXX_SOURCES})
