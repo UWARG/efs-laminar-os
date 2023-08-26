@@ -95,7 +95,7 @@ DSTATUS SD_initialize(BYTE lun)
         return STA_NODISK;
     }
     /* HAL SD initialization */
-    return HAL_SD_Init(&hsd1);
+    return HAL_SD_Init(&hsd1) & HAL_SD_InitCard(&hsd1);
 
   /* USER CODE END SD_initialize */
 }
